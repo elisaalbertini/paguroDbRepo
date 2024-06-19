@@ -17,5 +17,5 @@ jobs:
   kotlinTest:
     needs:
       - ktlintCheck
-    name: test kotlin
-    uses: ./.github/workflows/kotlin_test_pipeline.yml
+    name: test kotlin with MongoDB
+    uses: ./.github/workflows/mongodb_pipeline.yml
