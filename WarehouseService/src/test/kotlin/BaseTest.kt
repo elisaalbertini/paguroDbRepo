@@ -1,7 +1,4 @@
 import com.mongodb.client.model.Filters
-import com.mongodb.client.model.IndexOptions
-import com.mongodb.client.model.Indexes
-import com.mongodb.kotlin.client.coroutine.MongoClient
 import domain.Ingredient
 import io.kotest.core.spec.style.AnnotationSpec
 import server.MongoUtils

@@ -17,4 +17,3 @@ object MainDB {
             .createIndex(ascendingIndex, IndexOptions().unique(true))
     }
 }
-
