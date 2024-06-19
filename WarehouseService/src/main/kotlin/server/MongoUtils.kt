@@ -1,10 +1,13 @@
 package server
 
 import MongoInfo
+import com.mongodb.client.model.IndexOptions
+import com.mongodb.client.model.Indexes
 import com.mongodb.kotlin.client.coroutine.MongoClient
 import com.mongodb.kotlin.client.coroutine.MongoCollection
 import domain.Ingredient
 import kotlinx.coroutines.flow.toList
+import org.bson.BsonDocument
 
 /**
  * Object that exposes utils methods for MongoDB

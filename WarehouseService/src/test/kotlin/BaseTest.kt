@@ -1,4 +1,6 @@
 import com.mongodb.client.model.Filters
+import com.mongodb.client.model.IndexOptions
+import com.mongodb.client.model.Indexes
 import com.mongodb.kotlin.client.coroutine.MongoClient
 import domain.Ingredient
 import io.kotest.core.spec.style.AnnotationSpec
@@ -14,9 +16,14 @@ open class BaseTest : AnnotationSpec() {
 
     @BeforeAll
     suspend fun initializeCollection(){
-        MongoClient.create(MongoInfo().mongoAddress)
+        /////////////////////
+        val ascendingIndex = Indexes.text("name")
+        MongoClient
+            .create(MongoInfo().mongoAddress)
             .getDatabase(MongoInfo().databaseName)
-            .createCollection("Ingredients")
+            .getCollection<Ingredient>(MongoInfo().collectionName)
+            .createIndex(ascendingIndex, IndexOptions().unique(true))
+        /////////////////////
     }
 
     @BeforeEach
