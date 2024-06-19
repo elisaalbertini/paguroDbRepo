@@ -14,7 +14,7 @@ open class BaseTest : AnnotationSpec() {
     protected val notAvailableCoffee = Ingredient(coffee.name, 0)
     protected val ingredients = listOf(milk, tea)
 
-    @BeforeAll
+    /*@BeforeAll
     suspend fun initializeCollection(){
         /////////////////////
         val ascendingIndex = Indexes.text("name")
@@ -24,7 +24,7 @@ open class BaseTest : AnnotationSpec() {
             .getCollection<Ingredient>(MongoInfo().collectionName)
             .createIndex(ascendingIndex, IndexOptions().unique(true))
         /////////////////////
-    }
+    }*/
 
     @BeforeEach
     suspend fun beforeTest() {

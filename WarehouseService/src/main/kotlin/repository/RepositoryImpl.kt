@@ -4,16 +4,31 @@ import MongoInfo
 import WarehouseMessage
 import com.mongodb.MongoException
 import com.mongodb.client.model.Filters.eq
+import com.mongodb.client.model.IndexOptions
+import com.mongodb.client.model.Indexes
 import com.mongodb.client.model.Projections
 import com.mongodb.client.model.Updates
+import com.mongodb.kotlin.client.coroutine.MongoClient
 import domain.Ingredient
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
 import server.MongoUtils
 
 class RepositoryImpl(mongoInfo: MongoInfo) : Repository {
     private val collection = MongoUtils.getMongoCollection(mongoInfo)
+
+    init {
+        runBlocking {
+            val ascendingIndex = Indexes.text("name")
+            MongoClient
+                .create(MongoInfo().mongoAddress)
+                .getDatabase(MongoInfo().databaseName)
+                .getCollection<Ingredient>(MongoInfo().collectionName)
+                .createIndex(ascendingIndex, IndexOptions().unique(true))
+        }
+    }
 
     override suspend fun getAllIngredients(): RepositoryResponse<List<Ingredient>> {
         return RepositoryResponse(collection.find<Ingredient>().toList(), WarehouseMessage.OK)

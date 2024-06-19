@@ -21,6 +21,7 @@ dependencies {
     implementation(libs.bundles.vertx)
     implementation(libs.mongodb.driver)
     implementation(libs.bundles.kotlinx)
+    implementation(kotlin("script-runtime"))
 }
 
 tasks.test {
