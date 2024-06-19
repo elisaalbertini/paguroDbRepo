@@ -4,11 +4,7 @@ on:
   workflow_call:
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [ ubuntu-latest]
-    runs-on: ${{ matrix.os }}
-
+    runs-on: ubuntu-latest
     steps:
       - name: Git checkout
         uses: actions/checkout@v4
