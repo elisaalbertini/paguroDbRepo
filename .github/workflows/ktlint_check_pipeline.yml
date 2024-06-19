@@ -1,0 +1,22 @@
+name: Ktlint check workflow
+
+on:
+  workflow_call:
+jobs:
+  ktlintCheck:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: java version
+        uses: actions/setup-java@v4
+        with:
+          java-version: 18
+          distribution: 'temurin'
+      - name: Check format
+        run: |
+          chmod +x gradlew
+          ./gradlew ktlintCheck

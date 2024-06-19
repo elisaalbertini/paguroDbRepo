@@ -1,0 +1,25 @@
+name: Deploy Javadoc
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install and Build
+        run: |
+          chmod +x gradlew
+          ./gradlew dokkaHtml
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ./WarehouseService/build/dokka/html
+          branch: report
+          target-folder: ./docs/dokka
