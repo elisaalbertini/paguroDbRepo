@@ -21,7 +21,7 @@ class RepositoryImpl(mongoInfo: MongoInfo) : Repository {
 
     init {
         runBlocking {
-            val ascendingIndex = Indexes.text("name")
+            val ascendingIndex = Indexes.text("ciao")
             MongoClient
                 .create(MongoInfo().mongoAddress)
                 .getDatabase(MongoInfo().databaseName)
