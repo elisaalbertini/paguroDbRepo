@@ -4,6 +4,9 @@ on:
   workflow_call:
 jobs:
   build:
+    strategy:
+      matrix:
+        java-version: [ 11, 16, 17, 18 ]
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout
@@ -13,6 +16,14 @@ jobs:
         uses: supercharge/mongodb-github-action@1.11.0
         with:
           mongodb-db: 'Warehouse'
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'temurin'
 
-      - name: test kotlin
-        uses: ./.github/workflows/kotlin_test_pipeline.yml
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Run Test
+        run: ./gradlew test
