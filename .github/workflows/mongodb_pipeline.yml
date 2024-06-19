@@ -21,7 +21,7 @@ jobs:
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.11.0
         with:
-           mongodb-name: 'Warehouse'
+          mongodb-db: 'Warehouse'
 
       - name: Set up JDK
         uses: actions/setup-java@v4
