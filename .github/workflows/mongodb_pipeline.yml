@@ -20,8 +20,8 @@ jobs:
 
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.11.0
-        # with:
-          # mongodb-port: localhost:27017
+        with:
+           mongodb-name: 'Warehouse'
 
       - name: Set up JDK
         uses: actions/setup-java@v4
