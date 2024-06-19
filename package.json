@@ -1,0 +1,11 @@
+{
+  "name": "pagurodbrepo",
+  "version": "1.0.0",
+  "description": "Distributed System and Software Process Engineering Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
