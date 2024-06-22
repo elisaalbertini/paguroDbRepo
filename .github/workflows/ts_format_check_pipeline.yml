@@ -7,14 +7,13 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest, windows-latest ]
+        dir: ['manager-application', 'server']
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install and check
-        working-directory: 
-          - manager-application
-          - server
+        working-directory: ${{ matrix.dir }}
         run: |
           npm install 
           npx tsfmt --verify
