@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install and check
-        working-directory: manager-application
+        working-directory: manager-application, server
         run: |
           npm install 
           npx tsfmt --verify
