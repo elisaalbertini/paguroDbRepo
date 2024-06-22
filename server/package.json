@@ -13,6 +13,7 @@
     "@types/ws": "^8.5.10",
     "axios": "^1.7.2",
     "express": "^4.19.2",
+    "npx": "^10.2.2",
     "typescript-formatter": "^4.1.0",
     "ws": "^8.17.1"
   },
