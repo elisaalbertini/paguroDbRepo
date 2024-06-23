@@ -1,4 +1,4 @@
 export interface WarehouseInput {
-    name: string,
-    quantity: number
+	name: string,
+	quantity: number
 }

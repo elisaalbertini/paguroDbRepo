@@ -10,12 +10,12 @@ const server = createServer(app);
 const wss = new WebSocketServer({ server });
 
 wss.on('connection', (ws: WebSocket) => {
-    ws.on('error', console.error);
+	ws.on('error', console.error);
 
-    ws.on('message', (data: RequestMessage) => {
-        console.log('received: %s', data);
-        check_service(data)
-    });
+	ws.on('message', (data: RequestMessage) => {
+		console.log('received: %s', data);
+		check_service(data)
+	});
 });
 
 app.get('/', (req, res) => res.send('Hello World'));
