@@ -8,8 +8,8 @@ on:
 jobs:
   serverTest:
     name: test server
-    uses: /.github/workflows/server_test_pipeline.yml
-    
+    uses: ./.github/workflows/server_test_pipeline.yml
+
   ktlintCheck:
     name: check format kotlin
     uses: ./.github/workflows/ktlint_check_pipeline.yml
