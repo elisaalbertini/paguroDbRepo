@@ -35,4 +35,10 @@ jobs:
         working-directory: server
         run: |
           npm install
-          npx ts-node ./src/server
+          npx ts-node ./src/server &
+
+      - name: Run Tests
+          working-directory: server
+          run: |
+          sleep 20
+          npm test
