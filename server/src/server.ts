@@ -9,22 +9,22 @@ const server = createServer(app);
 const wss = new WebSocketServer({ server });
 
 wss.on('connection', (ws: WebSocket) => {
-    
-    ws.on('error', console.error);
 
-    ws.on('message', (data: string) => {
-        console.log('received: %s', data);
-        check_service(JSON.parse(data), ws)
-        
-    });
+	ws.on('error', console.error);
 
-    ws.on('open', () => {
-        console.log('socket is open');
-    });
+	ws.on('message', (data: string) => {
+		console.log('received: %s', data);
+		check_service(JSON.parse(data), ws)
 
-    ws.on('close', () => {
-        console.log('socket has closed');
-    });
+	});
+
+	ws.on('open', () => {
+		console.log('socket is open');
+	});
+
+	ws.on('close', () => {
+		console.log('socket has closed');
+	});
 });
 
 app.get('/', (req, res) => res.send('Hello World'));

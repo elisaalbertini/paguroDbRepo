@@ -1,5 +1,5 @@
 export enum Service {
-    WAREHOUSE,
-    MENU,
-    ORDERS
+	WAREHOUSE,
+	MENU,
+	ORDERS
 }
