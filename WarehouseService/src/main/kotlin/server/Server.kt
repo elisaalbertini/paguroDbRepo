@@ -4,6 +4,7 @@ import MongoInfo
 import handlers.HandlerImpl
 import io.vertx.core.Vertx
 import io.vertx.ext.web.Router
+import io.vertx.ext.web.handler.BodyHandler
 import io.vertx.kotlin.core.http.httpServerOptionsOf
 import io.vertx.kotlin.coroutines.CoroutineVerticle
 import io.vertx.kotlin.coroutines.dispatcher
@@ -18,6 +19,7 @@ class Server(private val mongoInfo: MongoInfo, private val port: Int) : Coroutin
     override suspend fun start() {
         val handler = HandlerImpl(mongoInfo)
         val router = Router.router(vertx)
+        router.route().handler(BodyHandler.create())
 
         router.post("/warehouse/").handler {
                 ctx ->

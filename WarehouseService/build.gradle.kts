@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.dokka)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.serialization)
+    id("application")
     id("jacoco")
 }
 
@@ -21,7 +22,6 @@ dependencies {
     implementation(libs.bundles.vertx)
     implementation(libs.mongodb.driver)
     implementation(libs.bundles.kotlinx)
-    implementation(kotlin("script-runtime"))
 }
 
 tasks.test {
@@ -42,5 +42,10 @@ ktlint {
         include("**/main/kotlin/**/*.kt")
         exclude("**/*.gradle.kts")
     }
+}
+
+
+application {
+    mainClass.set("server.Main")
 }
 

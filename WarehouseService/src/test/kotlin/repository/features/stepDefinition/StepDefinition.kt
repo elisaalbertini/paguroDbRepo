@@ -12,6 +12,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Assertions
+import repository.Quantity
 
 class StepDefinition : BaseTest() {
     private var actualAnswer: String = ""
@@ -30,7 +31,7 @@ class StepDefinition : BaseTest() {
     ) {
         val ingredient = Ingredient(name, quantity.toInt())
         runBlocking {
-            val res = apiUtils.createIngredient("ingredient", Json.encodeToString(ingredient)).send().coAwait()
+            val res = apiUtils.createIngredient(Buffer.buffer(Json.encodeToString(ingredient))).coAwait()
             getActualValues(res)
         }
     }
@@ -41,7 +42,7 @@ class StepDefinition : BaseTest() {
         quantity: String,
     ) {
         runBlocking {
-            val res = apiUtils.restock(name, "quantity", Json.encodeToString(quantity.toInt())).send().coAwait()
+            val res = apiUtils.restock(name, Buffer.buffer(Json.encodeToString(Quantity(quantity.toInt())))).coAwait()
             getActualValues(res)
         }
     }

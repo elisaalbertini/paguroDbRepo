@@ -1,6 +1,8 @@
+import io.vertx.core.Future
 import io.vertx.core.Vertx
 import io.vertx.core.buffer.Buffer
 import io.vertx.ext.web.client.HttpRequest
+import io.vertx.ext.web.client.HttpResponse
 import io.vertx.ext.web.client.WebClient
 
 class ApiUtils(private val port: Int) {
@@ -18,26 +20,19 @@ class ApiUtils(private val port: Int) {
         return client.put(URI).port(port).host("localhost")
     }
 
-    fun createIngredient(
-        paramName: String,
-        ingredient: String,
-    ): HttpRequest<Buffer> {
-        return initializePost("/warehouse/").addQueryParam(paramName, ingredient)
+    fun createIngredient(ingredient: Buffer): Future<HttpResponse<Buffer>> {
+        return initializePost("/warehouse/").sendBuffer(ingredient)
     }
 
-    fun updateConsumedIngredientsQuantity(
-        paramName: String,
-        quantity: String,
-    ): HttpRequest<Buffer> {
-        return initializePut("/warehouse/").addQueryParam(paramName, quantity)
+    fun updateConsumedIngredientsQuantity(quantity: Buffer): Future<HttpResponse<Buffer>> {
+        return initializePut("/warehouse/").sendBuffer(quantity)
     }
 
     fun restock(
         ingredient: String,
-        paramName: String,
-        quantity: String,
-    ): HttpRequest<Buffer> {
-        return initializePut("/warehouse/$ingredient").addQueryParam(paramName, quantity)
+        quantity: Buffer,
+    ): Future<HttpResponse<Buffer>> {
+        return initializePut("/warehouse/$ingredient").sendBuffer(quantity)
     }
 
     fun getAllIngredients(type: String): HttpRequest<Buffer> {

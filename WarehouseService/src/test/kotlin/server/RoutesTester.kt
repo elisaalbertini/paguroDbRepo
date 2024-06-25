@@ -9,10 +9,12 @@ import com.mongodb.client.model.Filters
 import domain.Ingredient
 import io.kotest.matchers.shouldBe
 import io.vertx.core.Vertx
+import io.vertx.core.buffer.Buffer
 import io.vertx.kotlin.coroutines.coAwait
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import repository.Quantity
 import java.net.HttpURLConnection
 
 class RoutesTester : BaseTest() {
@@ -29,17 +31,24 @@ class RoutesTester : BaseTest() {
     suspend fun createIngredientRouteTest() {
         val newIngredient = Json.encodeToString(coffee)
         val existingIngredient = Json.encodeToString(milk)
-        val correctParamName = "ingredient"
-        val wrongParamName = "ingrediente"
-        var response = apiUtils.createIngredient(correctParamName, newIngredient).send().coAwait()
+
+        var response = apiUtils.createIngredient(Buffer.buffer(newIngredient)).coAwait()
         response.statusCode() shouldBe HttpURLConnection.HTTP_OK
         response.bodyAsString() shouldBe newIngredient
 
-        response = apiUtils.createIngredient(correctParamName, existingIngredient).send().coAwait()
+        response = apiUtils.createIngredient(Buffer.buffer(existingIngredient)).coAwait()
         response.statusCode() shouldBe HttpURLConnection.HTTP_BAD_REQUEST
         response.statusMessage() shouldBe WarehouseMessage.ERROR_INGREDIENT_ALREADY_EXISTS.toString()
 
-        response = apiUtils.createIngredient(wrongParamName, existingIngredient).send().coAwait()
+        response = apiUtils.createIngredient(Buffer.buffer("{\"names\":\"milk\", \"quantity\":2}")).coAwait()
+        response.statusCode() shouldBe HttpURLConnection.HTTP_BAD_REQUEST
+        response.statusMessage() shouldBe WarehouseMessage.ERROR_WRONG_PARAMETERS.toString()
+
+        response = apiUtils.createIngredient(Buffer.buffer("{\"name\":\"milk\", \"quantity\":\"two\"}")).coAwait()
+        response.statusCode() shouldBe HttpURLConnection.HTTP_BAD_REQUEST
+        response.statusMessage() shouldBe WarehouseMessage.ERROR_WRONG_PARAMETERS.toString()
+
+        response = apiUtils.createIngredient(Buffer.buffer("")).coAwait()
         response.statusCode() shouldBe HttpURLConnection.HTTP_BAD_REQUEST
         response.statusMessage() shouldBe WarehouseMessage.ERROR_WRONG_PARAMETERS.toString()
     }
@@ -48,60 +57,63 @@ class RoutesTester : BaseTest() {
     suspend fun updateConsumedIngredientsQuantityRouteTest() {
         val decrease = 4
         val decreaseMilk = 100
-        val correctParamName = "ingredients"
-        val wrongParamName = "ingredient"
         var decreaseIngredients =
-            Json.encodeToString(listOf(UpdateQuantity("milk", decrease), UpdateQuantity("tea", decrease)))
+            Buffer.buffer(
+                Json.encodeToString(
+                    listOf(
+                        UpdateQuantity("milk", decrease),
+                        UpdateQuantity("tea", decrease),
+                    ),
+                ),
+            )
 
-        apiUtils.updateConsumedIngredientsQuantity(correctParamName, decreaseIngredients)
-            .send().coAwait().statusCode() shouldBe HttpURLConnection.HTTP_OK
+        apiUtils.updateConsumedIngredientsQuantity(decreaseIngredients)
+            .coAwait().statusCode() shouldBe HttpURLConnection.HTTP_OK
 
-        decreaseIngredients = Json.encodeToString(listOf(UpdateQuantity("tea", decrease)))
-        var response = apiUtils.updateConsumedIngredientsQuantity(correctParamName, decreaseIngredients).send().coAwait()
+        decreaseIngredients =
+            Buffer.buffer(Json.encodeToString(listOf(UpdateQuantity("tea", decrease))))
+        var response = apiUtils.updateConsumedIngredientsQuantity(decreaseIngredients).coAwait()
         response.statusCode() shouldBe HttpURLConnection.HTTP_NOT_FOUND
         response.statusMessage() shouldBe WarehouseMessage.ERROR_INGREDIENT_NOT_FOUND.toString()
 
-        decreaseIngredients = Json.encodeToString(listOf(UpdateQuantity("milk", decreaseMilk)))
-        response = apiUtils.updateConsumedIngredientsQuantity(correctParamName, decreaseIngredients).send().coAwait()
+        decreaseIngredients =
+            Buffer.buffer(Json.encodeToString(listOf(UpdateQuantity("milk", decreaseMilk))))
+        response = apiUtils.updateConsumedIngredientsQuantity(decreaseIngredients).coAwait()
         response.statusCode() shouldBe HttpURLConnection.HTTP_BAD_REQUEST
         response.statusMessage() shouldBe WarehouseMessage.ERROR_INGREDIENT_QUANTITY.toString()
 
-        decreaseIngredients = Json.encodeToString(listOf(UpdateQuantity("coffee", decrease)))
-        response = apiUtils.updateConsumedIngredientsQuantity(correctParamName, decreaseIngredients).send().coAwait()
+        decreaseIngredients =
+            Buffer.buffer(Json.encodeToString(listOf(UpdateQuantity("coffee", decrease))))
+        response = apiUtils.updateConsumedIngredientsQuantity(decreaseIngredients).coAwait()
         response.statusCode() shouldBe HttpURLConnection.HTTP_NOT_FOUND
         response.statusMessage() shouldBe WarehouseMessage.ERROR_INGREDIENT_NOT_FOUND.toString()
 
-        decreaseIngredients = Json.encodeToString(listOf(UpdateQuantity("coffee", decrease)))
-        response = apiUtils.updateConsumedIngredientsQuantity(correctParamName, decreaseIngredients).send().coAwait()
+        decreaseIngredients =
+            Buffer.buffer(Json.encodeToString(listOf(UpdateQuantity("coffee", decrease))))
+        response = apiUtils.updateConsumedIngredientsQuantity(decreaseIngredients).coAwait()
         response.statusCode() shouldBe HttpURLConnection.HTTP_NOT_FOUND
         response.statusMessage() shouldBe WarehouseMessage.ERROR_INGREDIENT_NOT_FOUND.toString()
 
-        decreaseIngredients = Json.encodeToString(listOf(UpdateQuantity("milk", decrease)))
-        response = apiUtils.updateConsumedIngredientsQuantity(wrongParamName, decreaseIngredients).send().coAwait()
-        response.statusCode() shouldBe HttpURLConnection.HTTP_BAD_REQUEST
-        response.statusMessage() shouldBe WarehouseMessage.ERROR_WRONG_PARAMETERS.toString()
-
-        decreaseIngredients = "[{\"name\":\"milk\",\"quantity\":\"four\"}]"
-        response = apiUtils.updateConsumedIngredientsQuantity(wrongParamName, decreaseIngredients).send().coAwait()
+        decreaseIngredients = Buffer.buffer("[{\"name\":\"milk\",\"quantity\":\"four\"}]")
+        response = apiUtils.updateConsumedIngredientsQuantity(decreaseIngredients).coAwait()
         response.statusCode() shouldBe HttpURLConnection.HTTP_BAD_REQUEST
         response.statusMessage() shouldBe WarehouseMessage.ERROR_WRONG_PARAMETERS.toString()
     }
 
     @Test
     suspend fun restockRouteTest() {
-        val quantity = Json.encodeToString(10)
+        val quantity = Buffer.buffer(Json.encodeToString(Quantity(10)))
+        apiUtils.restock("tea", quantity).coAwait().statusCode() shouldBe HttpURLConnection.HTTP_OK
 
-        apiUtils.restock("tea", "quantity", quantity).send().coAwait().statusCode() shouldBe HttpURLConnection.HTTP_OK
-
-        var response = apiUtils.restock("coffee", "quantity", quantity).send().coAwait()
+        var response = apiUtils.restock("coffee", quantity).coAwait()
         response.statusCode() shouldBe HttpURLConnection.HTTP_NOT_FOUND
         response.statusMessage() shouldBe WarehouseMessage.ERROR_INGREDIENT_NOT_FOUND.toString()
 
-        response = apiUtils.restock("coffee", "quantiti", quantity).send().coAwait()
+        response = apiUtils.restock("tea", Buffer.buffer("[{\"quantity\": \"ten\"}]")).coAwait()
         response.statusCode() shouldBe HttpURLConnection.HTTP_BAD_REQUEST
         response.statusMessage() shouldBe WarehouseMessage.ERROR_WRONG_PARAMETERS.toString()
 
-        response = apiUtils.restock("tea", "quantity", "ten").send().coAwait()
+        response = apiUtils.restock("tea", Buffer.buffer("[{\"quantiti\": \"ten\"}]")).coAwait()
         response.statusCode() shouldBe HttpURLConnection.HTTP_BAD_REQUEST
         response.statusMessage() shouldBe WarehouseMessage.ERROR_WRONG_PARAMETERS.toString()
     }

@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.Serializable
 import server.MongoUtils
 
 class RepositoryImpl(mongoInfo: MongoInfo) : Repository {
@@ -117,4 +118,5 @@ class RepositoryImpl(mongoInfo: MongoInfo) : Repository {
     }
 }
 
+@Serializable
 data class Quantity(val quantity: Int)

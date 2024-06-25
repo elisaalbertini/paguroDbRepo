@@ -5,6 +5,7 @@ import BaseTest
 import application.UpdateQuantity
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import io.vertx.core.buffer.Buffer
 import io.vertx.kotlin.coroutines.coAwait
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.encodeToString
@@ -23,7 +24,7 @@ class StepDefinitionDecreaseIngredientQuantity : BaseTest() {
     ) {
         val decreaseIngredients = Json.encodeToString(listOf(UpdateQuantity(name, quantity.toInt())))
         runBlocking {
-            val res = apiUtils.updateConsumedIngredientsQuantity("ingredients", decreaseIngredients).send().coAwait()
+            val res = apiUtils.updateConsumedIngredientsQuantity(Buffer.buffer(decreaseIngredients)).coAwait()
             actualAnswer =
                 res.statusCode().toString()
             actualMessage = res.statusMessage().toString()

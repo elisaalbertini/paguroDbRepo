@@ -7,6 +7,7 @@ import application.UpdateQuantity
 import domain.Ingredient
 import io.kotest.matchers.shouldBe
 import io.vertx.core.Vertx
+import io.vertx.core.buffer.Buffer
 import io.vertx.kotlin.coroutines.coAwait
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.encodeToString
@@ -26,7 +27,7 @@ class RoutesTesterWrongConnection : BaseTest() {
     suspend fun createIngredientRouteTest() {
         val newIngredient = Json.encodeToString(coffee)
 
-        val response = apiUtils.createIngredient("ingredient", newIngredient).send().coAwait()
+        val response = apiUtils.createIngredient(Buffer.buffer(newIngredient)).coAwait()
         response.statusCode() shouldBe 500
         response.statusMessage() shouldBe WarehouseMessage.ERROR_DB_NOT_AVAILABLE.toString()
     }
@@ -40,7 +41,7 @@ class RoutesTesterWrongConnection : BaseTest() {
         val decreaseIngredients =
             Json.encodeToString(listOf(UpdateQuantity("milk", decreaseMilk), UpdateQuantity("tea", decreaseTea)))
 
-        val response = apiUtils.updateConsumedIngredientsQuantity("quantity", decreaseIngredients).send().coAwait()
+        val response = apiUtils.updateConsumedIngredientsQuantity(Buffer.buffer(decreaseIngredients)).coAwait()
         response.statusCode() shouldBe 500
         response.statusMessage() shouldBe WarehouseMessage.ERROR_DB_NOT_AVAILABLE.toString()
     }
@@ -48,9 +49,9 @@ class RoutesTesterWrongConnection : BaseTest() {
     @Ignore
     @Test
     suspend fun restockRouteTest() {
-        val quantity = Json.encodeToString(10)
+        val quantity = Buffer.buffer(Json.encodeToString(10))
 
-        val response = apiUtils.restock("tea", "quantity", quantity).send().coAwait()
+        val response = apiUtils.restock("tea", quantity).coAwait()
         response.statusCode() shouldBe 500
         response.statusMessage() shouldBe WarehouseMessage.ERROR_DB_NOT_AVAILABLE.toString()
     }

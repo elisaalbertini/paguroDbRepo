@@ -7,5 +7,5 @@
 data class MongoInfo(
     var mongoAddress: String = "mongodb://localhost:27017/",
     val databaseName: String = "Warehouse",
-    val collectionName: String = "Ingredients",
+    val collectionName: String = "Ingredient",
 )

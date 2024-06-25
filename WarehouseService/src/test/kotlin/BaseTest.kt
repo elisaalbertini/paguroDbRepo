@@ -11,18 +11,6 @@ open class BaseTest : AnnotationSpec() {
     protected val notAvailableCoffee = Ingredient(coffee.name, 0)
     protected val ingredients = listOf(milk, tea)
 
-    /*@BeforeAll
-    suspend fun initializeCollection(){
-        /////////////////////
-        val ascendingIndex = Indexes.text("name")
-        MongoClient
-            .create(MongoInfo().mongoAddress)
-            .getDatabase(MongoInfo().databaseName)
-            .getCollection<Ingredient>(MongoInfo().collectionName)
-            .createIndex(ascendingIndex, IndexOptions().unique(true))
-        /////////////////////
-    }*/
-
     @BeforeEach
     suspend fun beforeTest() {
         collection.deleteMany(Filters.empty())
