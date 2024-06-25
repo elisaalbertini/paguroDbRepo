@@ -46,6 +46,6 @@ ktlint {
 
 
 application {
-    mainClass.set("server.Main")
+    mainClass.set("server.MainInit")
 }
 
