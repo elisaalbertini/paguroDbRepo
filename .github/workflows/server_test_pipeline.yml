@@ -38,7 +38,7 @@ jobs:
           npx ts-node ./src/server &
 
       - name: Run Tests
-          working-directory: server
-          run: |
-          sleep 20
-          npm test
+        working-directory: server
+        run: |
+        sleep 20
+        npm test
