@@ -23,6 +23,5 @@ object MainInit {
 
         val vertxServer = Vertx.vertx()
         vertxServer.deployVerticle(Server(MongoInfo(), 8080))
-
     }
 }
