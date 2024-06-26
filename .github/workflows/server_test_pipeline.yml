@@ -1,12 +1,9 @@
-name: Run tests with MongoDB
+name: Run server tests
 
 on:
   workflow_call:
 jobs:
   build:
-    strategy:
-      matrix:
-        java-version: [ 16 ]
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout
@@ -19,7 +16,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: ${{ matrix.java-version }}
+          java-version: 17
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
@@ -40,5 +37,5 @@ jobs:
       - name: Run Tests
         working-directory: server
         run: |
-          sleep 60
+          sleep 120
           npm test

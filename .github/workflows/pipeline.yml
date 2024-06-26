@@ -6,9 +6,6 @@ on:
       - main
       - develop
 jobs:
-  serverTest:
-    name: test server
-    uses: ./.github/workflows/server_test_pipeline.yml
 
   ktlintCheck:
     name: check format kotlin
@@ -23,4 +20,10 @@ jobs:
       - ktlintCheck
     name: test kotlin with MongoDB
     uses: ./.github/workflows/mongodb_pipeline.yml
+
+  serverTest:
+    needs:
+      - tsFormatCheck
+    name: test server
+    uses: ./.github/workflows/server_test_pipeline.yml
 
