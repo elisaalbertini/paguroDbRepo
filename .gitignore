@@ -169,3 +169,6 @@ testem.log
 /tmp
 /out-tsc
 /bazel-out
+
+#generated documentation
+/docs

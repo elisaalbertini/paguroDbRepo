@@ -1,0 +1,24 @@
+name: Typedoc workflow
+on:
+  workflow_call:
+permissions:
+  contents: write
+jobs:
+  build-and-deploy:
+    #concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install and Build
+        run: |
+          npm install
+          npx typedoc ./server/src/*
+        
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ./server/docs # The folder the action should deploy.
+          branch: report
+          target-folder: ./docs/typedoc
