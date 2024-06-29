@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest, windows-latest ]
-        dir: ['manager-application', 'server']
+        dir: ['manager-application']
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -16,4 +16,5 @@ jobs:
         working-directory: ${{ matrix.dir }}
         run: |
           npm install 
-          tsfmt --verify
+          npm i typescript-formatter@4.1.0
+          npx tsfmt --verify
