@@ -7,7 +7,7 @@ jobs:
   build-and-deploy:
     strategy:
       matrix:
-        dir: ['manager-application', 'server']
+        dir: ['server']
     #concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
     steps:
@@ -18,7 +18,7 @@ jobs:
         working-directory: ${{ matrix.dir }}
         run: |
           npm install
-          npx typedoc ./server/src/*
+          npx typedoc ./src/*
         
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
