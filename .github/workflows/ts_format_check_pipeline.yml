@@ -16,4 +16,4 @@ jobs:
         working-directory: ${{ matrix.dir }}
         run: |
           npm install 
-          npx tsfmt --verify
+          tsfmt --verify
