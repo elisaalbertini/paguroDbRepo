@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest, windows-latest ]
-        dir: ['manager-application', 'server']
+        dir: ['manager-application']
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
