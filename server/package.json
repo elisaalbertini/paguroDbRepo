@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "test": "jest",
-    "start": "npx ts-node ./server.ts"
+    "start": "npx ts-node ./src/server.ts"
   },
   "author": "Elisa Albertini and Eleonora Bertoni",
   "license": "MIT",

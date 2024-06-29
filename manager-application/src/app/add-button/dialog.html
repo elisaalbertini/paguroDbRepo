@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Add a new ingredient</h2>
+<mat-dialog-content>
+    <p>
+        <mat-form-field class="form" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" [(ngModel)]="name" minlength="1">
+            <mat-hint>Ex. Sugar</mat-hint>
+            </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Quantity</mat-label>
+            <input type="number" matInput value=1 min="1" max="999" [(ngModel)]="quantity">
+            <mat-hint>Ex. 10</mat-hint>
+        </mat-form-field>
+    </p>
+    <button mat-raised-button (click)="add()" class="add-button">
+        Add
+    </button> 
+    
+</mat-dialog-content>
+

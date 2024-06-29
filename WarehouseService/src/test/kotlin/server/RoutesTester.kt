@@ -51,6 +51,10 @@ class RoutesTester : BaseTest() {
         response = apiUtils.createIngredient(Buffer.buffer("")).coAwait()
         response.statusCode() shouldBe HttpURLConnection.HTTP_BAD_REQUEST
         response.statusMessage() shouldBe WarehouseMessage.ERROR_WRONG_PARAMETERS.toString()
+
+        response = apiUtils.createIngredient(Buffer.buffer(Json.encodeToString(butter))).coAwait()
+        response.statusCode() shouldBe HttpURLConnection.HTTP_BAD_REQUEST
+        response.statusMessage() shouldBe WarehouseMessage.ERROR_WRONG_PARAMETERS.toString()
     }
 
     @Test
@@ -103,6 +107,7 @@ class RoutesTester : BaseTest() {
     @Test
     suspend fun restockRouteTest() {
         val quantity = Buffer.buffer(Json.encodeToString(Quantity(10)))
+
         apiUtils.restock("tea", quantity).coAwait().statusCode() shouldBe HttpURLConnection.HTTP_OK
 
         var response = apiUtils.restock("coffee", quantity).coAwait()
@@ -114,6 +119,10 @@ class RoutesTester : BaseTest() {
         response.statusMessage() shouldBe WarehouseMessage.ERROR_WRONG_PARAMETERS.toString()
 
         response = apiUtils.restock("tea", Buffer.buffer("[{\"quantiti\": \"ten\"}]")).coAwait()
+        response.statusCode() shouldBe HttpURLConnection.HTTP_BAD_REQUEST
+        response.statusMessage() shouldBe WarehouseMessage.ERROR_WRONG_PARAMETERS.toString()
+
+        response = apiUtils.restock("tea", Buffer.buffer(Json.encodeToString(butter))).coAwait()
         response.statusCode() shouldBe HttpURLConnection.HTTP_BAD_REQUEST
         response.statusMessage() shouldBe WarehouseMessage.ERROR_WRONG_PARAMETERS.toString()
     }

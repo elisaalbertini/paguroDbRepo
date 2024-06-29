@@ -5,8 +5,13 @@ import { fromStringToInput, fromStringToArrayInput } from './string-utils';
 
 const http = axios.create({
 	baseURL: 'http://localhost:8080'
-});
-
+})
+/**
+ * This function is used to call the correct microservice and API based on the received RequestMessage. 
+ * It also sends the answer back through the websocket
+	  @param message sent by the client through the websocket
+	@param ws the websocket communication used
+**/
 export function check_service(message: RequestMessage, ws: any) {
 	console.log('received: %s', message);
 	switch (message.client_name) {
@@ -55,12 +60,20 @@ function handleResponse(promise: Promise<any>, ws: WebSocket) {
 		}
 		ws.send(JSON.stringify(msg))
 	}).catch((error) => {
-		const msg: ResponseMessage = {
-			message: error.response.statusText,
-			code: error.response.status,
-			data: ""
+		var msg: ResponseMessage
+		if (error.response == undefined) {
+			msg = {
+				message: "ERROR_SERVER_NOT_AVAILABLE",
+				code: 500,
+				data: ""
+			}
+		} else {
+			msg = {
+				message: error.response.statusText,
+				code: error.response.status,
+				data: ""
+			}
 		}
 		ws.send(JSON.stringify(msg))
 	});
-
 }

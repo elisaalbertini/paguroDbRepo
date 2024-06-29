@@ -1,12 +1,11 @@
 name: Main project workflow
 
 on:
-  push:
+  pull_request:
     branches:
       - main
       - develop
 jobs:
-
   ktlintCheck:
     name: check format kotlin
     uses: ./.github/workflows/ktlint_check_pipeline.yml
@@ -26,4 +25,3 @@ jobs:
       - tsFormatCheck
     name: test server
     uses: ./.github/workflows/server_test_pipeline.yml
-

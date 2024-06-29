@@ -7,6 +7,7 @@ Feature: Interacting with the warehouse
     Examples:
       |name     |quantity |response | message                          |
       |milk     |99       |400      | ERROR_INGREDIENT_ALREADY_EXISTS  |
+      |butter   |-2       |400      | ERROR_WRONG_PARAMETERS            |
       |coffee   |5        |200      | OK                               |
 
   Scenario Outline: Manager wants to restock the <name> in the warehouse
@@ -16,6 +17,7 @@ Feature: Interacting with the warehouse
     Examples:
       |name   |quantity |response | message                    |
       |coffee |10       |404      | ERROR_INGREDIENT_NOT_FOUND |
+      |butter |-2       |400      | ERROR_WRONG_PARAMETERS |
       |tea    |5        |200      | OK                         |
 
   Scenario Outline: System wants to decrease the <name> quantity in the warehouse

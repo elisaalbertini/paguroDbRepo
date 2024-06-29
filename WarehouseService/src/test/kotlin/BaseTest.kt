@@ -8,6 +8,7 @@ open class BaseTest : AnnotationSpec() {
     protected val milk = Ingredient("milk", 99)
     protected val tea = Ingredient("tea", 4)
     protected val coffee = Ingredient("coffee", 1)
+    protected val butter = Ingredient("butter", -2)
     protected val notAvailableCoffee = Ingredient(coffee.name, 0)
     protected val ingredients = listOf(milk, tea)
 

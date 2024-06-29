@@ -79,7 +79,6 @@ function startWebsocket(requestMessage: RequestMessage, code: number, message: s
 		m = JSON.parse(msg)
 		expect(m.code).toBe(code);
 		expect(m.message).toBe(message);
-		console.log(data)
 		expect(m.data).toBe(data);
 		callback()
 

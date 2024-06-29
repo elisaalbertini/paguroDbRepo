@@ -12,7 +12,9 @@ interface WarehouseService {
 
     /**
      * @param ingredient to create
-     * @return the repository response
+     * @return null and WarehouseMessage.ERROR_WRONG_PARAMETERS
+     *      if the quantity passed in the body is less ore equal to 0,
+     *      otherwise it returns the repository response
      */
     suspend fun createIngredient(ingredient: Ingredient): WarehouseServiceResponse<Ingredient>
 
@@ -21,15 +23,17 @@ interface WarehouseService {
      * @return the list of updated ingredients and WarehouseMessage.OK
      *      if all the consumed ingredients are updated,
      *      null and WarehouseMessage.ERROR_INGREDIENT_QUANTITY
-     *          if a quantity is greater than the actual quantity of the consumed ingredient in the warehouse,
+     *      if a quantity is greater than the actual quantity of the consumed ingredient in the warehouse,
      *      null and WarehouseMessage.ERROR_INGREDIENT_NOT_FOUND
-     *          if one consumed ingredient is not found in the warehouse
+     *      if one consumed ingredient is not found in the warehouse
      */
     suspend fun updateConsumedIngredientsQuantity(ingredients: List<UpdateQuantity>): WarehouseServiceResponse<List<Ingredient>>
 
     /**
      * @param ingredient information needed to restock
-     * @return the repository response
+     * @return null and WarehouseMessage.ERROR_WRONG_PARAMETERS
+     *      if the quantity passed in the body is less ore equal to 0,
+     *      otherwise it returns the repository response
      */
     suspend fun restock(ingredient: UpdateQuantity): WarehouseServiceResponse<Ingredient>
 
