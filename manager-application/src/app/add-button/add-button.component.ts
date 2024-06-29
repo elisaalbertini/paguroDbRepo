@@ -34,7 +34,8 @@ export class AddButtonComponent {
 	@Input()
 	ws!: WebSocket;
 
-	openDialog() {
+	openDialog  () 
+	{
 		this.dialog.open(Dialog, {
 			data: {
 				ws: this.ws,
