@@ -16,6 +16,5 @@ jobs:
         working-directory: ${{ matrix.dir }}
         run: |
           npm install 
-          npm i typescript-formatter@4.1.0
-          npm install
+          npm install -g typescript-formatter
           npx tsfmt --verify
