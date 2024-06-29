@@ -7,7 +7,7 @@ jobs:
   build-and-deploy:
     strategy:
       matrix:
-        dir: ['server']
+        dir: ['server', 'manager-application']
     #concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
     steps:
@@ -23,6 +23,6 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./server/docs # The folder the action should deploy.
+          folder: ./${{ matrix.dir }}/docs # The folder the action should deploy.
           branch: report
-          target-folder: ./docs/typedoc
+          target-folder: ./docs/typedoc/${{ matrix.dir }}
