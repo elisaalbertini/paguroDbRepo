@@ -1,5 +1,4 @@
 {
- "include": ["src/**/*"],
   "exclude": ["**/*.spec.ts"],
   "compileOnSave": false,
   "compilerOptions": {
