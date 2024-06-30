@@ -1,4 +1,6 @@
 {
+ "include": ["src/**/*"],
+  "exclude": ["**/*.spec.ts"],
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
