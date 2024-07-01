@@ -51,7 +51,7 @@ jobs:
         working-directory: server
         run: |
           sleep 50
-          npx jest test/test-server.test.ts
+          npx jest test/test-server.test.ts --coverage
         
       - name: Run Warehouse Microservice
         run: |
@@ -62,7 +62,7 @@ jobs:
         working-directory: server
         run: |
           sleep 50
-          npx jest test/test-check-service.test.ts
+          npx jest test/test-check-service.test.ts --coverage
       #########################
 
       - name: SonarQube Scan
