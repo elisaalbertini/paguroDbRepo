@@ -14,32 +14,33 @@ let wss: WebSocketServer;
 const app = express();
 let server: Server<typeof IncomingMessage, typeof ServerResponse>
 
-afterEach(() => { 
-    ws.close()
-    server.close() })
-beforeEach(() => {  
-    server = createServer(app);
-    wss = new WebSocketServer({ server });
-    console.log("dai")
+afterEach(() => {
+	ws.close()
+	server.close()
+})
+beforeEach(() => {
+	server = createServer(app);
+	wss = new WebSocketServer({ server });
+	console.log("dai")
 })
 
 // read
 test('Get all Ingredient Test - 200', done => {
-    const output = JSON.stringify([{ name: "milk", quantity: 95 }, { name: "tea", quantity: 0 }])
-    const requestMessage = createRequestMessage(WarehouseServiceMessages.GET_ALL_INGREDIENT, '')
-    createConnectionAndCall(requestMessage, 200, 'OK', output, done)
-});
-
-test('Get all Available Ingredient Test - 200', done => {
-    const output = JSON.stringify([{ name: "milk", quantity: 95 }])
-    const requestMessage = createRequestMessage(WarehouseServiceMessages.GET_ALL_AVAILABLE_INGREDIENT, '')
-    createConnectionAndCall(requestMessage, 200, 'OK', output, done)
+	const output = JSON.stringify([{ name: "milk", quantity: 95 }, { name: "tea", quantity: 0 }])
+	const requestMessage = createRequestMessage(WarehouseServiceMessages.GET_ALL_INGREDIENT, '')
+	createConnectionAndCall(requestMessage, 200, 'OK', output, done)
 });
 
 test('Get all Available Ingredient Test - 200', done => {
 	const output = JSON.stringify([{ name: "milk", quantity: 95 }])
-    const requestMessage = createRequestMessage(WarehouseServiceMessages.GET_ALL_AVAILABLE_INGREDIENT, '')
-    createConnectionAndCall(requestMessage, 200, 'OK', output, done)
+	const requestMessage = createRequestMessage(WarehouseServiceMessages.GET_ALL_AVAILABLE_INGREDIENT, '')
+	createConnectionAndCall(requestMessage, 200, 'OK', output, done)
+});
+
+test('Get all Available Ingredient Test - 200', done => {
+	const output = JSON.stringify([{ name: "milk", quantity: 95 }])
+	const requestMessage = createRequestMessage(WarehouseServiceMessages.GET_ALL_AVAILABLE_INGREDIENT, '')
+	createConnectionAndCall(requestMessage, 200, 'OK', output, done)
 });
 
 
@@ -94,23 +95,23 @@ function createRequestMessage(request: WarehouseServiceMessages, input: string):
 	}
 }
 
-function createConnectionAndCall(requestMessage: RequestMessage, code: number, message:string, output:string, callback: jest.DoneCallback){
-    wss.on('connection', (ws) => {
-        ws.on('error', console.error);
-    
-        ws.on('message', (msg: string) => {
-            m = JSON.parse(msg)
-            expect(m.code).toBe(code);
-            expect(m.message).toBe(message);
-            expect(m.data).toBe(output);
-            callback()
-        });
+function createConnectionAndCall(requestMessage: RequestMessage, code: number, message: string, output: string, callback: jest.DoneCallback) {
+	wss.on('connection', (ws) => {
+		ws.on('error', console.error);
 
-    });
-    server.listen(8081, () => console.log('listening on port :8081'));
+		ws.on('message', (msg: string) => {
+			m = JSON.parse(msg)
+			expect(m.code).toBe(code);
+			expect(m.message).toBe(message);
+			expect(m.data).toBe(output);
+			callback()
+		});
 
-    ws = new WebSocket('ws://localhost:8081');
-    ws.on('open', () => {
-       check_service(requestMessage, ws)
-    })
+	});
+	server.listen(8081, () => console.log('listening on port :8081'));
+
+	ws = new WebSocket('ws://localhost:8081');
+	ws.on('open', () => {
+		check_service(requestMessage, ws)
+	})
 }
