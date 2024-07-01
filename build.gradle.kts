@@ -14,7 +14,7 @@ sonar {
         property("systemProp.sonar.coverage.exclusions")
         property("systemProp.sonar.coverage.jacoco.xmlReportPaths")
         property("systemProp.sonar.exclusion")
-        property("sonar.javascript.lcov.reportPaths")
+        property("systemProp.sonar.javascript.lcov.reportPaths")
         property("systemProp.sonar.sources")
     }
 }
