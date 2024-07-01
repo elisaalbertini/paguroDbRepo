@@ -1,4 +1,4 @@
-import WebSocket, { WebSocketServer } from 'ws';
+import WebSocket from 'ws';
 import { Service } from '../src/utils/service'
 import { RequestMessage, ResponseMessage, WarehouseServiceMessages } from '../src/utils/messages';
 
