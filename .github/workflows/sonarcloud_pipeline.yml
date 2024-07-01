@@ -50,7 +50,7 @@ jobs:
       - name: Run Tests websocket
         working-directory: server
         run: |
-          sleep 120
+          sleep 50
           npx jest test/test-server.test.ts
         
       - name: Run Warehouse Microservice
@@ -61,7 +61,7 @@ jobs:
       - name: Run Tests checkservice
         working-directory: server
         run: |
-          sleep 120
+          sleep 50
           npx jest test/test-check-service.test.ts
       #########################
 
