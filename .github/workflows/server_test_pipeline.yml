@@ -34,8 +34,19 @@ jobs:
           npm install
           npx ts-node ./src/server &
 
-      - name: Run Tests
+      - name: Run Tests websocket
         working-directory: server
         run: |
           sleep 120
-          npm test
+          npm test test/test-server.test.ts
+        
+      - name: Run Warehouse Microservice
+        run: |
+        gradle --stop
+        ./gradlew run &
+
+      - name: Run Tests checkservice
+        working-directory: server
+        run: |
+          sleep 120
+          npm test test/test-check-service.test.ts
