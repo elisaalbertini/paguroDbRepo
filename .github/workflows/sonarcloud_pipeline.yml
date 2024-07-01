@@ -14,8 +14,8 @@ jobs:
     name: Build and analyze
     runs-on: ubuntu-latest
     steps:
-      name: check format kotlin
-      uses: ./.github/workflows/ts_coverage.yml
+      - name: check format kotlin
+        uses: ./.github/workflows/ts_coverage.yml
 
       #########################
       - name: Grant execute permission for gradlew
