@@ -10,7 +10,7 @@ on:
       - main
       - develop
 jobs:
-  sonarcloud:
+  setup:
     - name: Setup java  
       uses: actions/checkout@v4
     - name: Setup java
