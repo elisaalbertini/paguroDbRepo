@@ -32,38 +32,8 @@ jobs:
           ./gradlew jacocoTestReport
 
       #########################
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Run Warehouse Microservice
-        run: ./gradlew run &
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '>=20.10.0'
-      - name: Start server
-        working-directory: server
-        run: |
-          npm install
-          npx ts-node ./src/server &
-
-      - name: Run Tests websocket
-        working-directory: server
-        run: |
-          sleep 50
-          npx jest test/test-server.test.ts --coverage
-        
-      - name: Run Warehouse Microservice
-        run: |
-          gradle --stop
-          ./gradlew run &
-
-      - name: Run Tests checkservice
-        working-directory: server
-        run: |
-          sleep 50
-          npx jest test/test-check-service.test.ts --coverage
-      #########################
+      - name: coverage ts
+        uses: ./.github/workflows/ts_coverage.yml
 
       - name: SonarQube Scan
         run: |
