@@ -11,7 +11,8 @@ on:
       - develop
 jobs:
   sonarcloud:
-    - uses: actions/checkout@v4
+    - name: Setup java  
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - name: Setup java
