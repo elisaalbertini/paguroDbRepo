@@ -17,8 +17,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: setup
-        uses: ./.github/workflows/ts_coverage.yml
-      #########################
+        uses: ./.github/workflows/setup
+
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
