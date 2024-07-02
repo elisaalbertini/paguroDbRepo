@@ -10,18 +10,14 @@ on:
       - main
       - develop
 jobs:
-  setup:
-    #runs-on: ubuntu-latest
-    steps:
-      - name: setup
-        uses: ./.github/workflows/ts_coverage.yml
   sonarcloud:
     name: Build and analyze
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - needs: setup
+      - name: setup
+        uses: ./.github/workflows/ts_coverage.yml
       #########################
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
