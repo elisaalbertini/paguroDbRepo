@@ -33,7 +33,7 @@ jobs:
 
       #########################
       - id: foo
-        uses: elisaalbertini/paguroDbRepo/.github/actions@main
+        uses: elisaalbertini/paguroDbRepo/.github/serverAction@main
       #########################
 
       - name: SonarQube Scan
