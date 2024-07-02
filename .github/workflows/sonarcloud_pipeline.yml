@@ -33,7 +33,7 @@ jobs:
 
       #########################
       - id: foo
-        uses: DistributedCafe/DistributedCafeProject/.github/actions@main
+        uses: elisaalbertini/paguroDbRepo/@main
       #########################
 
       - name: SonarQube Scan
