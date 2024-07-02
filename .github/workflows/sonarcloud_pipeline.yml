@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup
-        uses: elisaalbertini/paguroDbRepo/.github/setupAction@${{ github.head_ref || github.ref_name }} 
+        uses: elisaalbertini/paguroDbRepo/.github/setupAction@${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
       
       - name: Gradle (build and coverage)
         run: |
@@ -23,7 +23,7 @@ jobs:
           ./gradlew jacocoTestReport
 
       - name: Coverage server
-        uses: elisaalbertini/paguroDbRepo/.github/serverTest@${{ github.head_ref || github.ref_name }} 
+        uses: elisaalbertini/paguroDbRepo/.github/serverTest@${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
         with:
           command: '--coverage'
 
