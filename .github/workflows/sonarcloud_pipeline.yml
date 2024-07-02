@@ -11,7 +11,7 @@ on:
       - develop
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
     steps:
       - name: setup
         uses: ./.github/workflows/ts_coverage.yml
