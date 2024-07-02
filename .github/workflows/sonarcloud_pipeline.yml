@@ -33,7 +33,7 @@ jobs:
 
       #########################
       - id: foo
-        uses: ./.github/actions/prova.yml@v1
+        uses: DistributedCafe/DistributedCafeProject@main
       #########################
 
       - name: SonarQube Scan
