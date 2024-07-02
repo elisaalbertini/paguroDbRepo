@@ -33,7 +33,7 @@ jobs:
 
       #########################
       - id: foo
-        uses: ./.github/workflows/prova.yml
+        uses: action/./.github/workflows/prova.yml
       #########################
 
       - name: SonarQube Scan
