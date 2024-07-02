@@ -18,8 +18,8 @@ runs:
       with:
         java-version: 18
         distribution: 'temurin'
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+    #- name: Grant execute permission for gradlew
+    #  run: chmod +x gradlew
 
     - name: Run Warehouse Microservice
       run: ./gradlew run &
