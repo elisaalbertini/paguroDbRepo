@@ -23,7 +23,9 @@ jobs:
           ./gradlew jacocoTestReport
 
       - name: Coverage server
-        uses: elisaalbertini/paguroDbRepo/.github/serverAction@main
+        uses: elisaalbertini/paguroDbRepo/.github/serverTest@main
+        with:
+          command: '--coverage'
 
       - name: SonarQube Scan
         run: |
