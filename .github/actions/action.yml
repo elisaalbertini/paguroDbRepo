@@ -18,11 +18,13 @@ runs:
       with:
         java-version: 18
         distribution: 'temurin'
-    #- name: Grant execute permission for gradlew
-    #  run: chmod +x gradlew
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      shell: bash
 
     - name: Run Warehouse Microservice
       run: ./gradlew run &
+      shell: bash
 
     - uses: actions/setup-node@v4
       with:
@@ -32,21 +34,25 @@ runs:
       run: |
         npm install
         npx ts-node ./src/server &
+      shell: bash
 
     - name: Run Tests websocket
       working-directory: server
       run: |
         sleep 50
         npx jest test/test-server.test.ts --coverage
+      shell: bash
       
     - name: Run Warehouse Microservice
       run: |
         gradle --stop
         ./gradlew run &
+      shell: bash
 
     - name: Run Tests checkservice
       working-directory: server
       run: |
         sleep 50
         npx jest test/test-check-service.test.ts --coverage
+      shell: bash
 
