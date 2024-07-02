@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup
-        uses: elisaalbertini/paguroDbRepo/.github/setupAction@actions
+        uses: elisaalbertini/paguroDbRepo/.github/setupAction@${{ github.head_ref || github.ref_name }} 
       - name: Run tests
-        uses: elisaalbertini/paguroDbRepo/.github/serverTest@actions
+        uses: elisaalbertini/paguroDbRepo/.github/serverTest@${{ github.head_ref || github.ref_name }} 
       
