@@ -1,7 +1,7 @@
 name: Main project workflow
 
 on:
-  pull_request:
+  push:
     branches:
       - main
       - develop
@@ -25,3 +25,15 @@ jobs:
       - tsFormatCheck
     name: test server
     uses: ./.github/workflows/server_test_pipeline.yml
+
+  ordersServiceTest:
+    needs:
+      - tsFormatCheck
+    name: test orders-service
+    uses: ./.github/workflows/orders_service_test_pipeline.yml
+
+  menuServiceTest:
+    needs:
+      - tsFormatCheck
+    name: test menu-service
+    uses: ./.github/workflows/menu_service_test_pipeline.yml
