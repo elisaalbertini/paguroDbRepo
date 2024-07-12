@@ -1,4 +1,4 @@
-name: Run menu-service tests
+name: Run orders-service tests
 
 on:
  push:
@@ -9,7 +9,7 @@ jobs:
       - name: Setup
         uses: elisaalbertini/paguroDbRepo/.github/setupAction@main
       - name: Run Tests
-        working-directory: menu-service
+        working-directory: orders-service
         run: |
           npm install
           npx jest 
