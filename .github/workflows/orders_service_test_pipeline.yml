@@ -1,7 +1,7 @@
 name: Run orders-service tests
 
 on:
- push:
+ workflow_call:
 jobs:
   build:
     runs-on: ubuntu-latest
