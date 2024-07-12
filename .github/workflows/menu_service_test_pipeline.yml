@@ -1,0 +1,14 @@
+name: Run menu-service tests
+
+on:
+ push:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup
+        uses: elisaalbertini/paguroDbRepo/.github/setupAction@main
+      - name: Run Tests websocket
+        working-directory: server
+        run: npx jest 
+        shell: bash
