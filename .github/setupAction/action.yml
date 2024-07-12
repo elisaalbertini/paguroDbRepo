@@ -13,12 +13,6 @@ runs:
         distribution: 'temurin'
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.11.0
-      with:
-        mongodb-db: 'Warehouse'
-      with:
-        mongodb-db: 'Orders'
-      with:
-        mongodb-db: 'Menu'
     - uses: actions/setup-node@v4
       with:
         node-version: '>=20.10.0'
