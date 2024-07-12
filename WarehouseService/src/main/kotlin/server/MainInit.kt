@@ -1,10 +1,7 @@
 package server
 
 import MongoInfo
-import com.mongodb.client.model.Filters
-import domain.Ingredient
 import io.vertx.core.Vertx
-import kotlinx.coroutines.runBlocking
 
 /**
  * Entry point of the service
