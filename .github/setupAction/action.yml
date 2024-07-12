@@ -14,15 +14,7 @@ runs:
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.11.0
       with:
-        mongodb-db: 'Warehouse'
-    - name: Start MongoDB
-      uses: supercharge/mongodb-github-action@1.11.0
-      with:
-        mongodb-db: 'Menu'
-    - name: Start MongoDB
-      uses: supercharge/mongodb-github-action@1.11.0
-      with:
-        mongodb-db: 'Orders'
+        mongodb-db: 'Warehouse', 'Orders', 'Menu'
     - uses: actions/setup-node@v4
       with:
         node-version: '>=20.10.0'
