@@ -9,7 +9,7 @@ jobs:
       - name: Setup
         uses: elisaalbertini/paguroDbRepo/.github/setupAction@main
       - name: Run Tests websocket
-        working-directory: server
+        working-directory: menu-service
         run: |
           npm install
           npx jest 
