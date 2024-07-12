@@ -1,12 +1,12 @@
 name: Run server tests
 
 on:
-  workflow_call:
+ push:
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Setup
-        uses: DistributedCafe/DistributedCafeProject/.github/setupAction@server-test
+        uses: elisaalbertini/paguroDbRepo/.github/setupAction@main
       - name: Run tests
-        uses: DistributedCafe/DistributedCafeProject/.github/serverTest@server-test
+        uses: elisaalbertini/paguroDbRepo/.github/serverTest@main

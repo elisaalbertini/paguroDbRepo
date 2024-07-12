@@ -21,26 +21,25 @@ runs:
         npx ts-node ./src/server &
       shell: bash
 
+    - name: Start orders-service
+      working-directory: orders-service
+      run: |
+        npm install
+        npx ts-node ./src/app &
+      shell: bash
+
+    - name: Start menu-service
+      working-directory: menu-service
+      run: |
+        npm install
+        npx ts-node ./src/app &
+      shell: bash
+
     - name: Run Tests websocket
       working-directory: server
       run: |
         sleep 50
-        npx jest test/test-server.test.ts $INPUT
-      shell: bash
-      env:
-        INPUT: ${{ inputs.command }}
-      
-    - name: Restart Warehouse microservice
-      run: |
-        gradle --stop
-        ./gradlew run &
-      shell: bash
-
-    - name: Run Tests checkservice
-      working-directory: server
-      run: |
-        sleep 50
-        npx jest test/test-check-service.test.ts $INPUT
+        npx jest $INPUT
       shell: bash
       env:
         INPUT: ${{ inputs.command }}
