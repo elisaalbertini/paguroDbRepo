@@ -4,10 +4,7 @@ on:
  workflow_call:
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [ ubuntu-latest, windows-latest ]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - name: Setup
         uses: elisaalbertini/paguroDbRepo/.github/setupAction@main
