@@ -1,2 +1,2 @@
 # DistributedCafeProject
-Distributed System and Software Process Engineering Project.
+Distributed System and Software Process Engineering Project

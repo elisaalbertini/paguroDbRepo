@@ -5,7 +5,7 @@ import { Service } from './service';
  */
 export interface RequestMessage {
 	client_name: Service
-	client_request: WarehouseServiceMessages
+	client_request: string
 	input: string
 }
 

@@ -1,6 +1,9 @@
-name: Typedoc workflow
+name: Deploy Typedoc
 on:
   push:
+    branches:
+      - main
+      - develop
 permissions:
   contents: write
 jobs:
@@ -8,7 +11,6 @@ jobs:
     strategy:
       matrix:
         dir: ['server', 'manager-application']
-    #concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,6 +25,6 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./${{ matrix.dir }}/docs # The folder the action should deploy.
+          folder: ./${{ matrix.dir }}/docs
           branch: report
           target-folder: ./docs/typedoc/${{ matrix.dir }}

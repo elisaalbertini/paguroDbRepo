@@ -16,5 +16,6 @@ sonar {
         property("systemProp.sonar.exclusion")
         property("systemProp.sonar.javascript.lcov.reportPaths")
         property("systemProp.sonar.sources")
+
     }
 }

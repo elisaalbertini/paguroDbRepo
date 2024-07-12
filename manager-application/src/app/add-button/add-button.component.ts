@@ -86,7 +86,7 @@ export class Dialog {
 		}
 		const request: RequestMessage = {
 			client_name: Service.WAREHOUSE,
-			client_request: WarehouseServiceMessages.CREATE_INGREDIENT,
+			client_request: WarehouseServiceMessages.CREATE_INGREDIENT.toString(),
 			input: JSON.stringify(input)
 		}
 		const closeDialog = () => {

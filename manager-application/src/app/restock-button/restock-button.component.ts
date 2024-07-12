@@ -87,7 +87,7 @@ export class Dialog {
 			}
 			const request: RequestMessage = {
 				client_name: Service.WAREHOUSE,
-				client_request: WarehouseServiceMessages.RESTOCK_INGREDIENT,
+				client_request: WarehouseServiceMessages.RESTOCK_INGREDIENT.toString(),
 				input: JSON.stringify(input)
 			}
 			data.ws.send(JSON.stringify(request))

@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup
-        uses: ./.github/setupAction/action.yml
+        uses: DistributedCafe/DistributedCafeProject/.github/setupAction@server-test
       
       - name: Gradle (build and coverage)
         run: |
@@ -23,7 +23,7 @@ jobs:
           ./gradlew jacocoTestReport
 
       - name: Coverage server
-        uses: ./.github/serverTest/action.yml
+        uses: DistributedCafe/DistributedCafeProject/.github/serverTest@server-test
         with:
           command: '--coverage'
 

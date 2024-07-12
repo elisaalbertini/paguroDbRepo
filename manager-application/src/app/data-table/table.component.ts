@@ -45,7 +45,7 @@ export class TableComponent {
 		let ingredients: Ingredient[]
 		const initialRequest: RequestMessage = {
 			client_name: Service.WAREHOUSE,
-			client_request: WarehouseServiceMessages.GET_ALL_INGREDIENT,
+			client_request: WarehouseServiceMessages.GET_ALL_INGREDIENT.toString(),
 			input: ''
 		}
 		this.ws.onopen = function() {
