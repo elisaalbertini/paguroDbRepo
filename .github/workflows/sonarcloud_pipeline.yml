@@ -26,6 +26,8 @@ jobs:
         uses: elisaalbertini/paguroDbRepo/.github/serverTest@main
       
       - name: Run Tests menu-service
+        needs: 
+          - Coverage server
         working-directory: menu-service
         run: |
           npm install
@@ -33,6 +35,9 @@ jobs:
         shell: bash
       
       - name: Run Tests orders-service
+        needs: 
+          - Run Tests menu-service
+          - Coverage server
         working-directory: orders-service
         run: |
           npm install
@@ -40,6 +45,10 @@ jobs:
         shell: bash
 
       - name: SonarQube Scan
+        needs: 
+          - Run Tests orders-service
+          - Run Tests menu-service
+          - Coverage server
         run: |
           chmod +x gradlew
           ./gradlew build sonar
