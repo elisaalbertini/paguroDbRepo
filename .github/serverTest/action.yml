@@ -39,8 +39,6 @@ runs:
       working-directory: server
       run: |
         sleep 50
-        npx jest $INPUT --runInBand
+        npx jest --runInBand
       shell: bash
-      env:
-        INPUT: ${{ inputs.command }}
 
