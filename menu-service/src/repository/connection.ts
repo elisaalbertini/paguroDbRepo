@@ -15,16 +15,16 @@ const client: mongoDB.MongoClient = new mongoDB.MongoClient(DB_CONN_STRING)
  */
 export async function getMenuItems() {
 
-    await client.connect()
+	await client.connect()
 
-    return client.db(DB_NAME).collection<Item>(COLLECTION_NAME)
+	return client.db(DB_NAME).collection<Item>(COLLECTION_NAME)
 }
 
 /**
  * Closes the connection
  */
 export function closeMongoClient() {
-    client.close()
+	client.close()
 }
 
 

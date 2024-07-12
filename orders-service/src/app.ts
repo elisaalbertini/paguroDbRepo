@@ -11,6 +11,6 @@ app.use('/orders', ordersRouter)
 let PORT = 8090
 
 export let server = app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+	console.log(`Server running on http://localhost:${PORT}`);
 });
 

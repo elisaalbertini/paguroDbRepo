@@ -15,8 +15,8 @@ type ServiceResponse<T> = { data?: T, message: MenuMessage };
  * @returns a Promise with the Service Response containing the new Item data and the message returned by the repository 
  */
 export async function addNewItem(name: string, price: number, recipe: IngredientInRecipe[]): Promise<ServiceResponse<Item>> {
-    let res = await repository.createItem(name, price, recipe)
-    return { data: res.data, message: res.message }
+	let res = await repository.createItem(name, price, recipe)
+	return { data: res.data, message: res.message }
 
 }
 
@@ -26,6 +26,6 @@ export async function addNewItem(name: string, price: number, recipe: Ingredient
  * @returns a Promise with the Service Response containing the searched Item data and the message returned by the repository 
  */
 export async function getItemByName(name: string): Promise<ServiceResponse<Item>> {
-    let res = await repository.getItemByName(name)
-    return { data: res.data, message: res.message }
+	let res = await repository.getItemByName(name)
+	return { data: res.data, message: res.message }
 }

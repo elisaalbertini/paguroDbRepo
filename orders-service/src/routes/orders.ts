@@ -11,15 +11,15 @@ var router = express.Router();
  * POST '/orders' API handles the addition of a new Order delegating to the service.
  */
 router.post('/', async (req: Request, res: Response) => {
-    let order = req.body
+	let order = req.body
 
-    try {
-        assertEquals<NewOrder>(order)
-        let service_res = await service.addNewOrder(order.customerContact, order.price, order.type, order.items)
-        sendResponse(res, service_res.message, service_res.data)
-    } catch (error) {
-        sendResponse(res, OrdersMessage.ERROR_WRONG_PARAMETERS, {})
-    }
+	try {
+		assertEquals<NewOrder>(order)
+		let service_res = await service.addNewOrder(order.customerContact, order.price, order.type, order.items)
+		sendResponse(res, service_res.message, service_res.data)
+	} catch (error) {
+		sendResponse(res, OrdersMessage.ERROR_WRONG_PARAMETERS, {})
+	}
 
 });
 
@@ -27,28 +27,28 @@ router.post('/', async (req: Request, res: Response) => {
  * GET '/orders' API handles the retrieval of all the Orders delegating to the service
  */
 router.get('/', async (req: Request, res: Response) => {
-    let service_res = await service.getAllOrders()
-    sendResponse(res, service_res.message, service_res.data)
+	let service_res = await service.getAllOrders()
+	sendResponse(res, service_res.message, service_res.data)
 })
 
 function sendResponse(res: Response, message: string, data: any) {
-    res.statusMessage = message
-    res.statusCode = serviceMessageToCode(res.statusMessage)
-    res.json(data)
+	res.statusMessage = message
+	res.statusCode = serviceMessageToCode(res.statusMessage)
+	res.json(data)
 }
 
 function serviceMessageToCode(service_message: string) {
-    switch (service_message) {
-        case OrdersMessage.OK: {
-            return StatusCodes.OK
-        }
-        case OrdersMessage.EMPTY_ORDERS_DB: {
-            return StatusCodes.NOT_FOUND
-        }
-        default: {
-            return StatusCodes.BAD_REQUEST
-        }
-    }
+	switch (service_message) {
+		case OrdersMessage.OK: {
+			return StatusCodes.OK
+		}
+		case OrdersMessage.EMPTY_ORDERS_DB: {
+			return StatusCodes.NOT_FOUND
+		}
+		default: {
+			return StatusCodes.BAD_REQUEST
+		}
+	}
 
 }
 

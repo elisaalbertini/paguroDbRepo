@@ -14,16 +14,16 @@ const client: mongoDB.MongoClient = new mongoDB.MongoClient(DB_CONN_STRING)
  */
 export async function getOrdersCollection() {
 
-    await client.connect()
+	await client.connect()
 
-    return client.db(DB_NAME).collection(COLLECTION_NAME)
+	return client.db(DB_NAME).collection(COLLECTION_NAME)
 }
 
 /**
  * Closes the connection
  */
 export function closeMongoClient() {
-    client.close()
+	client.close()
 }
 
 

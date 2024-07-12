@@ -1,4 +1,4 @@
-import { InsertOrder, Order, OrderItem, OrderType } from "../domain/order";
+import { Order, OrderItem, OrderType } from "../domain/order";
 import { OrdersMessage } from "../orders-message";
 import * as repository from "../repository/repository";
 
@@ -16,8 +16,8 @@ type ServiceResponse<T> = { data?: T, message: OrdersMessage };
  * @returns a Promise with the Service Response containing the new Order data and an OK message 
  */
 export async function addNewOrder(customerContact: string, price: number, type: OrderType, items: OrderItem[]): Promise<ServiceResponse<Order>> {
-    let res = await repository.createOrder(customerContact, price, type, items)
-    return { data: res.data, message: res.message }
+	let res = await repository.createOrder(customerContact, price, type, items)
+	return { data: res.data, message: res.message }
 
 }
 
@@ -26,6 +26,6 @@ export async function addNewOrder(customerContact: string, price: number, type: 
  * @returns all the received orders
  */
 export async function getAllOrders(): Promise<ServiceResponse<Order[]>> {
-    let res = await repository.getAllOrders()
-    return { data: res.data, message: res.message }
+	let res = await repository.getAllOrders()
+	return { data: res.data, message: res.message }
 }

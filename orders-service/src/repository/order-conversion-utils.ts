@@ -10,13 +10,13 @@ import { OrderItem, OrderType, OrderState, InsertOrder, Order } from "../domain/
  * @returns the order to insert in the database, the id is not provided
  */
 export function toInsertOrder(customerContact: string, price: number, type: OrderType, state: OrderState, items: OrderItem[]): InsertOrder {
-    return {
-        customerContact: customerContact,
-        price: price,
-        type: type,
-        state: state,
-        items: items
-    }
+	return {
+		customerContact: customerContact,
+		price: price,
+		type: type,
+		state: state,
+		items: items
+	}
 }
 
 /**
@@ -30,14 +30,14 @@ export function toInsertOrder(customerContact: string, price: number, type: Orde
  * @returns the converted Order
  */
 export function fromMongoOrderToOrder(id: ObjectId, customerContact: string, price: number, type: OrderType, state: OrderState, items: OrderItem[]): Order {
-    return {
-        _id: id.toString(),
-        customerContact: customerContact,
-        price: price,
-        type: type,
-        state: state,
-        items: items
-    }
+	return {
+		_id: id.toString(),
+		customerContact: customerContact,
+		price: price,
+		type: type,
+		state: state,
+		items: items
+	}
 }
 
 /**
@@ -46,19 +46,19 @@ export function fromMongoOrderToOrder(id: ObjectId, customerContact: string, pri
  * @returns the converted InsertOrder
  */
 export function removeIndexOrder(order: Order): InsertOrder {
-    return toInsertOrder(order.customerContact, order.price, order.type, order.state, order.items)
+	return toInsertOrder(order.customerContact, order.price, order.type, order.state, order.items)
 }
 
 /**
  * This interface represents the Order Document used by Mongo
  */
 export interface MongoOrder {
-    _id: ObjectId,
-    customerContact: string,
-    price: number,
-    type: OrderType,
-    state: OrderState,
-    items: OrderItem[]
+	_id: ObjectId,
+	customerContact: string,
+	price: number,
+	type: OrderType,
+	state: OrderState,
+	items: OrderItem[]
 }
 
 

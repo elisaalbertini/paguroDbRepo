@@ -21,14 +21,14 @@ let collection = mongoConnection.getOrdersCollection()
  */
 export async function createOrder(customerContact: string, price: number, type: OrderType, items: OrderItem[]): Promise<RepositoryResponse<Order>> {
 
-    let ordersCollection = await collection
+	let ordersCollection = await collection
 
-    let newOrder = toInsertOrder(customerContact, price, type, OrderState.PENDING, items)
+	let newOrder = toInsertOrder(customerContact, price, type, OrderState.PENDING, items)
 
-    let promise = await ordersCollection.insertOne(newOrder)
-    let order = fromMongoOrderToOrder(promise.insertedId, customerContact, price, type, OrderState.PENDING, items)
+	let promise = await ordersCollection.insertOne(newOrder)
+	let order = fromMongoOrderToOrder(promise.insertedId, customerContact, price, type, OrderState.PENDING, items)
 
-    return { data: order, message: OrdersMessage.OK };
+	return { data: order, message: OrdersMessage.OK };
 
 }
 
@@ -38,13 +38,13 @@ export async function createOrder(customerContact: string, price: number, type: 
  */
 export async function getAllOrders(): Promise<RepositoryResponse<Order[]>> {
 
-    let ordersCollection = await collection
-    let mongoOrders = await ordersCollection.find().toArray() as MongoOrder[]
-    let orders = mongoOrders.map((o) => fromMongoOrderToOrder(o._id, o.customerContact, o.price, o.type, o.state, o.items))
+	let ordersCollection = await collection
+	let mongoOrders = await ordersCollection.find().toArray() as MongoOrder[]
+	let orders = mongoOrders.map((o) => fromMongoOrderToOrder(o._id, o.customerContact, o.price, o.type, o.state, o.items))
 
-    if (orders.length > 0) {
-        return { data: orders, message: OrdersMessage.OK }
-    } else {
-        return { data: orders, message: OrdersMessage.EMPTY_ORDERS_DB };
-    }
+	if (orders.length > 0) {
+		return { data: orders, message: OrdersMessage.OK }
+	} else {
+		return { data: orders, message: OrdersMessage.EMPTY_ORDERS_DB };
+	}
 }

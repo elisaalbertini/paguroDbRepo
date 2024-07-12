@@ -19,21 +19,21 @@ const collection = mongoConnection.getMenuItems()
  */
 export async function createItem(name: string, price: number, recipe: IngredientInRecipe[]): Promise<RepositoryResponse<Item>> {
 
-    const items = await collection
-    const correctName = name.replace(/ /g, "_");
+	const items = await collection
+	const correctName = name.replace(/ /g, "_");
 
-    const menuItem: Item = {
-        name: correctName,
-        price: price,
-        recipe: recipe
-    }
+	const menuItem: Item = {
+		name: correctName,
+		price: price,
+		recipe: recipe
+	}
 
-    try {
-        await items.insertOne(menuItem, { forceServerObjectId: true })
-        return { data: menuItem, message: MenuMessage.OK };
-    } catch (error) {
-        return { message: MenuMessage.ERROR_ITEM_ALREADY_EXISTS };
-    }
+	try {
+		await items.insertOne(menuItem, { forceServerObjectId: true })
+		return { data: menuItem, message: MenuMessage.OK };
+	} catch (error) {
+		return { message: MenuMessage.ERROR_ITEM_ALREADY_EXISTS };
+	}
 
 }
 
@@ -45,14 +45,14 @@ export async function createItem(name: string, price: number, recipe: Ingredient
  */
 export async function getItemByName(name: string): Promise<RepositoryResponse<Item>> {
 
-    const items = await collection
-    const correctName = name.replace(/ /g, "_");
+	const items = await collection
+	const correctName = name.replace(/ /g, "_");
 
-    const res = await items.findOne({ name: correctName }, { projection: { _id: 0 } })
+	const res = await items.findOne({ name: correctName }, { projection: { _id: 0 } })
 
-    if (res != null) {
-        return { data: res, message: MenuMessage.OK }
-    } else {
-        return { message: MenuMessage.ERROR_ITEM_NOT_FOUND };
-    }
+	if (res != null) {
+		return { data: res, message: MenuMessage.OK }
+	} else {
+		return { message: MenuMessage.ERROR_ITEM_NOT_FOUND };
+	}
 }
