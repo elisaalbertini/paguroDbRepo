@@ -14,12 +14,6 @@ jobs:
     name: check format ts
     uses: ./.github/workflows/ts_format_check_pipeline.yml
 
-  kotlinTest:
-    needs:
-      - ktlintCheck
-    name: test kotlin with MongoDB
-    uses: ./.github/workflows/mongodb_pipeline.yml
-
   serverTest:
     needs:
       - tsFormatCheck
@@ -28,12 +22,24 @@ jobs:
 
   ordersServiceTest:
     needs:
+      - serverTest
       - tsFormatCheck
     name: test orders-service
     uses: ./.github/workflows/orders_service_test_pipeline.yml
 
   menuServiceTest:
     needs:
+      - ordersServiceTest
+      - serverTest
       - tsFormatCheck
     name: test menu-service
     uses: ./.github/workflows/menu_service_test_pipeline.yml
+
+  kotlinTest:
+    needs:
+      - menuServiceTest
+      - ordersServiceTest
+      - serverTest
+      - ktlintCheck
+    name: test kotlin with MongoDB
+    uses: ./.github/workflows/mongodb_pipeline.yml
