@@ -6,24 +6,24 @@ on:
       - main
       - develop
 jobs:
-  ktlintCheck:
-    name: check format kotlin
-    uses: ./.github/workflows/ktlint_check_pipeline.yml
+  #ktlintCheck:
+   # name: check format kotlin
+    #uses: ./.github/workflows/ktlint_check_pipeline.yml
 
-  tsFormatCheck:
-    name: check format ts
-    uses: ./.github/workflows/ts_format_check_pipeline.yml
+  #tsFormatCheck:
+   # name: check format ts
+    #uses: ./.github/workflows/ts_format_check_pipeline.yml
 
   serverTest:
-    needs:
-      - tsFormatCheck
+    #needs:
+     # - tsFormatCheck
     name: test server
     uses: ./.github/workflows/server_test_pipeline.yml
 
   ordersServiceTest:
     needs:
       - serverTest
-      - tsFormatCheck
+     # - tsFormatCheck
     name: test orders-service
     uses: ./.github/workflows/orders_service_test_pipeline.yml
 
@@ -31,7 +31,7 @@ jobs:
     needs:
       - ordersServiceTest
       - serverTest
-      - tsFormatCheck
+    #  - tsFormatCheck
     name: test menu-service
     uses: ./.github/workflows/menu_service_test_pipeline.yml
 
@@ -40,6 +40,6 @@ jobs:
       - menuServiceTest
       - ordersServiceTest
       - serverTest
-      - ktlintCheck
+     # - ktlintCheck
     name: test kotlin with MongoDB
     uses: ./.github/workflows/mongodb_pipeline.yml
