@@ -2,7 +2,6 @@ name: Run server tests
 
 on:
  workflow_call:
- push:
 jobs:
   build:
     runs-on: ubuntu-latest
