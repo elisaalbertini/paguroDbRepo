@@ -28,8 +28,8 @@ jobs:
       - name: Kill node 
         run: killall node
       
-      - name: Run Tests order-service
-        working-directory: order-service
+      - name: Run Tests orders-service
+        working-directory: orders-service
         run: |
           npm install
           npx jest --coverage
