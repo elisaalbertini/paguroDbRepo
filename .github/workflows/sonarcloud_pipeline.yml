@@ -9,6 +9,8 @@ on:
     branches:
       - main
       - develop
+  permissions:
+    contents: write
 jobs:
   sonarcloud:
     name: Build and analyze
