@@ -11,9 +11,6 @@ on:
       - develop
 jobs:
   sonarcloud:
-    strategy:
-      matrix:
-        dir: [ "menu-service", "orders-service" ]
     name: Build and analyze
     runs-on: ubuntu-latest
     steps:
@@ -25,17 +22,24 @@ jobs:
           chmod +x gradlew
           ./gradlew jacocoTestReport
 
-      #- name: Coverage server
-       # uses: elisaalbertini/paguroDbRepo/.github/serverTest@main
+      - name: Coverage server
+        uses: elisaalbertini/paguroDbRepo/.github/serverTest@main
 
-    #- name: Kill node 
-     #   run: killall node
+      - name: Kill node 
+        run: killall node
       
-      - name: Run Tests menu-service
-        working-directory: ${{ matrix.dir }}
+      - name: Run Tests order-service
+        working-directory: order-service
         run: |
           npm install
-          npx jest 
+          npx jest --coverage
+        shell: bash
+
+      - name: Run Tests menu-service
+        working-directory: menu-service
+        run: |
+          npm install
+          npx jest --coverage
         shell: bash
 
       - name: SonarQube Scan
