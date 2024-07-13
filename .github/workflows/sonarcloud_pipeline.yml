@@ -44,7 +44,9 @@ jobs:
 
       - name: Merge coverage
         working-directory: server
-        run: ./node_modules/.bin/lcov-result-merger ../**/coverage/lcov.info
+        run: |
+          npm install 
+          ./node_modules/.bin/lcov-result-merger ../**/coverage/lcov.info
 
       - name: SonarQube Scan
         run: |
