@@ -47,7 +47,7 @@ jobs:
         run: |
           npm install
           npm i lcov-result-merger
-          ./node_modules/.bin/lcov-result-merger ../**/coverage/lcov.info ./coverage/merge/lcov.info
+          ./node_modules/.bin/lcov-result-merger ../**/coverage/lcov.info ./coverage/merge.info
           if [ ! -f ./coverage/merge/lcov.info ]; then
             echo "File not found!"
           fi
