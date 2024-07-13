@@ -22,11 +22,11 @@ jobs:
           chmod +x gradlew
           ./gradlew jacocoTestReport
 
-      - name: Coverage server
-        uses: elisaalbertini/paguroDbRepo/.github/serverTest@main
+      #- name: Coverage server
+       # uses: elisaalbertini/paguroDbRepo/.github/serverTest@main
 
-      - name: Kill node 
-        run: killall node
+      #- name: Kill node 
+       # run: killall node
       
       - name: Run Tests orders-service
         working-directory: orders-service
@@ -43,12 +43,12 @@ jobs:
         shell: bash
 
       - name: Merge coverage
-        working-directory: server
+        working-directory: menu-service
         run: |
           npm install
           npm i lcov-result-merger
-          ./node_modules/.bin/lcov-result-merger ../**/coverage/lcov.info ./coverage/merge.info
-          if [ ! -f ./coverage/merge/lcov.info ]; then
+          ./node_modules/.bin/lcov-result-merger ../**/coverage/lcov.info ./merge.info
+          if [ ! -f ./merge.info ]; then
             echo "File not found!"
           fi
 
