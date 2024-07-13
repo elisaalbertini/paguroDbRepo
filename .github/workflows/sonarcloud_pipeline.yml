@@ -42,6 +42,10 @@ jobs:
           npx jest --coverage
         shell: bash
 
+      - name: Merge coverage
+        working-directory: server
+        run: ./node_modules/.bin/lcov-result-merger ../**/coverage/lcov.info ../ciao.info
+
       - name: SonarQube Scan
         run: |
           chmod +x gradlew

@@ -13,6 +13,7 @@
     "@types/ws": "^8.5.10",
     "axios": "^1.7.2",
     "express": "^4.19.2",
+    "lcov-result-merger": "^3.0.0",
     "mongodb": "^6.8.0",
     "ws": "^8.17.1"
   },
