@@ -37,8 +37,6 @@ runs:
 
     - name: Run Tests websocket
       working-directory: server
-      run: |
-        sleep 50
-        npx jest --runInBand
+      run: npx jest --runInBand
       shell: bash
 
