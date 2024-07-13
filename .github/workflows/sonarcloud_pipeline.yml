@@ -25,8 +25,8 @@ jobs:
           chmod +x gradlew
           ./gradlew jacocoTestReport
 
-      - name: Coverage server
-        uses: elisaalbertini/paguroDbRepo/.github/serverTest@main
+      #- name: Coverage server
+       # uses: elisaalbertini/paguroDbRepo/.github/serverTest@main
 
       - name: Kill node 
         run: killall node
