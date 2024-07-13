@@ -28,8 +28,8 @@ jobs:
       #- name: Coverage server
        # uses: elisaalbertini/paguroDbRepo/.github/serverTest@main
 
-      - name: Kill node 
-        run: killall node
+    #- name: Kill node 
+     #   run: killall node
       
       - name: Run Tests menu-service
         working-directory: ${{ matrix.dir }}
