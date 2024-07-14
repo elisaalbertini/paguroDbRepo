@@ -49,7 +49,7 @@ jobs:
       - name: create dir
         working-directory: ${{ github.workspace }}
         run: |
-          mv  -v ~/menu-service/coverage/coverage-final.json ~/menu-service/coverage/lcov-report
+          mv  -v ${{ github.workspace }}/menu-service/coverage/coverage-final.json ${{ github.workspace }}/menu-service/coverage/lcov-report
           if [ ! -f ${{ github.workspace }}/menu-service/coverage/lcov-report/coverage-final.json ]; then
             echo "File not found!"
           fi
