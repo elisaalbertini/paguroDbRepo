@@ -16,9 +16,6 @@ jobs:
     steps:
       - name: Setup
         uses: elisaalbertini/paguroDbRepo/.github/setupAction@main
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '>=20.10.0'
       
       #- name: Gradle (build and coverage)
        # run: |
@@ -50,7 +47,7 @@ jobs:
         uses: selfagency/merge-coverage@v1.1.2
         with:
           source: paguroDbRepo
-          coverage-reports: paguroDbRepo/menu-service/coverage, paguroDbRepo/orders-service/coverage
+          coverage-reports: paguroDbRepo/menu-service/coverage
           output-folder: paguroDbRepo
           formats: lcov
           artifacts: false
