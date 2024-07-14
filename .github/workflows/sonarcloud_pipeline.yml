@@ -50,7 +50,7 @@ jobs:
         uses: selfagency/merge-coverage@v1.1.2
         with:
           source: ${{ github.workspace }}/menu-service
-          coverage-reports: ${{ github.workspace }}/${{ matrix.dir }}/coverage
+          coverage-reports: ${{ github.workspace }}/${{ matrix.dir }}
           output-folder: ${{ github.workspace }}/menu-service/coverage-reports
           formats: lcov
           artifacts: false
