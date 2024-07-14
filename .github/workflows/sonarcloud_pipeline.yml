@@ -61,7 +61,7 @@ jobs:
           coverage-reports: ${{ github.workspace }}/${{ matrix.dir }}/coverage
           output-folder: ${{ github.workspace }}/menu-service/
           formats: lcov
-          artifacts: true
+          artifacts: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
