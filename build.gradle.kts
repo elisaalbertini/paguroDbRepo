@@ -13,7 +13,7 @@ sonar {
         property("systemProp.sonar.host.url")
         property("systemProp.sonar.coverage.exclusions")
         property("systemProp.sonar.coverage.jacoco.xmlReportPaths")
-        property("systemProp.sonar.exclusion")
+        property("systemProp.sonar.exclusions")
         property("systemProp.sonar.javascript.lcov.reportPaths")
         property("systemProp.sonar.sources")
 
