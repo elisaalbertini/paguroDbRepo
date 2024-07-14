@@ -49,7 +49,7 @@ jobs:
         uses: selfagency/merge-coverage@v1.1.2
         with:
           source: ./
-          coverage-reports: ./**/coverage
+          coverage-reports: ./menu-service/coverage, ./orders-service/coverage
           output-folder: ./
           formats: lcov
           artifacts: false
