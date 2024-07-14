@@ -46,9 +46,9 @@ jobs:
           npm install
           npx jest --coverage
         shell: bash
-      #- name: create dir
-       # working-directory: ${{ github.workspace }}
-        #run: mkdir -p coverage
+      - name: create dir
+        working-directory: ${{ github.workspace }}
+        run: mkdir coverage
 
       - name: Merge coverage reports
         id: coverage
@@ -56,7 +56,7 @@ jobs:
         with:
           source: ${{ github.workspace }}/menu-service
           coverage-reports: ${{ github.workspace }}/${{ matrix.dir }}/coverage
-          output-folder: ${{ github.workspace }}/menu-service/
+          output-folder: ${{ github.workspace }}/menu-service/coverage
           formats: lcov
           artifacts: false
 
