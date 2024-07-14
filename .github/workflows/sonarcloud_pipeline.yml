@@ -59,7 +59,7 @@ jobs:
         with:
           source: ${{ github.workspace }}/menu-service
           coverage-reports: ${{ github.workspace }}/${{ matrix.dir }}/coverage
-          output-folder: ${{ github.workspace }}/menu-service/coverage-report
+          output-folder: ${{ github.workspace }}/menu-service/
           formats: lcov
           artifacts: true
         env:
