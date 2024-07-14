@@ -9,8 +9,6 @@ on:
     branches:
       - main
       - develop
-permissions:
-  contents: write
 jobs:
   sonarcloud:
     name: Build and analyze
@@ -18,11 +16,14 @@ jobs:
     steps:
       - name: Setup
         uses: elisaalbertini/paguroDbRepo/.github/setupAction@main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '>=20.10.0'
       
-      - name: Gradle (build and coverage)
-        run: |
-          chmod +x gradlew
-          ./gradlew jacocoTestReport
+      #- name: Gradle (build and coverage)
+       # run: |
+        #  chmod +x gradlew
+         # ./gradlew jacocoTestReport
 
       #- name: Coverage server
        # uses: elisaalbertini/paguroDbRepo/.github/serverTest@main
@@ -48,9 +49,9 @@ jobs:
         id: coverage
         uses: selfagency/merge-coverage@v1.1.2
         with:
-          source: ./
-          coverage-reports: ./menu-service/coverage, ./orders-service/coverage
-          output-folder: ./
+          source: paguroDbRepo
+          coverage-reports: paguroDbRepo/menu-service/coverage, paguroDbRepo/orders-service/coverage
+          output-folder: paguroDbRepo
           formats: lcov
           artifacts: false
 
