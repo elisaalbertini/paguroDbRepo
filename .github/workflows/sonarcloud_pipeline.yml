@@ -48,7 +48,9 @@ jobs:
         shell: bash
       - name: create dir
         working-directory: ${{ github.workspace }}
-        run: mkdir coverage
+        run: |
+          mkdir coverage
+          touch lcov-report.json
 
       - name: Merge coverage reports
         id: coverage
