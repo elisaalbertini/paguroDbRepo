@@ -15,7 +15,7 @@ jobs:
   sonarcloud:
     strategy:
       matrix:
-        dir: ['menu-service', 'orders-service']
+        dir: ['menu-service']
     name: Build and analyze
     runs-on: ubuntu-latest
     steps:
