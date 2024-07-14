@@ -46,10 +46,10 @@ jobs:
         id: coverage
         uses: selfagency/merge-coverage@v1.1.2
         with:
-          source: paguroDbRepo
-          coverage-reports: paguroDbRepo/menu-service/coverage
-          output-folder: paguroDbRepo
-          formats: lcov
+          source: ${{ github.workspace }}/
+          coverage-reports: ${{ github.workspace }}/coverage
+          output-folder: ${{ github.workspace }}/coverage-reports
+          formats: html
           artifacts: false
 
       - name: SonarQube Scan
