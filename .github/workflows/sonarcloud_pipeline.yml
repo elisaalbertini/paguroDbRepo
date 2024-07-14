@@ -49,7 +49,9 @@ jobs:
       - name: create dir
         working-directory: ${{ github.workspace }}
         run: |
-          mkdir coverage-report
+          if [ ! -f ${{ github.workspace }}/menu-service/coverage/lcov-report/coverage-final.json ]; then
+            echo "File not found!"
+          fi
 
       - name: Merge coverage reports
         id: coverage
