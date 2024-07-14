@@ -59,7 +59,9 @@ jobs:
           coverage-reports: ${{ github.workspace }}/${{ matrix.dir }}/coverage
           output-folder: ${{ github.workspace }}/menu-service/coverage-report
           formats: lcov
-          artifacts: false
+          artifacts: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: SonarQube Scan
         run: |
