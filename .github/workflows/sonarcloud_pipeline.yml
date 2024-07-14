@@ -44,15 +44,15 @@ jobs:
           npx jest --coverage
         shell: bash
 
-      - name: Merge coverage
-        working-directory: menu-service
-        run: |
-          npm install
-          npm i lcov-result-merger
-          ./node_modules/.bin/lcov-result-merger ../**/coverage/lcov.info ./merge.info
-          if [ ! -f ./merge.info ]; then
-            echo "File not found!"
-          fi
+      - name: Merge coverage reports
+        id: coverage
+        uses: selfagency/merge-coverage@v1.1.2
+        with:
+          source: ./
+          coverage-reports: ./**/coverage
+          output-folder: ./
+          formats: lcov
+          artifacts: false
 
       - name: SonarQube Scan
         run: |
