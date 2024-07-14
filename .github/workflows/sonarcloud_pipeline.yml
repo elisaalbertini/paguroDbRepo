@@ -49,7 +49,7 @@ jobs:
       - name: create dir
         working-directory: ${{ github.workspace }}
         run: |
-          if [ ! -f /home/runner/work/paguroDbRepo/menu-service/coverage/lcov-report/coverage-final.json ]; then
+          if [ ! -f ${{ github.workspace }}/menu-service/coverage/coverage-final.json ]; then
             echo "File not found!"
           fi
 
