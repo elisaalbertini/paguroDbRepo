@@ -9,6 +9,8 @@ on:
     branches:
       - main
       - develop
+permissions:
+  contents: write
 jobs:
   sonarcloud:
     strategy:
@@ -44,9 +46,9 @@ jobs:
           npm install
           npx jest --coverage
         shell: bash
-      - name: create dir
-        working-directory: ${{ github.workspace }}
-        run: mkdir -p coverage
+      #- name: create dir
+       # working-directory: ${{ github.workspace }}
+        #run: mkdir -p coverage
 
       - name: Merge coverage reports
         id: coverage
