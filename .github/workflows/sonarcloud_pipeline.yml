@@ -62,8 +62,6 @@ jobs:
           output-folder: ${{ github.workspace }}/menu-service/
           formats: lcov
           artifacts: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: SonarQube Scan
         run: |
