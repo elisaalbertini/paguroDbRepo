@@ -49,7 +49,7 @@ jobs:
       - name: create dir
         working-directory: ${{ github.workspace }}
         run: |
-          touch coverage/lcov-report.json
+          touch ./coverage/lcov-report.json
 
       - name: Merge coverage reports
         id: coverage
