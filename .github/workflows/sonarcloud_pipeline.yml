@@ -49,7 +49,7 @@ jobs:
         id: coverage
         uses: selfagency/merge-coverage@v1.1.2
         with:
-          source: ${{ github.workspace }}/${{ matrix.dir }}
+          source: ${{ github.workspace }}/menu-service
           coverage-reports: ${{ github.workspace }}/${{ matrix.dir }}/coverage
           output-folder: ${{ github.workspace }}/${{ matrix.dir }}/coverage-reports
           formats: lcov
