@@ -51,7 +51,7 @@ jobs:
         with:
           source: ${{ github.workspace }}/${{ matrix.dir }}
           coverage-reports: ${{ github.workspace }}/${{ matrix.dir }}/coverage
-          output-folder: ${{ github.workspace }}/${{ matrix.dir }}
+          #output-folder: ${{ github.workspace }}/${{ matrix.dir }}
           formats: lcov
           artifacts: false
 
