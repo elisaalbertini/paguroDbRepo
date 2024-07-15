@@ -56,7 +56,7 @@ jobs:
         uses: selfagency/merge-coverage@v1.1.2
         with:
           source: ${{ github.workspace }}
-          coverage-reports: ${{ github.workspace }}/menu-service ${{ github.workspace }}/orders-service
+          coverage-reports: ${{ github.workspace }}/menu-service:${{ github.workspace }}/orders-service
           output-folder: ${{ github.workspace }}/coverage-report
           formats: lcov
           artifacts: false
