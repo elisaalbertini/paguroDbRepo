@@ -1,5 +1,5 @@
 import { Service } from '../src/utils/service'
-import { OrdersServiceMessages, RequestMessage, ResponseMessage } from '../src/utils/messages';
+import { OrdersServiceMessages, RequestMessage } from '../src/utils/messages';
 import { check_service } from '../src/check-service';
 import express from 'express';
 import { IncomingMessage, Server, ServerResponse, createServer } from 'http';
@@ -8,7 +8,6 @@ import { add, cleanCollection, closeMongoClient } from './utils/db-connection';
 import { addId } from './utils/order-json-utils';
 import { check_order_message, createRequestMessage, egg, newOrder, omelette, order } from './utils/test-utils';
 
-let m: ResponseMessage
 let ws: WebSocket;
 let wss: WebSocketServer;
 const app = express();
