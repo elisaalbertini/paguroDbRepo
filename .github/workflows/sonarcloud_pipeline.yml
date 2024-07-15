@@ -28,21 +28,21 @@ jobs:
       - name: Kill node 
         run: killall node
       
-      - name: Run Tests orders-service
+      - name: Coverage orders-service
         working-directory: orders-service
         run: |
           npm install
           npx jest --coverage
         shell: bash
 
-      - name: Run Tests menu-service
+      - name: Coverage menu-service
         working-directory: menu-service
         run: |
           npm install
           npx jest --coverage
         shell: bash
 
-      - name: merge coverage
+      - name: Merge coverage
         working-directory: ${{ github.workspace }}
         run: | 
           mkdir ${{ github.workspace }}/menu-service/final-coverage
