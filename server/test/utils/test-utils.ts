@@ -1,6 +1,6 @@
 import { OrdersServiceMessages, ResponseMessage } from "../../src/utils/messages";
 import { Service } from "../../src/utils/service";
-import { add, cleanCollection, getCollection } from "./db-connection";
+import { getCollection } from "./db-connection";
 import { addIdandState } from "./order-json-utils";
 
 export const milk = {
@@ -122,14 +122,4 @@ export function createRequestMessage(client: Service, request: string, input: an
 		client_request: request,
 		input: input
 	}
-}
-
-export async function initMenu(){
-	const db_name = "Menu"
-	const db_collection = "Items"
-	const collection = await getCollection(db_name, db_collection)
-
-	collection.createIndex({ name: 1 }, { unique: true })
-	await cleanCollection(db_name, db_collection)
-	await add(db_name, db_collection, JSON.stringify(omelette))
 }

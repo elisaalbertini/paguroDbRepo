@@ -5,16 +5,20 @@ import express from 'express';
 import { IncomingMessage, Server, ServerResponse, createServer } from 'http';
 import WebSocket, { Server as WebSocketServer } from 'ws';
 import { add, cleanCollection, closeMongoClient, getCollection } from './utils/db-connection';
-import { boiledEgg, createRequestMessage, initMenu, omelette } from './utils/test-utils';
+import { boiledEgg, createRequestMessage, omelette } from './utils/test-utils';
 
 let m: ResponseMessage
 let ws: WebSocket;
 let wss: WebSocketServer;
 const app = express();
 let server: Server<typeof IncomingMessage, typeof ServerResponse>
+let db_name = "Menu"
+let db_collection = "Items"
 
 beforeAll(async () => {
-	initMenu()
+	(await getCollection(db_name, db_collection)).createIndex({ name: 1 }, { unique: true })
+	await cleanCollection(db_name, db_collection)
+	await add(db_name, db_collection, JSON.stringify(omelette))
 })
 
 afterEach(() => {
