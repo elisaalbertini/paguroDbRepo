@@ -10,7 +10,7 @@ jobs:
   build-and-deploy:
     strategy:
       matrix:
-        dir: ['server', 'manager-application']
+        dir: ['server', 'manager-application', 'orders-service', 'menu-service']
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

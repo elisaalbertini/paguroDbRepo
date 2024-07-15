@@ -11,9 +11,6 @@ on:
       - develop
 jobs:
   sonarcloud:
-    strategy:
-      matrix:
-        dir: ['menu-service']
     name: Build and analyze
     runs-on: ubuntu-latest
     steps:
