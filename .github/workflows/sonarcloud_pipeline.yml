@@ -50,7 +50,7 @@ jobs:
         run: | 
           mkdir ${{ github.workspace }}/menu-service/final-coverage
           cd ${{ github.workspace }}/menu-service/final-coverage
-          npx istanbul-merge --out coverage.json ${{ github.workspace }}/menu-service/coverage/coverage-final.json ${{ github.workspace }}/server/coverage/coverage-final.json
+          npx istanbul-merge --out coverage.json ${{ github.workspace }}/menu-service/coverage/coverage-final.json ${{ github.workspace }}/orders-service/coverage/coverage-final.json
           npx istanbul report --dir coverage --include ${{ github.workspace }}/menu-service/final-coverage/coverage.json lcov
 
       - name: SonarQube Scan
