@@ -3,8 +3,9 @@ import helmet from "helmet";
 import menuRouter from './routes/menu';
 
 const app = express()
+
+app.use(express.json())
 app.use(helmet())
-//app.use(express.json())
 
 //menu route
 app.use('/menu', menuRouter)
