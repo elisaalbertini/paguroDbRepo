@@ -50,15 +50,17 @@ jobs:
         run: | 
           mkdir ${{ github.workspace }}/coverage-report
           mv  -v ${{ github.workspace }}/menu-service/coverage/coverage-final.json ${{ github.workspace }}/menu-service/coverage/lcov-report
-          mv  -v ${{ github.workspace }}/orders-service/coverage/coverage-final.json ${{ github.workspace }}/orders-service/coverage/lcov-report
+          cd ${{ github.workspace }}/orders-service/coverage
+          mv "coverage-final.json"  coverage-final-2.json
+          mv  -v ${{ github.workspace }}/orders-service/coverage/coverage-final-2.json ${{ github.workspace }}/menu-service/coverage/lcov-report
           
 
       - name: Merge coverage reports
         id: coverage
         uses: selfagency/merge-coverage@v1.1.2
         with:
-          source: ${{ github.workspace }}/menu-service/, ${{ github.workspace }}/orders-service/
-          coverage-reports: ${{ github.workspace }}/menu-service/coverage, ${{ github.workspace }}/orders-service/coverage
+          source: ${{ github.workspace }}
+          coverage-reports: ${{ github.workspace }}/menu-service/coverage
           output-folder: ${{ github.workspace }}/coverage-report
           formats: lcov
           artifacts: false
