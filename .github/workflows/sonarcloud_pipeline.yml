@@ -45,22 +45,24 @@ jobs:
           npx jest --coverage
         shell: bash
 
-      - name: Manage files
+      - name: merge coverage
         working-directory: ${{ github.workspace }}
         run: | 
-          mkdir ${{ github.workspace }}/coverage-report
+          mkdir ${{ github.workspace }}/menu-service/final-coverage
+          cd ${{ github.workspace }}/menu-service/final-coverage
+          npx istanbul-merge --out coverage.json ${{ github.workspace }}/menu-service/coverage/coverage-final.json ${{ github.workspace }}/orders-service/coverage/coverage-final.json
+          npx istanbul report --dir coverage --include ${{ github.workspace }}/menu-service/final-coverage/coverage.json lcov
           
 
-      - name: Merge coverage reports
-        id: coverage
-        uses: selfagency/merge-coverage@v1.1.2
-        with:
-          source: ${{ github.workspace }}
-          coverage-reports: ${{ github.workspace }}/menu-service
-          coverage-reports: ${{ github.workspace }}/orders-service
-          output-folder: ${{ github.workspace }}/coverage-report
-          formats: lcov
-          artifacts: false
+      #- name: Merge coverage reports
+       # id: coverage
+       # uses: selfagency/merge-coverage@v1.1.2
+       # with:
+        #  source: ${{ github.workspace }}
+         # coverage-reports: ${{ github.workspace }}/
+         # output-folder: ${{ github.workspace }}/coverage-report
+         # formats: lcov
+         # artifacts: false
 
       - name: SonarQube Scan
         run: |
