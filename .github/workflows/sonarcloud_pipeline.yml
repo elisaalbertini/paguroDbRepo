@@ -50,7 +50,7 @@ jobs:
         run: | 
           mkdir ${{ github.workspace }}/coverage-report
           mv  -v ${{ github.workspace }}/menu-service/coverage/coverage-final.json ${{ github.workspace }}/menu-service/coverage/lcov-report
-          mv  -v ${{ github.workspace }}/orders-service/coverage/coverage-final.json ${{ github.workspace }}orders-service/coverage/lcov-report
+          mv  -v ${{ github.workspace }}/orders-service/coverage/coverage-final.json ${{ github.workspace }}/orders-service/coverage/lcov-report
           
 
       - name: Merge coverage reports
