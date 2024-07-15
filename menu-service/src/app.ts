@@ -1,7 +1,7 @@
 import express from "express";
 import menuRouter from './routes/menu';
 
-var app = express()
+const app = express()
 app.use(express.json())
 
 //menu route
