@@ -30,12 +30,13 @@ jobs:
 
       #- name: Kill node 
        # run: killall node
-      #- name: Run Tests orders-service
-       # working-directory: orders-service
-        #run: |
-         # npm install
-          #npx jest --coverage
-        #shell: bash
+      
+      - name: Run Tests orders-service
+        working-directory: orders-service
+        run: |
+          npm install
+          npx jest --coverage
+        shell: bash
 
       - name: Run Tests menu-service
         working-directory: menu-service
@@ -43,25 +44,25 @@ jobs:
           npm install
           npx jest --coverage
         shell: bash
-      - name: create dir
+
+      - name: Manage files
         working-directory: ${{ github.workspace }}
         run: | 
-          mv  -v ${{ github.workspace }}/menu-service/coverage/coverage-final.json ${{ github.workspace }}/menu-service/coverage/lcov-report
-          mkdir ${{ github.workspace }}/menu-service/coverage-report
+          mkdir ${{ github.workspace }}/coverage-report
+          mkdir ${{ github.workspace }}/coverage/lcov-report
+          mv  -v ${{ github.workspace }}/menu-service/coverage/coverage-final.json ${{ github.workspace }}/coverage/lcov-report
+          mv  -v ${{ github.workspace }}/orders-service/coverage/coverage-final.json ${{ github.workspace }}/coverage/lcov-report
+          
 
       - name: Merge coverage reports
         id: coverage
         uses: selfagency/merge-coverage@v1.1.2
         with:
-          source: ${{ github.workspace }}/menu-service
-          coverage-reports: ${{ github.workspace }}/${{ matrix.dir }}/coverage
-          output-folder: ${{ github.workspace }}/menu-service/coverage-report
+          source: ${{ github.workspace }}
+          coverage-reports: ${{ github.workspace }}/coverage
+          output-folder: ${{ github.workspace }}/coverage-report
           formats: lcov
           artifacts: false
-      
-      - name: print
-        working-directory: ${{ github.workspace }}/menu-service
-        run: ls
 
       - name: SonarQube Scan
         run: |
