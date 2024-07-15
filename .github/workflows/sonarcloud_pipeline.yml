@@ -49,10 +49,9 @@ jobs:
         working-directory: ${{ github.workspace }}
         run: | 
           mkdir ${{ github.workspace }}/coverage-report
-          mv  -v ${{ github.workspace }}/menu-service/coverage/coverage-final.json ${{ github.workspace }}/menu-service/coverage/lcov-report
+          
           cd  ${{ github.workspace }}/orders-service/coverage
           mv "coverage-final.json" coverage-final-2.json
-          mv  -v ${{ github.workspace }}/orders-service/coverage/coverage-final-2.json ${{ github.workspace }}/menu-service/coverage/lcov-report
           
 
       - name: Merge coverage reports
