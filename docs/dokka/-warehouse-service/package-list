@@ -88,8 +88,6 @@ $dokka.location:repository/RepositoryResponse/message/#/PointingToDeclaration/-
 $dokka.location:server////PointingToDeclaration/-warehouse-service/server/index.html
 $dokka.location:server/Main///PointingToDeclaration/-warehouse-service/server/-main/index.html
 $dokka.location:server/Main/main/#kotlin.Array[kotlin.String]/PointingToDeclaration/-warehouse-service/server/-main/main.html
-$dokka.location:server/MainInit///PointingToDeclaration/-warehouse-service/server/-main-init/index.html
-$dokka.location:server/MainInit/main/#kotlin.Array[kotlin.String]/PointingToDeclaration/-warehouse-service/server/-main-init/main.html
 $dokka.location:server/MongoUtils///PointingToDeclaration/-warehouse-service/server/-mongo-utils/index.html
 $dokka.location:server/MongoUtils/getMongoCollection/#MongoInfo/PointingToDeclaration/-warehouse-service/server/-mongo-utils/get-mongo-collection.html
 $dokka.location:server/MongoUtils/isDbSuccessfullyConnected/#MongoInfo/PointingToDeclaration/-warehouse-service/server/-mongo-utils/is-db-successfully-connected.html
