@@ -4,6 +4,7 @@ import { assertEquals } from 'typia'
 import { Item } from "../domain/item";
 import { addNewItem, getItemByName } from "../application/menu-service";
 import { MenuMessage } from "../../menu-message";
+import { name } from "typia/lib/reflect";
 
 var router = express.Router();
 
@@ -12,7 +13,11 @@ var router = express.Router();
  * POST '/menu' API handles the addition of a new Item delegating to the service.
  */
 router.post('/', async (req: Request, res: Response) => {
-	let item = req.body
+	let item = {
+		name: req.body.name,
+		price: req.body.price,
+		recipe: req.body.recipe
+	}
 
 	try {
 		assertEquals<Item>(item)
