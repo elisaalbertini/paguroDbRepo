@@ -15,7 +15,7 @@ type ServiceResponse<T> = { data?: T, message: MenuMessage };
  * @returns a Promise with the Service Response containing the new Item data and the message returned by the repository 
  */
 export async function addNewItem(item: string): Promise<ServiceResponse<Item>> {
-	const newItem = JSON.parse(item)
+	const newItem: Item = JSON.parse(item)
 	let res = await repository.createItem(newItem.name, newItem.price, newItem.recipe)
 	return { data: res.data, message: res.message }
 
