@@ -1,14 +1,11 @@
 import express from "express";
 import helmet from "helmet";
 import menuRouter from './routes/menu';
-import bodyParser from 'body-parser';
-import mongoSanitize from 'express-mongo-sanitize';
 
 const app = express()
 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(helmet())
-app.use(mongoSanitize());
 
 //menu route
 app.use('/menu', menuRouter)

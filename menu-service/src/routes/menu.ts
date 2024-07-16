@@ -20,8 +20,8 @@ router.post('/', async (req: Request, res: Response) => {
 	}
 
 	try {
-		assertEquals<Item>(item)
-		let service_res = await addNewItem(item.name, item.price, item.recipe)
+		let item2 = assertEquals<Item>(item)
+		let service_res = await addNewItem(item2.name, item2.price, item2.recipe)
 		sendResponse(res, service_res.message, service_res.data)
 	} catch (error) {
 		sendResponse(res, MenuMessage.ERROR_WRONG_PARAMETERS)
