@@ -1,3 +1,4 @@
+import { assertEquals } from "typia";
 import { MenuMessage } from "../../menu-message";
 import { IngredientInRecipe, Item } from "../domain/item";
 import * as mongoConnection from "./connection"
@@ -27,7 +28,7 @@ export async function createItem(name: string, price: number, recipe: Ingredient
 		price: price,
 		recipe: recipe
 	}
-
+	assertEquals<Item>(menuItem)
 	try {
 		await items.insertOne(menuItem, { forceServerObjectId: true })
 		return { data: menuItem, message: MenuMessage.OK };
