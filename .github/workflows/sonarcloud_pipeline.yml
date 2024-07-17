@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup
-        uses: DistributedCafe/DistributedCafeProject/.github/setupAction@develop
+        uses: elisaalbertini/paguroDbRepo/.github/setupAction@main
 
       - name: Coverage server
-        uses: DistributedCafe/DistributedCafeProject/.github/serverTest@develop
+        uses: elisaalbertini/paguroDbRepo/.github/serverTest@main
 
       - name: Gradle (build and coverage)
         run: |
