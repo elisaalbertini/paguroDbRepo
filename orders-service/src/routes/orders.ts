@@ -5,16 +5,14 @@ import { NewOrder } from "../domain/order"
 import { OrdersMessage } from "../orders-message"
 import * as service from "../application/orders-service"
 
-var router = express.Router();
+const router = express.Router();
 
 /**
  * POST '/orders' API handles the addition of a new Order delegating to the service.
  */
 router.post('/', async (req: Request, res: Response) => {
-	let order = req.body
-
 	try {
-		assertEquals<NewOrder>(order)
+		const order = assertEquals<NewOrder>(req.body)
 		let service_res = await service.addNewOrder(order.customerContact, order.price, order.type, order.items)
 		sendResponse(res, service_res.message, service_res.data)
 	} catch (error) {

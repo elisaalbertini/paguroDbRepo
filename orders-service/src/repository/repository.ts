@@ -1,5 +1,4 @@
-import { ObjectId } from 'mongodb';
-import { OrderType, OrderItem, OrderState, Order, Item, InsertOrder } from '../domain/order'
+import { OrderType, OrderItem, OrderState, Order } from '../domain/order'
 import { OrdersMessage } from "../orders-message";
 import * as mongoConnection from "./connection"
 import { MongoOrder, toInsertOrder, fromMongoOrderToOrder } from './order-conversion-utils';

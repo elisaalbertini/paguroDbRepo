@@ -39,7 +39,7 @@ export async function getCollection(db_name: string, db_collection: string) {
 export async function cleanCollection(db_name: string, collection_name: string) {
 	await client.connect()
 
-	client.db(db_name).collection(collection_name).deleteMany()
+	await client.db(db_name).collection(collection_name).deleteMany()
 }
 
 /**

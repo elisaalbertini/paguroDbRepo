@@ -41,4 +41,3 @@ runs:
         sleep 60
         npx jest --runInBand
       shell: bash
-

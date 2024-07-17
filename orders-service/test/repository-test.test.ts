@@ -1,5 +1,5 @@
 import * as repository from '../src/repository/repository'
-import { InsertOrder, Order, OrderState, OrderType } from '../src/domain/order'
+import { OrderState, OrderType } from '../src/domain/order'
 import { OrdersMessage } from '../src/orders-message'
 import * as client from '../src/repository/connection'
 import * as conversion from '../src/repository/order-conversion-utils'

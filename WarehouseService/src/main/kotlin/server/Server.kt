@@ -16,32 +16,34 @@ import kotlinx.coroutines.launch
  * @param port for the server connection
  */
 class Server(private val mongoInfo: MongoInfo, private val port: Int) : CoroutineVerticle() {
+    private val path = "/warehouse"
+
     override suspend fun start() {
         val handler = HandlerImpl(mongoInfo)
         val router = Router.router(vertx)
         router.route().handler(BodyHandler.create())
 
-        router.post("/warehouse/").handler {
+        router.post(path).handler {
                 ctx ->
             launch(Vertx.currentContext().dispatcher()) { handler.createIngredient(ctx) }
         }
 
-        router.get("/warehouse/").handler {
+        router.get(path).handler {
                 ctx ->
             launch(Vertx.currentContext().dispatcher()) { handler.getAllIngredients(ctx) }
         }
 
-        router.put("/warehouse/").handler {
+        router.put(path).handler {
                 ctx ->
             launch(Vertx.currentContext().dispatcher()) { handler.updateConsumedIngredientsQuantity(ctx) }
         }
 
-        router.put("/warehouse/:ingredient").handler {
+        router.put("$path/:ingredient").handler {
                 ctx ->
             launch(Vertx.currentContext().dispatcher()) { handler.restock(ctx) }
         }
 
-        router.get("/warehouse/available").handler {
+        router.get("$path/available").handler {
                 ctx ->
             launch(Vertx.currentContext().dispatcher()) { handler.getAllAvailableIngredients(ctx) }
         }

@@ -33,6 +33,16 @@ export const boiledEgg = {
 	],
 	price: 1
 }
+export const friedEgg = {
+	name: "fried_egg",
+	recipe: [
+		{
+			ingredient_name: "egg",
+			quantity: 1
+		}
+	],
+	price: 1
+}
 
 export const order: any = {
 	"customerContact": "c1",
@@ -43,20 +53,6 @@ export const order: any = {
 		{
 			"item": {
 				"name": "i1"
-			},
-			"quantity": 2
-		},
-	]
-}
-
-export const newOrder = {
-	"customerContact": "c1",
-	"price": 1,
-	"type": "HOME_DELIVERY",
-	"items": [
-		{
-			"item": {
-				"name": "omelette"
 			},
 			"quantity": 2
 		},
@@ -82,6 +78,8 @@ export const egg = {
 	"quantity": 20
 }
 
+export const orderItemQuantity = 2
+
 /**
  * Check that the responce message is correct
  * @param msg that has to be checked
@@ -91,6 +89,7 @@ export const egg = {
  * @param request request of the client
  */
 export async function check_order_message(msg: ResponseMessage, code: number, message: string, data: any, request: string) {
+	console.log(msg.message)
 	expect(msg.code).toBe(code);
 	expect(msg.message).toBe(message);
 	if (msg.code == 200) {
@@ -98,7 +97,7 @@ export async function check_order_message(msg: ResponseMessage, code: number, me
 			expect(JSON.parse(msg.data)).toStrictEqual(JSON.parse(await addIdandState(data)));
 			//check ingredient db
 			let dbEgg = await (await getCollection("Warehouse", "Ingredient")).findOne({ name: "egg" }, { projection: { _id: 0 } })
-			const qty = egg.quantity - (omelette.recipe[0].quantity * newOrder.items[0].quantity)
+			const qty = egg.quantity - (omelette.recipe[0].quantity * orderItemQuantity)
 			expect(dbEgg?.quantity).toBe(qty)
 		} else {
 			expect(JSON.parse(msg.data)).toStrictEqual(JSON.parse(data));

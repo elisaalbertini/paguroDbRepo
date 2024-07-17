@@ -68,13 +68,15 @@ function warehouse_api(message: string, input: string, ws: WebSocket) {
 		case WarehouseServiceMessages.GET_ALL_INGREDIENT.toString():
 			handleResponse(http.get('/warehouse/'), ws)
 			break;
-		default: //restock
+		// restock
+		default: {
 			const body = JSON.parse(input)
 			const quantity = {
 				"quantity": body.quantity
 			}
 			handleResponse(http.put('/warehouse/' + body.name, quantity), ws)
 			break;
+		}
 	}
 }
 
@@ -87,9 +89,7 @@ async function calcUsedIngredient(item: string, ingredients: IArray, items: IArr
 	for (let r of res.data.recipe) {
 		let ingredient = r.ingredient_name
 		let qty = r.quantity
-		Object.keys(ingredients).includes(ingredient) ?
-			ingredients[ingredient] += items[item] * qty :
-			ingredients[ingredient] = items[item] * qty
+		ingredients[ingredient] = Object.keys(ingredients).includes(ingredient) ? ingredients[ingredient] + (items[item] * qty) : items[item] * qty
 	}
 	return ingredients
 }
@@ -103,7 +103,7 @@ function handleNewOrder(promise: Promise<any>, input: any, ws: WebSocket) {
 			for (let i of orederItems) {
 				let ingredient: string = i.item.name.toString()
 				let qty: number = i.quantity
-				Object.keys(items).includes(ingredient) ? items[ingredient] += qty : items[ingredient] = qty
+				items[ingredient] = Object.keys(items).includes(ingredient) ? items[ingredient] + qty : qty
 			}
 			for (let i of Object.keys(items)) {
 				ingredients = await calcUsedIngredient(i, ingredients, items)

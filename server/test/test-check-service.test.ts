@@ -18,7 +18,7 @@ const db_name = "Warehouse"
 const db_collection = "Ingredient"
 
 beforeAll(async () => {
-	(await getCollection(db_name, db_collection)).createIndex({ name: 1 }, { unique: true })
+	await (await getCollection(db_name, db_collection)).createIndex({ name: 1 }, { unique: true })
 	await cleanCollection(db_name, db_collection)
 	await add(db_name, db_collection, JSON.stringify(milk))
 	await add(db_name, db_collection, JSON.stringify(tea))
@@ -47,13 +47,6 @@ test('Get all Available Ingredient Test - 200', done => {
 	const requestMessage = createRequestMessage(WarehouseServiceMessages.GET_ALL_AVAILABLE_INGREDIENT, '')
 	createConnectionAndCall(requestMessage, 200, 'OK', output, done)
 });
-
-test('Get all Available Ingredient Test - 200', done => {
-	const output = JSON.stringify([{ name: "milk", quantity: 95 }])
-	const requestMessage = createRequestMessage(WarehouseServiceMessages.GET_ALL_AVAILABLE_INGREDIENT, '')
-	createConnectionAndCall(requestMessage, 200, 'OK', output, done)
-});
-
 
 // write
 test('Restock Test - 200', done => {

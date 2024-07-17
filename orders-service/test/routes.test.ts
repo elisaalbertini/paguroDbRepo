@@ -32,8 +32,7 @@ test('Get All Orders', async () => {
 	let res = await http.get('/orders')
 	expect(res.status).toBe(200)
 	expect(res.statusText).toBe(OrdersMessage.OK)
-	assertEquals<Order[]>(res.data)
-	let orders = res.data as Order[]
+	let orders = assertEquals<Order[]>(res.data)
 	let expectedValues = orders.map(o => removeIndexOrder(o))
 	expect(expectedValues).toStrictEqual(db_test.getTestOrders())
 

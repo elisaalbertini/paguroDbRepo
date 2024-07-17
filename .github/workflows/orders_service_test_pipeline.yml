@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup
-        uses: elisaalbertini/paguroDbRepo/.github/setupAction@main
+        uses: DistributedCafe/DistributedCafeProject/.github/setupAction@develop
       - name: Run Tests
         working-directory: orders-service
         run: |

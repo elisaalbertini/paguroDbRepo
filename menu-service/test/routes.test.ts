@@ -36,8 +36,7 @@ test('Get Item by name', async () => {
 	const res = await http.get('/menu/omelette')
 	expect(res.status).toBe(200)
 	expect(res.statusText).toBe(MenuMessage.OK)
-	assertEquals<Item>(res.data)
-	const item = res.data as Item
+	const item = assertEquals<Item>(res.data)
 	expect(item).toStrictEqual(omelette)
 
 	// empty
@@ -77,9 +76,9 @@ test('Add new item', async () => {
 	let res = await http.post('/menu', friedEgg)
 	expect(res.status).toBe(200)
 	expect(res.statusText).toBe(MenuMessage.OK)
-	assertEquals<Item>(res.data)
+	const data = assertEquals<Item>(res.data)
 	let last = await getLastInsertedItem()
-	expect(res.data).toStrictEqual(last)
+	expect(data).toStrictEqual(last)
 
 	// send wrong format
 	await http.post('/menu', wrongItem).catch((error) => {

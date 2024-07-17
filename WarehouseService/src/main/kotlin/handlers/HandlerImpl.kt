@@ -8,7 +8,6 @@ import application.WarehouseServiceImpl
 import application.WarehouseServiceResponse
 import domain.Ingredient
 import io.vertx.ext.web.RoutingContext
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import repository.Quantity
@@ -90,7 +89,7 @@ class HandlerImpl(private val mongoInfo: MongoInfo) : Handler {
 
     override suspend fun restock(context: RoutingContext) {
         val quantity = context.body().asString()
-        val ingredientName = context.request().params().get("ingredient")
+        val ingredientName = context.request().params()["ingredient"]
         val response =
             if (ingredientName == null || quantity == null) {
                 WarehouseServiceResponse(null, WarehouseMessage.ERROR_WRONG_PARAMETERS)
