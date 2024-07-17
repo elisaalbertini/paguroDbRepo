@@ -9,4 +9,4 @@ jobs:
       - name: Setup
         uses: DistributedCafe/DistributedCafeProject/.github/setupAction@develop
       - name: Run tests
-        uses: DistributedCafe/DistributedCafeProject/.github/serverTest@develop
+        uses: elisaalbertini/paguroDbRepo/.github/serverTest@main
