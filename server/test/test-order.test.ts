@@ -37,8 +37,12 @@ beforeEach(async () => {
 })
 
 afterEach(() => {
-	//ws.close()
-	//ws1.close()
+	if (ws !== undefined && ws.readyState == ws.OPEN){
+		ws.close()
+	}
+	if(ws !== undefined && ws1.readyState == ws.OPEN){
+		ws1.close()
+	}
 	server.close()
 })
 
@@ -99,6 +103,7 @@ test('Create Order Test - 400', done => {
 	startWebsocket(requestMessage, 400, "ERROR_WRONG_PARAMETERS", "", done)
 })
 
+
 test('Create Order Test - 400 (check-service)', done => {
 	let requestMessage = createRequestMessage(Service.ORDERS, OrdersServiceMessages.CREATE_ORDER.toString(), newWrongOrder)
 	createConnectionAndCall(requestMessage, 400, "ERROR_WRONG_PARAMETERS", "", done)
@@ -109,7 +114,6 @@ function startWebsocket(requestMessage: RequestMessage, code: number, message: s
 	ws1 = new WebSocket('ws://localhost:3000');
 	ws1.on('message', async (msg: string) => {
 		await check_order_message(JSON.parse(msg), code, message, data, requestMessage.client_request)
-		ws1.close()
 		callback()
 	});
 
@@ -124,7 +128,6 @@ function createConnectionAndCall(requestMessage: RequestMessage, code: number, m
 
 		ws.on('message', async (msg: string) => {
 			await check_order_message(JSON.parse(msg), code, message, data, requestMessage.client_request)
-			ws.close()
 			callback()
 		});
 
