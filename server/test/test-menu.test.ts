@@ -22,10 +22,10 @@ beforeAll(async () => {
 })
 
 afterEach(() => {
-	if (ws_check_service !== undefined && ws_check_service.OPEN){
+	if (ws_check_service !== undefined && ws_check_service.OPEN) {
 		ws_check_service.close()
 	}
-	if (ws_route !== undefined && ws_route.OPEN){
+	if (ws_route !== undefined && ws_route.OPEN) {
 		ws_route.close()
 	}
 	server.close()
@@ -45,7 +45,7 @@ test('Get item by name Test - 200', done => {
 	test_route(requestMessage, 200, 'OK', omelette, done)
 });
 
-test('Get item by name Test - 200 (check-service)', done =>{
+test('Get item by name Test - 200 (check-service)', done => {
 	const requestMessage = createRequestMessage(Service.MENU, MenuServiceMessages.GET_ITEM_BY_NAME.toString(), omelette.name)
 	test_check_service(requestMessage, 200, 'OK', omelette, done)
 })

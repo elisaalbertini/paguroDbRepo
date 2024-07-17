@@ -37,10 +37,10 @@ beforeEach(async () => {
 })
 
 afterEach(() => {
-	if (ws !== undefined && ws.readyState == ws.OPEN){
+	if (ws !== undefined && ws.readyState == ws.OPEN) {
 		ws.close()
 	}
-	if(ws1 !== undefined && ws1.readyState == ws1.OPEN){
+	if (ws1 !== undefined && ws1.readyState == ws1.OPEN) {
 		ws1.close()
 	}
 	server.close()
