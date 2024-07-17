@@ -16,14 +16,14 @@ jobs:
     steps:
       - name: Setup
         uses: DistributedCafe/DistributedCafeProject/.github/setupAction@develop
-      
+
+      - name: Coverage server
+        uses: DistributedCafe/DistributedCafeProject/.github/serverTest@develop
+
       - name: Gradle (build and coverage)
         run: |
           chmod +x gradlew
           ./gradlew jacocoTestReport
-
-      - name: Coverage server
-        uses: DistributedCafe/DistributedCafeProject/.github/serverTest@develop
 
       - name: Kill node 
         run: killall node
