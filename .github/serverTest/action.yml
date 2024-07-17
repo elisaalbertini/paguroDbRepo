@@ -18,21 +18,21 @@ runs:
       working-directory: server
       run: |
         npm install
-        npx start &
+        npm start &
       shell: bash
 
     - name: Start orders-service
       working-directory: orders-service
       run: |
         npm install
-        npx start &
+        npm start &
       shell: bash
 
     - name: Start menu-service
       working-directory: menu-service
       run: |
         npm install
-        npx start &
+        npm start &
       shell: bash
 
     - name: Run Tests websocket
