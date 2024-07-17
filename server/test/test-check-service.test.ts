@@ -27,6 +27,7 @@ beforeAll(async () => {
 afterEach(() => {
 	ws.close()
 	server.close()
+	wss.close()
 })
 beforeEach(() => {
 	server = createServer(app);

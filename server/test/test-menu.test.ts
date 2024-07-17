@@ -29,6 +29,7 @@ afterEach(() => {
 		ws_route.close()
 	}
 	server.close()
+	wss.close()
 })
 
 beforeEach(() => {

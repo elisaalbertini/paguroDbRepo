@@ -44,6 +44,7 @@ afterEach(() => {
 		ws1.close()
 	}
 	server.close()
+	wss.close()
 })
 
 afterAll(() => { closeMongoClient() })
