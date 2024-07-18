@@ -22,16 +22,10 @@ beforeAll(async () => {
 })
 
 afterEach(() => {
-	if (ws_check_service !== undefined && ws_check_service.OPEN) {
-		ws_check_service.close()
-	}
-	if (ws_route !== undefined && ws_route.OPEN) {
-		ws_route.close()
-	}
+	ws_check_service.close()
+	ws_route.close()
 	server.close()
-	wss.close()
 })
-
 beforeEach(() => {
 	server = createServer(app);
 	wss = new WebSocketServer({ server });
@@ -42,25 +36,17 @@ afterAll(() => { closeMongoClient() })
 // read
 test('Get item by name Test - 200', done => {
 	const requestMessage = createRequestMessage(Service.MENU, MenuServiceMessages.GET_ITEM_BY_NAME.toString(), omelette.name)
+	test_check_service(requestMessage, 200, 'OK', omelette, done)
 	test_route(requestMessage, 200, 'OK', omelette, done)
 });
 
-test('Get item by name Test - 200 (check-service)', done => {
-	const requestMessage = createRequestMessage(Service.MENU, MenuServiceMessages.GET_ITEM_BY_NAME.toString(), omelette.name)
-	test_check_service(requestMessage, 200, 'OK', omelette, done)
-})
-
-
 // write
 test('Add new item Test - 200', done => {
+	test_check_service(
+		createRequestMessage(Service.MENU, MenuServiceMessages.CREATE_ITEM.toString(), boiledEgg), 200, 'OK', boiledEgg, done)
 	test_route(
 		createRequestMessage(Service.MENU, MenuServiceMessages.CREATE_ITEM.toString(), friedEgg), 200, 'OK', friedEgg, done)
 });
-
-test('Add new item Test - 200 (check-service)', done => {
-	test_check_service(
-		createRequestMessage(Service.MENU, MenuServiceMessages.CREATE_ITEM.toString(), boiledEgg), 200, 'OK', boiledEgg, done)
-})
 
 function test_check_service(requestMessage: RequestMessage, code: number, message: string, output: any, callback: jest.DoneCallback) {
 	wss.on('connection', (ws) => {
@@ -96,4 +82,3 @@ function test_route(requestMessage: RequestMessage, code: number, message: strin
 
 	ws_route.on('open', () => ws_route.send(JSON.stringify(requestMessage)));
 }
-

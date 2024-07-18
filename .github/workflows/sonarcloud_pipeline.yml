@@ -1,6 +1,10 @@
 name: Sonarcloud workflow
 
 on:
+  push:
+    branches:
+      - main
+      - develop
   pull_request:
     branches:
       - main
@@ -11,15 +15,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup
-        uses: elisaalbertini/paguroDbRepo/.github/setupAction@main
-
-      - name: Coverage server
-        uses: elisaalbertini/paguroDbRepo/.github/serverTest@main
-
+        uses: DistributedCafe/DistributedCafeProject/.github/setupAction@develop
+      
       - name: Gradle (build and coverage)
         run: |
           chmod +x gradlew
           ./gradlew jacocoTestReport
+
+      - name: Coverage server
+        uses: DistributedCafe/DistributedCafeProject/.github/serverTest@develop
 
       - name: Kill node 
         run: killall node

@@ -37,14 +37,9 @@ beforeEach(async () => {
 })
 
 afterEach(() => {
-	if (ws !== undefined && ws.readyState == ws.OPEN) {
-		ws.close()
-	}
-	if (ws1 !== undefined && ws1.readyState == ws1.OPEN) {
-		ws1.close()
-	}
+	ws.close()
+	ws1.close()
 	server.close()
-	wss.close()
 })
 
 afterAll(() => { closeMongoClient() })
@@ -53,12 +48,8 @@ afterAll(() => { closeMongoClient() })
 test('Get all orders - 200', done => {
 	let requestMessage = createRequestMessage(Service.ORDERS, OrdersServiceMessages.GET_ALL_ORDERS.toString(), '')
 	startWebsocket(requestMessage, 200, "OK", addId(order, insertedId), done)
-});
-
-test('Get all orders - 200 (check-service)', done => {
-	let requestMessage = createRequestMessage(Service.ORDERS, OrdersServiceMessages.GET_ALL_ORDERS.toString(), '')
 	createConnectionAndCall(requestMessage, 200, "OK", addId(order, insertedId), done)
-})
+});
 
 //write
 test('Create Order Test - 200', done => {
@@ -79,8 +70,7 @@ test('Create Order Test - 200', done => {
 		createRequestMessage(Service.ORDERS, OrdersServiceMessages.CREATE_ORDER.toString(), newOrder), 200, "OK", newOrder, done)
 });
 
-
-test('Create Order Test (check-service) - 200', done => {
+test('Create Order Test 2 - 200', done => {
 	const newOrder = {
 		"customerContact": "c2",
 		"price": 1,
@@ -98,18 +88,11 @@ test('Create Order Test (check-service) - 200', done => {
 		createRequestMessage(Service.ORDERS, OrdersServiceMessages.CREATE_ORDER.toString(), newOrder), 200, "OK", newOrder, done)
 });
 
-
 test('Create Order Test - 400', done => {
 	let requestMessage = createRequestMessage(Service.ORDERS, OrdersServiceMessages.CREATE_ORDER.toString(), newWrongOrder)
 	startWebsocket(requestMessage, 400, "ERROR_WRONG_PARAMETERS", "", done)
-})
-
-
-test('Create Order Test - 400 (check-service)', done => {
-	let requestMessage = createRequestMessage(Service.ORDERS, OrdersServiceMessages.CREATE_ORDER.toString(), newWrongOrder)
 	createConnectionAndCall(requestMessage, 400, "ERROR_WRONG_PARAMETERS", "", done)
-})
-
+});
 
 function startWebsocket(requestMessage: RequestMessage, code: number, message: string, data: any, callback: jest.DoneCallback) {
 	ws1 = new WebSocket('ws://localhost:3000');

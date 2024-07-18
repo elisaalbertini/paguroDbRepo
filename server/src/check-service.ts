@@ -122,10 +122,6 @@ function handleNewOrder(promise: Promise<any>, input: any, ws: WebSocket) {
 					data: JSON.stringify(res.data)
 				}
 				ws.send(JSON.stringify(msg))
-			}).catch((error) => {
-				console.log("error warehouse")
-				const msg = createErrorMessage(error)
-				ws.send(JSON.stringify(msg))
 			})
 		}
 	}).catch((error) => {
