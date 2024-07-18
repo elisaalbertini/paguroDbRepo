@@ -11,6 +11,7 @@ jobs:
     strategy:
       matrix:
         dir: ['server', 'manager-application', 'orders-service', 'menu-service']
+      max-parallel: 1
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

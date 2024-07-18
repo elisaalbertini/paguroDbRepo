@@ -21,7 +21,7 @@ export async function getMenuItems() {
 }
 
 /**
- * Closes the connection
+ * Close the connection
  */
 export function closeMongoClient() {
 	client.close()

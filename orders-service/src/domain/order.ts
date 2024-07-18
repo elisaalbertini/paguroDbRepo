@@ -6,7 +6,7 @@ export interface Order extends InsertOrder {
 }
 
 /**
- * this interface represents the information needed to insert an order into the repository
+ * This interface represents the information needed to insert an order into the repository
  */
 export interface InsertOrder extends NewOrder {
 	state: OrderState,

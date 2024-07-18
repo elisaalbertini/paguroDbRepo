@@ -4,7 +4,7 @@ import WebSocket, { Server as WebSocketServer } from 'ws';
 import { check_service } from './check-service';
 
 /**
- * Script used to initialize the server
+ * script used to initialize the server
  */
 const app = express();
 const server = createServer(app);
