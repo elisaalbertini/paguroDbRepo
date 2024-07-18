@@ -1,12 +1,7 @@
 name: Deploy Javadoc
 
 on:
-  push:
-    branches:
-      - main
-      - develop
-permissions:
-  contents: write
+  workflow_call:
 jobs:
   publish:
     runs-on: ubuntu-latest
