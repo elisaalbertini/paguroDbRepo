@@ -5,8 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "test": "jest --runInBand",
-    "start": "npx ts-node ./src/server.ts",
-    "prepare": "ts-patch install && typia patch"
+    "start": "npx ts-node ./src/server.ts"
   },
   "author": "Elisa Albertini and Eleonora Bertoni",
   "license": "MIT",
