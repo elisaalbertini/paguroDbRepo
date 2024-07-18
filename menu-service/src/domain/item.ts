@@ -1,5 +1,5 @@
 /**
- * This interface represents an item
+ * his interface represents an item
  */
 export interface Item {
 	name: string,

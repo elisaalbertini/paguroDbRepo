@@ -1,5 +1,5 @@
 /**
- * this interface represents an ingredient with its name and quantity
+ * his interface represents an ingredient with its name and quantity
  */
 export interface Ingredient {
 	name: string;

@@ -12,7 +12,7 @@ const httpMenu = axios.create({
 	baseURL: 'http://localhost:8085'
 })
 /**
- * this function is used to call the correct microservice and API based on the received RequestMessage. 
+ * This function is used to call the correct microservice and API based on the received RequestMessage. 
  * It also sends the answer back through the websocket
 	  @param message sent by the client through the websocket
 	@param ws the websocket communication used

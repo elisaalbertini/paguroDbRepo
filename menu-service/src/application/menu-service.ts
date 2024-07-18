@@ -8,7 +8,7 @@ import * as repository from "../repository/repository";
 type ServiceResponse<T> = { data?: T, message: MenuMessage };
 
 /**
- * Service functionality to add a new item given its information:
+ * Service functinality to add a new item given its information:
  * @param name
  * @param price 
  * @param recipe
