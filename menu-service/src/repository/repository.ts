@@ -56,3 +56,63 @@ export async function getItemByName(name: string): Promise<RepositoryResponse<It
 		return { message: MenuMessage.ERROR_ITEM_NOT_FOUND };
 	}
 }
+
+/**
+ * It returs a Promise with the repository response and all the items in the repository
+ * @returns MenuMessage.OK if there are items, MenuMessage.EMPTY_ORDERS_DB otherwise
+ */
+export async function getAllItems(): Promise<RepositoryResponse<Item[]>> {
+
+	const menuItems = await (await collection).find({}, { projection: { _id: 0 } }).toArray() as Item[]
+
+	if (menuItems.length > 0) {
+		return { data: menuItems, message: MenuMessage.OK }
+	} else {
+		return { message: MenuMessage.EMPTY_MENU_DB };
+	}
+}
+
+/**
+ * It returs a Promise with the repository response and all the updated item
+ * @param name 
+ * @param item 
+ * @returns MenuMessage.OK if the item was successfully updated, MenuMessage.ERROR_ITEM_NOT_FOUND otherwise
+ */
+export async function updateItem(name: string, item: any): Promise<RepositoryResponse<Item>> {
+
+	const filter = { name: name }
+	const options = { upsert: false }
+
+	const res = await (await collection).updateOne(filter, item, options)
+
+	if (res.modifiedCount == 1) {
+		const data = await getItemByName(name)
+		return { data: data.data, message: MenuMessage.OK }
+	} else {
+		return { message: MenuMessage.ERROR_ITEM_NOT_FOUND };
+	}
+}
+
+/**
+ * It returs a Promise with the repository response and all the items in the repository all recipes 
+ * whose ingredients are contained in the available ingredient list
+ * @param availableIngredients 
+ * @returns MenuMessage.OK if there are items, MenuMessage.EMPTY_MENU_DB otherwise
+ */
+export async function getAllAvailableItems(availableIngredients: string[]): Promise<RepositoryResponse<Item[]>> {
+
+	const items = (await (await collection).find({
+		$expr: {
+			$setIsSubset: [
+				{ $map: { input: "$recipe", as: "recipe", in: "$$recipe.ingredient_name" } },
+				availableIngredients
+			]
+		}
+	}, { projection: { _id: 0 } }).toArray())
+
+	if (items.length > 0) {
+		return { data: items, message: MenuMessage.OK }
+	} else {
+		return { message: MenuMessage.EMPTY_MENU_DB };
+	}
+}

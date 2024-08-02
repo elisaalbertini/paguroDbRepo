@@ -19,28 +19,62 @@ export interface ResponseMessage {
 }
 
 /**
- * This enum lists the different messages handled by the warehouse microservice
+ * Different messages handled by the warehouse microservice
  */
-export enum WarehouseServiceMessages {
-	CREATE_INGREDIENT,
-	GET_ALL_INGREDIENT,
-	DECREASE_INGREDIENTS_QUANTITY,
-	GET_ALL_AVAILABLE_INGREDIENT,
-	RESTOCK_INGREDIENT
+export const WarehouseServiceMessages = {
+	CREATE_INGREDIENT: 'CREATE_INGREDIENT',
+	GET_ALL_INGREDIENT: 'GET_ALL_INGREDIENT',
+	DECREASE_INGREDIENTS_QUANTITY: 'DECREASE_INGREDIENTS_QUANTITY',
+	GET_ALL_AVAILABLE_INGREDIENT: 'GET_ALL_AVAILABLE_INGREDIENT',
+	RESTOCK_INGREDIENT: 'RESTOCK_INGREDIENT'
+}
+Object.freeze(WarehouseServiceMessages)
+
+/**
+ * Different messages handled by the orders microservice
+ */
+export const OrdersServiceMessages = {
+	CREATE_ORDER: 'CREATE_ORDER',
+	GET_ALL_ORDERS: 'GET_ALL_ORDERS',
+	PUT_ORDER: 'PUT_ORDER',
+	GET_ORDER_BY_ID: 'GET_ORDER_BY_ID'
+}
+Object.freeze(OrdersServiceMessages)
+
+/**
+ * Different messages handled by the menu microservice
+ */
+export const MenuServiceMessages = {
+	CREATE_ITEM: 'CREATE_ITEM',
+	GET_ITEM_BY_NAME: 'GET_ITEM_BY_NAME',
+	UPDATE_ITEM: 'UPDATE_ITEM',
+	GET_ITEMS: 'GET_ITEMS',
+	GET_AVAILABLE_ITEMS: 'GET_AVAILABLE_ITEMS'
+}
+Object.freeze(MenuServiceMessages)
+
+
+/**
+ * Different messages sent to log a frontend connection
+ */
+export const Frontend = {
+	MANAGER: 'MANAGER',
+	EMPLOYEE: 'EMPLOYEE',
+	CUSTOMER: 'CUSTOMER',
+}
+Object.freeze(Frontend)
+
+/**
+ * This interface represents the notification sent when an element is missing in the warehouse
+ */
+export interface MissingIngredientNotification {
+	message: string,
+	data: string
 }
 
 /**
- * This enum lists the different messages handled by the orders microservice
+ * This interface represents the first message sent by a frontend
  */
-export enum OrdersServiceMessages {
-	CREATE_ORDER,
-	GET_ALL_ORDERS,
-}
-
-/**
- * This enum lists the different messages handled by the menu microservice
- */
-export enum MenuServiceMessages {
-	CREATE_ITEM,
-	GET_ITEM_BY_NAME,
+export interface Log {
+	message: string
 }

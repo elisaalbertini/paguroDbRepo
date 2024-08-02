@@ -6,7 +6,7 @@ export interface Order extends InsertOrder {
 }
 
 /**
- * This interface represents the information needed to insert an order into the repository
+ * this interface represents the information needed to insert an order into the repository
  */
 export interface InsertOrder extends NewOrder {
 	state: OrderState,
@@ -16,7 +16,7 @@ export interface InsertOrder extends NewOrder {
  * this interface represents the information needed to create a new pending order
  */
 export interface NewOrder {
-	customerContact: string,
+	customerEmail: string,
 	price: number,
 	type: OrderType,
 	items: OrderItem[]

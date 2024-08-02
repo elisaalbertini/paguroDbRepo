@@ -9,7 +9,7 @@ import { Ingredient } from '../../utils/Ingredient';
 import { AddButtonComponent } from '../add-button/add-button.component';
 
 /**
- * Component that implements a table displaying the ingredient 
+ * Component that implements a table displaying the ingredients 
  * present in the warehouse. If the warehouse is empty or an 
  * error occurs it shows it.
  */
@@ -45,7 +45,7 @@ export class TableComponent {
 		let ingredients: Ingredient[]
 		const initialRequest: RequestMessage = {
 			client_name: Service.WAREHOUSE,
-			client_request: WarehouseServiceMessages.GET_ALL_INGREDIENT.toString(),
+			client_request: WarehouseServiceMessages.GET_ALL_INGREDIENT,
 			input: ''
 		}
 		this.ws.onopen = function() {

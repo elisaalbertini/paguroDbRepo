@@ -6,9 +6,10 @@ on:
       - main
       - develop
 jobs:
-  ktlintCheck:
+
+  ktlintAndJavaCheck:
     name: check format kotlin
-    uses: ./.github/workflows/ktlint_check_pipeline.yml
+    uses: ./.github/workflows/ktlint_and_java_check_pipeline.yml
 
   tsFormatCheck:
     name: check format ts
@@ -40,6 +41,6 @@ jobs:
       - menuServiceTest
       - ordersServiceTest
       - serverTest
-      - ktlintCheck
+      - ktlintAndJavaCheck
     name: test kotlin with MongoDB
     uses: ./.github/workflows/mongodb_pipeline.yml

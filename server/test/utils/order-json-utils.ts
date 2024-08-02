@@ -22,7 +22,7 @@ export async function addIdandState(order: any) {
  * @returns the modified order as a string
  */
 export function addId(order: any, id: string) {
-	let output = order
+	let output = { ...order }
 	output["_id"] = id
 	return "[" + JSON.stringify(output) + "]"
 }

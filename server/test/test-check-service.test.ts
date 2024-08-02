@@ -91,10 +91,10 @@ test('Decrease Ingredients Quantity Test - 200', done => {
 	createConnectionAndCall(requestMessage, 200, 'OK', output, done)
 
 });
-function createRequestMessage(request: WarehouseServiceMessages, input: string): RequestMessage {
+function createRequestMessage(request: string, input: string): RequestMessage {
 	return {
 		client_name: Service.WAREHOUSE,
-		client_request: request.toString(),
+		client_request: request,
 		input: input
 	}
 }
@@ -116,6 +116,7 @@ function createConnectionAndCall(requestMessage: RequestMessage, code: number, m
 
 	ws = new WebSocket('ws://localhost:8081');
 	ws.on('open', () => {
-		check_service(requestMessage, ws)
+		const managerWs = Array()
+		check_service(requestMessage, ws, managerWs)
 	})
 }

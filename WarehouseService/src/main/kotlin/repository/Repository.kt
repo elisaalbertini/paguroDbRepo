@@ -7,7 +7,7 @@ import domain.Ingredient
  */
 interface Repository {
     /**
-     * @return a List of all the ingredients and WarehouseMessage.OK
+     * @return a list of all the ingredients and WarehouseMessage.OK
      */
     suspend fun getAllIngredients(): RepositoryResponse<List<Ingredient>>
 

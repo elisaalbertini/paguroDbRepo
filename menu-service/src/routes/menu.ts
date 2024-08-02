@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express"
 import { StatusCodes } from 'http-status-codes';
 import { assertEquals } from 'typia'
-import { Item } from "../domain/item";
-import { addNewItem, getItemByName } from "../application/menu-service";
+import { IngredientInRecipe, Item } from "../domain/item";
+import { addNewItem, getItemByName, getAllMenuItems, updateMenuItem, getAllAvailableMenuItems } from "../application/menu-service";
 import { MenuMessage } from "../../menu-message";
 
 const router = express.Router();
@@ -44,12 +44,62 @@ function serviceMessageToCode(service_message: string) {
 		case MenuMessage.ERROR_ITEM_NOT_FOUND: {
 			return StatusCodes.NOT_FOUND
 		}
+		case MenuMessage.EMPTY_MENU_DB: {
+			return StatusCodes.NOT_FOUND
+		}
 		default: {
 			return StatusCodes.BAD_REQUEST
 		}
 	}
 
 }
+
+/**
+ * GET '/menu' API handles the retrieval of all the Items delegating to the service
+ */
+router.get('/', async (req: Request, res: Response) => {
+	let service_res = await getAllMenuItems()
+	sendResponse(res, service_res.message, service_res.data)
+})
+
+/**
+ * PUT '/menu' API handles the update of an item delegating to the service
+ */
+router.put('/', async (req: Request, res: Response) => {
+
+	try {
+		const name = assertEquals<string>(req.body.name)
+		const recipe = assertEquals<IngredientInRecipe[]>(req.body.recipe)
+		const price = assertEquals<number>(req.body.price)
+		const set = {
+			$set: {
+				recipe: recipe,
+				price: price
+			}
+		}
+		let service_res = await updateMenuItem(name, set)
+		sendResponse(res, service_res.message, service_res.data)
+	} catch (error) {
+		sendResponse(res, MenuMessage.ERROR_WRONG_PARAMETERS)
+	}
+
+
+})
+
+/**
+ * GET '/available/:availableIngredients' API handles the retrieval of an Item 
+ * given the parameter availableIngredients delegating to the service
+ */
+router.get('/available/:availableIngredients', async (req: Request, res: Response) => {
+	try {
+		const availableIng = assertEquals<string[]>(JSON.parse(req.params['availableIngredients']))
+		let service_res = await getAllAvailableMenuItems(availableIng)
+		sendResponse(res, service_res.message, service_res.data)
+	} catch (error) {
+		sendResponse(res, MenuMessage.ERROR_WRONG_PARAMETERS)
+	}
+
+})
 
 export default router;
 

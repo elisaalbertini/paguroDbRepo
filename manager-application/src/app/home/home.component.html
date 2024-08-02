@@ -1,9 +1,21 @@
 <mat-toolbar class="navbar">
     <span>Manager application</span>
 </mat-toolbar>
-<div class="table">
-    <h1>Warehouse</h1>
-    <dataTable></dataTable>
-</div>
+  <nav
+  mat-tab-nav-bar
+  [tabPanel]="tabPanel">
+  @for (link of links; track link) {
+  <a
+    mat-tab-link
+    (click)="setActiveLink(link.path)"
+    [active]="checkIfActive(link.path)"
+    [routerLink]="link.path">
+    {{ link.label }}
+  </a>
+  }
+</nav>
+<mat-tab-nav-panel #tabPanel>
+  <router-outlet></router-outlet>
+</mat-tab-nav-panel>
 
   

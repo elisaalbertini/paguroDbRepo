@@ -14,6 +14,7 @@ import { RequestMessage, ResponseMessage, WarehouseServiceMessages } from '../..
 import { Service } from '../../utils/service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { checkWsConnectionAndSend } from '../../utils/send';
 
 /**
  * Component that implements a button that manages 
@@ -78,7 +79,10 @@ export class Dialog {
 			window.location.reload()
 		}
 		const openDialog = (msg: ResponseMessage) => {
-			this.dialog.open(ErrorDialog, msg);
+			this.dialog.open(ErrorDialog, {
+				data:
+					msg
+			});
 		}
 		if (this.addQuantity > 0) {
 			const input = {
@@ -87,10 +91,12 @@ export class Dialog {
 			}
 			const request: RequestMessage = {
 				client_name: Service.WAREHOUSE,
-				client_request: WarehouseServiceMessages.RESTOCK_INGREDIENT.toString(),
+				client_request: WarehouseServiceMessages.RESTOCK_INGREDIENT,
 				input: JSON.stringify(input)
 			}
-			data.ws.send(JSON.stringify(request))
+			if (!checkWsConnectionAndSend(request, data.ws)) {
+				closeDialog()
+			}
 			data.ws.onmessage = function(e) {
 				const response = JSON.parse(e.data) as ResponseMessage
 				if (response.code == 200) {

@@ -1,4 +1,4 @@
-name: Deploy Javadoc
+name: Deploy Dokka
 
 on:
   workflow_call:

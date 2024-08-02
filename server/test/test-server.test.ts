@@ -100,10 +100,10 @@ function startWebsocket(requestMessage: RequestMessage, code: number, message: s
 	});
 }
 
-function createRequestMessage(request: WarehouseServiceMessages, input: string): RequestMessage {
+function createRequestMessage(request: string, input: string): RequestMessage {
 	return {
 		client_name: Service.WAREHOUSE,
-		client_request: request.toString(),
+		client_request: request,
 		input: input
 	}
 }

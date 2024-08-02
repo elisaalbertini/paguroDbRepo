@@ -1,4 +1,4 @@
-name: Ktlint check workflow
+name: Ktlint and Java check workflow
 
 on:
   workflow_call:
@@ -16,7 +16,11 @@ jobs:
         with:
           java-version: 18
           distribution: 'temurin'
-      - name: Check format
+      - name: Ktlint Check format
         run: |
           chmod +x gradlew
           ./gradlew ktlintCheck
+      - name: Java Check format
+        run: |
+          chmod +x gradlew
+          ./gradlew verifyGoogleJavaFormat

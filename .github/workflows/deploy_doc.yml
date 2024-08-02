@@ -1,4 +1,4 @@
-name: Deploy Code Documentation 
+name: Deploy Documentation 
 
 on:
   push:
@@ -9,6 +9,9 @@ permissions:
   contents: write
 
 jobs:
+  javaDoc:
+    name: deploy javadoc
+    uses: ./.github/workflows/javadoc.yml
   kotlinDoc:
     name: deploy kotlin doc
     uses: ./.github/workflows/kotlin_doc.yml
