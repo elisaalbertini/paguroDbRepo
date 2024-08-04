@@ -18,6 +18,7 @@ let employeeWs = Array()
 let customerWs = Array()
 
 function checkMessage(msg: string, ws: WebSocket) {
+	console.log("")
 	switch (msg) {
 		case Frontend.MANAGER: {
 			managerWs.push(ws)
