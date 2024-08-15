@@ -1,0 +1,46 @@
+name: Main project workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+jobs:
+
+  ktlintAndJavaCheck:
+    name: check format kotlin
+    uses: ./.github/workflows/ktlint_and_java_check_pipeline.yml
+
+  tsFormatCheck:
+    name: check format ts
+    uses: ./.github/workflows/ts_format_check_pipeline.yml
+
+  serverTest:
+    needs:
+      - tsFormatCheck
+    name: test server
+    uses: ./.github/workflows/server_test_pipeline.yml
+
+  ordersServiceTest:
+    needs:
+      - serverTest
+      - tsFormatCheck
+    name: test orders-service
+    uses: ./.github/workflows/orders_service_test_pipeline.yml
+
+  menuServiceTest:
+    needs:
+      - ordersServiceTest
+      - serverTest
+      - tsFormatCheck
+    name: test menu-service
+    uses: ./.github/workflows/menu_service_test_pipeline.yml
+
+  kotlinTest:
+    needs:
+      - menuServiceTest
+      - ordersServiceTest
+      - serverTest
+      - ktlintAndJavaCheck
+    name: test kotlin with MongoDB
+    uses: ./.github/workflows/mongodb_pipeline.yml

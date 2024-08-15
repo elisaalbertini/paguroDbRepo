@@ -1,0 +1,42 @@
+<add-menu-item-button [ws]="ws"></add-menu-item-button>
+<div *ngIf="!display">
+  <mat-spinner class="spinner"></mat-spinner>
+</div>
+<div *ngIf="display && error" class="empty">
+  {{errorMessage}}
+</div>
+<div *ngIf="display && !error">
+  <table mat-table [dataSource]="dataSource">  
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+  
+    <!-- Recipe Column -->
+    <ng-container matColumnDef="recipe">
+      <th mat-header-cell *matHeaderCellDef> Recipe </th>
+      <td mat-cell *matCellDef="let element"> {{element.recipe}} </td>
+    </ng-container>
+
+    <!-- Price Column -->
+    <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+      </ng-container>  
+      
+    <!-- Button Column -->  
+    <ng-container matColumnDef="update">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element"> 
+        <update-menu-item-button [ws]=ws [item]="element"></update-menu-item-button>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+  
+  

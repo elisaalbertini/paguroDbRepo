@@ -1,0 +1,9 @@
+.cart{
+    margin-left: auto; 
+    margin-right: 0;
+}
+
+.error{
+    color: red;
+    font-weight: bold;
+}

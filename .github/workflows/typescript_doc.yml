@@ -1,0 +1,27 @@
+name: Deploy Typedoc
+
+on:
+  workflow_call:
+jobs:
+  build-and-deploy:
+    strategy:
+      matrix:
+        dir: ['server', 'manager-application', 'orders-service', 'menu-service']
+      max-parallel: 1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install and Build
+        working-directory: ${{ matrix.dir }}
+        run: |
+          npm install
+          npx typedoc --entryPointStrategy expand ./src
+        
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ./${{ matrix.dir }}/docs
+          branch: report
+          target-folder: ./docs/typedoc/${{ matrix.dir }}

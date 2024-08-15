@@ -1,0 +1,20 @@
+.card{
+    width: 50%;
+    padding-left: 3%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+button{
+    background-color: #ff4081 !important;
+    color: white !important;
+}
+
+.content{
+    margin-top: 2%;
+}
+
+.error{
+    color: red;
+    font-weight: bold;
+}

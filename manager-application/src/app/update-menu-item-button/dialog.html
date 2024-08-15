@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>Update {{data.item.name}}</h2>
+<mat-dialog-content>
+    <mat-label>Recipe</mat-label>
+    <p *ngIf="errorEmpty" class="error">
+        Menu database is empty!
+    </p>
+    <p *ngIf="error" class="error">
+        No ingredient selected!
+    </p>
+    <div *ngIf="!errorEmpty">
+        <section  *ngFor="let ingredient of ingredients; index as i">
+            <p>
+                <mat-checkbox (change)="onCheckChange(ingredient.name)" class="check">{{ingredient.name}}</mat-checkbox>
+                <mat-form-field appearance="outline" class="qty">
+                    <input type="number" matInput value=1 min="1" max="999" [(ngModel)]="selectedQuantities[ingredient.name]">
+                </mat-form-field>
+            </p>
+        </section>
+    </div>
+    <p *ngIf="errorPrice" class="error">
+        Illegal price!
+    </p>
+    <p>
+        <mat-form-field class="form" appearance="outline">
+            <mat-label>Price</mat-label>
+            <input type="number" matInput value=1 min="1" max="999" [(ngModel)]="price">
+            <mat-hint>Ex. 10</mat-hint>
+        </mat-form-field>
+    </p>
+    <button mat-raised-button (click)="updateItem()" class="add-button" [disabled]="errorEmpty">
+        Update
+    </button>
+    
+</mat-dialog-content>
+
