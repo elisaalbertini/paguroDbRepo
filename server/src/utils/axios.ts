@@ -19,13 +19,13 @@ export const httpMenu = createAxios(process.env.MENU_ADDRESS, '8085')
 
 function createAxios(address: string | undefined, port: string): AxiosInstance {
 	return axios.create({
-		baseURL: 'http://' + (address != undefined ? address : 'localhost') + ':' + port
+		baseURL: 'https://' + (address != undefined ? address : 'localhost') + ':' + port
 	})
 }
 /**
  * This function catches the error of a promise and sends a message
- * @param promise 
- * @param ws 
+ * @param promise
+ * @param ws
  */
 export function catchErrorAndSendMsg(promise: Promise<any>, ws: WebSocket) {
 	promise.catch((e) => ws.send(checkErrorMessage(e)))
