@@ -6,7 +6,7 @@ import WebSocket from 'ws'
  * Connection with the warehouse microservice
  */
 export const http = axios.create({
-	baseURL: 'http://' + process.env.WAREHOUSE_ADDRESS != undefined ? process.env.WAREHOUSE_ADDRESS : 'localhost' + ':8080'
+	baseURL: 'http://' + (process.env.WAREHOUSE_ADDRESS != undefined ? process.env.WAREHOUSE_ADDRESS : 'localhost') + ':8080'
 })
 
 /**
