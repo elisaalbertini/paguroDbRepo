@@ -1,29 +1,27 @@
-import axios from 'axios'
+import axios, { AxiosInstance } from 'axios'
 import { checkErrorMessage } from './handlers'
 import WebSocket from 'ws'
 
 /**
  * Connection with the warehouse microservice
  */
-export const http = axios.create({
-	baseURL: 'http://' + (process.env.WAREHOUSE_ADDRESS != undefined ? process.env.WAREHOUSE_ADDRESS : 'localhost') + ':8080'
-})
+export const http = createAxios(process.env.WAREHOUSE_ADDRESS, '8080')
 
 /**
  * Connection with the orders microservice
  */
-export const httpOrders = axios.create({
-	baseURL: 'http://' + (process.env.ORDER_ADDRESS != undefined ? process.env.ORDER_ADDRESS : 'localhost') + ':8090'
-})
+export const httpOrders = createAxios(process.env.ORDER_ADDRESS, '8090')
 
 /**
  * Connection with the menu microservice
  */
-export const httpMenu = axios.create({
-	baseURL: 'http://' + (process.env.MENU_ADDRESS != undefined ? process.env.MENU_ADDRESS : 'localhost') + ':8085'
-})
+export const httpMenu = createAxios(process.env.MENU_ADDRESS, '8085')
 
-
+function createAxios(address: string | undefined, port: string): AxiosInstance {
+	return axios.create({
+		baseURL: 'http://' + (address != undefined ? address : 'localhost') + ':' + port
+	})
+}
 /**
  * This function catches the error of a promise and sends a message
  * @param promise 
