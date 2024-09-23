@@ -4,7 +4,6 @@ on:
   workflow_call:
 jobs:
   build:
-    strategy:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout
