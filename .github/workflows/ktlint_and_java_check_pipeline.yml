@@ -23,4 +23,4 @@ jobs:
       - name: Java Check format
         run: |
           chmod +x gradlew
-          ./gradlew verifyGoogleJavaFormat
+          ./gradlew ./gradlew spotlessJavaCheck
