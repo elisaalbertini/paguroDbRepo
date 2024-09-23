@@ -5,7 +5,14 @@
  * @param collectionName name of the collection
  */
 data class MongoInfo(
-    var mongoAddress: String = if (System.getenv("DB_CONNECTION_ADDRESS") == null) "mongodb://localhost:27017" else System.getenv("DB_CONNECTION_ADDRESS"),
+    var mongoAddress: String =
+        if (System.getenv("DB_CONNECTION_ADDRESS") == null) {
+            "mongodb://localhost:27017"
+        } else {
+            System.getenv(
+                "DB_CONNECTION_ADDRESS",
+            )
+        },
     val databaseName: String = "Warehouse",
     val collectionName: String = "Ingredient",
 )
