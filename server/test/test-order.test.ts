@@ -1,5 +1,6 @@
 import { Service } from '../src/utils/service'
-import { OrdersServiceMessages, ResponseMessage } from '../src/utils/messages'
+import { OrdersServiceMessages } from '../src/utils/messages'
+import { ResponseMessage } from '../src/schema/messages'
 import { add, cleanCollection, closeMongoClient, DbCollections, DbNames, getCollection } from './utils/db-connection'
 import {
 	closeServer, closeWs, createConnectionAndCall, createConnectionAndCallNewOrder, createRequestMessage, createResponseMessage,
@@ -92,23 +93,23 @@ test('Create Order Test (check-service) - 200', done => {
 test('Create Order Test (check-service) - 400 - Missing Ingredients', done => {
 	cleanCollection(DbNames.WAREHOUSE, DbCollections.WAREHOUSE).then(() => {
 		testCheckService(OrdersServiceMessages.CREATE_ORDER, newOrderOmelette,
-			createResponseMessage(ERROR_MISSING_INGREDIENTS, ""), done)
+			createResponseMessage(ERROR_MISSING_INGREDIENTS, undefined), done)
 	})
 })
 
 test('Create Order Test - 400 - Wrong parameters', done => {
-	testApi(OrdersServiceMessages.CREATE_ORDER, newWrongOrder, createResponseMessage(ERROR_WRONG_PARAMETERS, ""), done)
+	testApi(OrdersServiceMessages.CREATE_ORDER, newWrongOrder, createResponseMessage(ERROR_WRONG_PARAMETERS, undefined), done)
 
 })
 
 test('Create Order Test - 400 - Wrong parameters (check-service)', done => {
 	testCheckService(OrdersServiceMessages.CREATE_ORDER, newWrongOrder,
-		createResponseMessage(ERROR_WRONG_PARAMETERS, ""), done)
+		createResponseMessage(ERROR_WRONG_PARAMETERS, undefined), done)
 })
 
 test('Create Order Test - 400 - Missing ingredients (check-service)', done => {
 	testCheckService(OrdersServiceMessages.CREATE_ORDER, newOrderMissingIngredient,
-		createResponseMessage(ERROR_MISSING_INGREDIENTS, ""), done)
+		createResponseMessage(ERROR_MISSING_INGREDIENTS, undefined), done)
 })
 
 test('Put Order Test - 200', done => {

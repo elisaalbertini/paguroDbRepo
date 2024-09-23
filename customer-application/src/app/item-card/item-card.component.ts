@@ -5,8 +5,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Item } from '../../utils/Item';
+import { Item } from '../../utils/schema/item';
 import { beautifyDbName } from '../../utils/utils';
+import * as cartStorage from '../../utils/cart-storage'
 
 /**
  * Component that implements the card of a menu item.
@@ -53,10 +54,7 @@ export class ItemCardComponent {
         "price": this.item.price
       }
 
-      let cart: any[] = Array()
-      if (localStorage.getItem("cart") != null) {
-        cart = JSON.parse(localStorage.getItem("cart")!)
-      }
+      let cart: any[] = cartStorage.getCartStorage()
 
       if (!this.idItemAdded(cart)) {
         cart.push(newOrderItem)
@@ -68,7 +66,7 @@ export class ItemCardComponent {
         })
       }
 
-      localStorage.setItem("cart", JSON.stringify(cart))
+      cartStorage.setCartStorage(cart)
     } else {
       this.error = true
     }

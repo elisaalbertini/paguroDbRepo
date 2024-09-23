@@ -1,5 +1,5 @@
-import { IArray } from "./IArray"
-import { IngredientInRecipe } from "./Item"
+import { IArray } from "./array"
+import { IngredientInRecipe } from "./schema/item"
 
 /**
  * This function builds an array of IngredientInRecipe given the list of ingredient names and their quantity
@@ -18,6 +18,19 @@ export function buildRecipe(selectedQuantities: IArray, selectedIngredients: str
 			recipe.push(newItem)
 		}
 	})
-	console.log(recipe)
 	return recipe
+}
+
+/**
+ * This function formats a given recipe to be printed in the web page
+ * @param recipe 
+ * @returns 
+ */
+export function formatRecipe(recipe: IngredientInRecipe[]) {
+	let formattedRecipe = ""
+	recipe.forEach(i => {
+		const newElem = i.ingredient_name + " x" + i.quantity + ", "
+		formattedRecipe = formattedRecipe + newElem
+	})
+	return formattedRecipe
 }

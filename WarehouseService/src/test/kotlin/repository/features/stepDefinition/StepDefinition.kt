@@ -2,6 +2,7 @@ package repository.features.stepDefinition
 
 import ApiUtils
 import BaseTest
+import Quantity
 import domain.Ingredient
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
@@ -12,7 +13,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Assertions
-import repository.Quantity
 
 class StepDefinition : BaseTest() {
     private var actualAnswer: String = ""

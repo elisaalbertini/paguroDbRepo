@@ -1,5 +1,6 @@
 import { Service } from '../src/utils/service'
-import { ResponseMessage, WarehouseServiceMessages } from '../src/utils/messages'
+import { WarehouseServiceMessages } from '../src/utils/messages'
+import { ResponseMessage } from '../src/schema/messages'
 import { add, cleanCollection, closeMongoClient, DbCollections, DbNames, getCollection } from './utils/db-connection'
 import {
 	closeServer,
@@ -60,22 +61,22 @@ test('Get all Available Ingredient Test - 200', done => {
 
 // write
 test('Restock Test (check-service) - 200', done => {
-	let input = { name: "milk", quantity: qty }
-	let output = { name: "milk", quantity: (milk.quantity + qty) }
+	let input = { name: milk.name, quantity: qty }
+	let output = { name: milk.name, quantity: (milk.quantity + qty) }
 
 	testCheckService(WarehouseServiceMessages.RESTOCK_INGREDIENT, input,
 		createResponseMessage(OK, output), done)
 })
 
 test('Restock Test (check-service) - 400', done => {
-	let input = { name: "coffee", quantity: qty }
+	let input = { name: coffee.name, quantity: qty }
 	testCheckService(WarehouseServiceMessages.RESTOCK_INGREDIENT, input,
-		createResponseMessage(ERROR_INGREDIENT_NOT_FOUND, ""), done)
+		createResponseMessage(ERROR_INGREDIENT_NOT_FOUND, undefined), done)
 })
 
 test('Create Ingredient Test (check-service) - 400', done => {
 	testCheckService(WarehouseServiceMessages.CREATE_INGREDIENT, milk,
-		createResponseMessage(ERROR_INGREDIENT_ALREADY_EXISTS, ""), done)
+		createResponseMessage(ERROR_INGREDIENT_ALREADY_EXISTS, undefined), done)
 })
 
 test('Create Ingredient Test (check-service) - 200', done => {
@@ -84,34 +85,34 @@ test('Create Ingredient Test (check-service) - 200', done => {
 })
 
 test('Decrease Ingredients Quantity Test (check-service) - 400', done => {
-	let input = [{ name: "milk", quantity: (milk.quantity + qty) }]
+	let input = [{ name: milk.name, quantity: (milk.quantity + qty) }]
 	testCheckService(WarehouseServiceMessages.DECREASE_INGREDIENTS_QUANTITY, input,
-		createResponseMessage(ERROR_INGREDIENT_QUANTITY, ""), done)
+		createResponseMessage(ERROR_INGREDIENT_QUANTITY, undefined), done)
 })
 
 test('Decrease Ingredients Quantity Test (check-service) - 200', done => {
-	let input = [{ name: "milk", quantity: qty }]
-	let output = [{ name: "milk", quantity: (milk.quantity - qty) }, { name: "tea", quantity: 0 }]
+	let input = [{ name: milk.name, quantity: qty }]
+	let output = [{ name: milk.name, quantity: (milk.quantity - qty) }, { name: tea.name, quantity: 0 }]
 	testCheckService(WarehouseServiceMessages.DECREASE_INGREDIENTS_QUANTITY, input,
 		createResponseMessage(OK, output), done)
 })
 
 test('Restock Test - 200', done => {
-	let input = { name: "milk", quantity: qty }
-	let output = { name: "milk", quantity: (milk.quantity + qty) }
+	let input = { name: milk.name, quantity: qty }
+	let output = { name: milk.name, quantity: (milk.quantity + qty) }
 	testApi(WarehouseServiceMessages.RESTOCK_INGREDIENT, input,
 		createResponseMessage(OK, output), done)
 })
 
 test('Restock Test - 400', done => {
-	let input = { name: "coffee", quantity: qty }
+	let input = { name: coffee.name, quantity: qty }
 	testApi(WarehouseServiceMessages.RESTOCK_INGREDIENT, input,
-		createResponseMessage(ERROR_INGREDIENT_NOT_FOUND, ""), done)
+		createResponseMessage(ERROR_INGREDIENT_NOT_FOUND, undefined), done)
 })
 
 test('Create Ingredient Test - 400', done => {
 	testApi(WarehouseServiceMessages.CREATE_INGREDIENT, milk,
-		createResponseMessage(ERROR_INGREDIENT_ALREADY_EXISTS, ""), done)
+		createResponseMessage(ERROR_INGREDIENT_ALREADY_EXISTS, undefined), done)
 })
 
 test('Create Ingredient Test - 200', done => {
@@ -120,14 +121,14 @@ test('Create Ingredient Test - 200', done => {
 })
 
 test('Decrease Ingredients Quantity Test - 400', done => {
-	let input = [{ name: "milk", quantity: (milk.quantity + qty) }]
+	let input = [{ name: milk.name, quantity: (milk.quantity + qty) }]
 	testApi(WarehouseServiceMessages.DECREASE_INGREDIENTS_QUANTITY, input,
-		createResponseMessage(ERROR_INGREDIENT_QUANTITY, ""), done)
+		createResponseMessage(ERROR_INGREDIENT_QUANTITY, undefined), done)
 })
 
 test('Decrease Ingredients Quantity Test - 200', done => {
-	let input = [{ name: "milk", quantity: qty }]
-	let output = [{ name: "milk", quantity: (milk.quantity - qty) }, { name: "tea", quantity: 0 }]
+	let input = [{ name: milk.name, quantity: qty }]
+	let output = [{ name: milk.name, quantity: (milk.quantity - qty) }, { name: tea.name, quantity: 0 }]
 	testApi(WarehouseServiceMessages.DECREASE_INGREDIENTS_QUANTITY, input,
 		createResponseMessage(OK, output), done)
 })

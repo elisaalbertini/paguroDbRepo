@@ -8,6 +8,9 @@ import * as mongoConnection from "./connection"
 type RepositoryResponse<T> = { data?: T, message: MenuMessage }
 
 const collection = mongoConnection.getMenuItems()
+collection.then((collection) => {
+	collection.createIndex({ name: 1 }, { unique: true })
+})
 
 /**
  *  Inserts an item into the repository with the provided information

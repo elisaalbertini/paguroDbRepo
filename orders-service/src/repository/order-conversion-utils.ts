@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb"
-import { OrderItem, OrderType, OrderState, InsertOrder, Order } from "../domain/order"
+import { OrderItem, OrderType, OrderState, Order } from "../domain/order"
+import { InsertOrder } from "./insert-order"
 
 /**
  * @param customerEmail 

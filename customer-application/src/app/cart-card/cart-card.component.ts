@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { beautifyDbName } from '../../utils/utils';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import * as cartStorage from '../../utils/cart-storage'
 
 /**
  * Component that implements the card of a cart item.
@@ -43,23 +44,23 @@ export class CartCardComponent implements OnInit {
   update() {
     if (this.quantity > 0) {
       this.error = false
-      let cart = JSON.parse(localStorage.getItem("cart")!)
+      let cart = cartStorage.getCartStorage()
       cart.forEach((item: any) => {
         if (item.name == this.orderItem.name) {
           this.orderItem.quantity = this.quantity
           item.quantity = this.quantity
         }
       })
-      localStorage.setItem("cart", JSON.stringify(cart))
+      cartStorage.setCartStorage(cart)
     } else {
       this.error = true
     }
   }
 
   delete() {
-    let cart: any[] = JSON.parse(localStorage.getItem("cart")!)
+    let cart: any[] = cartStorage.getCartStorage()
     cart = cart.filter((item: any) => item.name != this.orderItem.name)
-    localStorage.setItem("cart", JSON.stringify(cart))
+    cartStorage.setCartStorage(cart)
     window.location.reload()
   }
 }

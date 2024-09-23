@@ -1,13 +1,13 @@
 <button mat-raised-button (click)="navigateMenu()">
     <mat-icon>arrow_back</mat-icon>
     Back to the menu</button>
-<div *ngIf="error" class="empty">
-    {{errorMsg}}
+<div *ngIf="error['error']" class="empty">
+    {{error["errorMsg"]}}
     <p>
-        <img src="assets/cooking_mama.gif">
+        <img src="assets/cooking_mama.gif" alt="Cooking mama gif">
     </p>
 </div>
-<div class="box" *ngIf="!error">   
+<div class="box" *ngIf="!error['error']">   
     <div class="recap">
         <div>
             <h4>Order recap</h4>

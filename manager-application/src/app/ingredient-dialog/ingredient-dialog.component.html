@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<mat-dialog-content>
+    <div class="name" *ngIf="!isUpdate">
+        <mat-form-field class="form" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" [(ngModel)]="name" minlength="1">
+            <mat-hint>Ex. Sugar</mat-hint>
+            </mat-form-field>
+    </div>
+    <div>
+        <h3 *ngIf="isUpdate">Actual quantity: {{data.data!.quantity}}</h3> 
+        <h4 class="error" *ngIf="quantity <= 0">Illegal quantity!</h4>
+        <mat-form-field appearance="outline">
+            <mat-label>Quantity</mat-label>
+            <input type="number" matInput value=1 min="1" max="999" [(ngModel)]="quantity">
+            <mat-hint>Ex. 10</mat-hint>
+        </mat-form-field>
+    </div>
+    <send-button [isDisabled]="quantity <= 0" [ws]="data.ws" [buttonName]="data.buttonMsg" [dialog]="data.dialog" [request]="createRequest()"></send-button>
+    
+</mat-dialog-content>
+

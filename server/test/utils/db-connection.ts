@@ -1,4 +1,5 @@
 import * as mongoDB from "mongodb"
+require('dotenv').config()
 
 /**
  * Names of the dbs
@@ -23,7 +24,7 @@ Object.freeze(DbCollections)
 /**
  * Mongo Client
  */
-const DB_CONN_STRING = "mongodb://localhost:27017"
+const DB_CONN_STRING = process.env.DB_CONNECTION_ADDRESS!
 
 const client: mongoDB.MongoClient = new mongoDB.MongoClient(DB_CONN_STRING)
 

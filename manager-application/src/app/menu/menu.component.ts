@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { DataTableMenuComponent } from "../data-table-menu/data-table-menu.component";
+import { TableComponent } from "../data-table/table.component";
+import { MenuServiceMessages, RequestMessage } from '../../utils/schema/messages';
+import { Service } from '../../utils/service';
 
 /**
  * Component that implements the menu page.
@@ -7,8 +9,15 @@ import { DataTableMenuComponent } from "../data-table-menu/data-table-menu.compo
 @Component({
 	selector: 'menu',
 	standalone: true,
-	imports: [DataTableMenuComponent],
+	imports: [TableComponent],
 	templateUrl: './menu.component.html',
 	styleUrl: './menu.component.css'
 })
-export class MenuComponent { }
+export class MenuComponent {
+	displayedColumns: string[] = ['name', 'recipe', 'price', 'button'];
+	initialRequest: RequestMessage = {
+		client_name: Service.MENU,
+		client_request: MenuServiceMessages.GET_ITEMS,
+		input: ''
+	}
+}

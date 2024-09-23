@@ -1,6 +1,6 @@
 package repository
 
-import WarehouseMessage
+import Message
 
 /**
  *  Data class representing the response of Repository
@@ -9,5 +9,5 @@ import WarehouseMessage
  */
 data class RepositoryResponse<Data>(
     val data: Data?,
-    val message: WarehouseMessage,
+    val message: Message,
 )

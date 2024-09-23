@@ -9,10 +9,14 @@ import { FormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { CommonModule } from '@angular/common';
 import validator from 'email-validator'
-import { NewOrder, OrderType } from '../../utils/order';
-import { OrdersServiceMessages, RequestMessage } from '../../utils/message';
+import { NewOrder, OrderType } from '../../utils/schema/order';
+import { OrdersServiceMessages, RequestMessage } from '../../utils/schema/message';
 import { Service } from '../../utils/service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MessageCode } from '../../utils/codes'
+import { NotAvailableError } from '../../utils/error';
+import * as errors from '../../utils/error'
+import * as cartStorage from '../../utils/cart-storage'
 
 /**
  * Component that implements the cart page.
@@ -27,7 +31,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatInputModule,
     FormsModule,
     MatRadioModule,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
@@ -41,8 +45,7 @@ export class CartComponent {
   errorType = false
   errorEmptyCart = false
   errorNewOrder = false
-  error = false
-  errorMsg = ""
+  error: NotAvailableError = errors.createError()
   apiError = ""
   ws!: WebSocket
 
@@ -73,21 +76,19 @@ export class CartComponent {
     this.ws = new WebSocket('ws://localhost:3000')
 
     this.ws.onerror = () => {
-      this.error = true
-      this.errorMsg = "Server not available!"
+      this.error = errors.getServerError()
       this.ws.close()
     }
 
     this.ws.onmessage = (e) => {
       const data = JSON.parse(e.data)
-      if (data.code == 200) {
+      if (data.code == MessageCode.OK) {
         this.errorNewOrder = false
         notification.open("Order successfully created", "OK").afterDismissed().subscribe(() => {
           this.cleanCart()
         })
-      } else if (data.code == 500) {
-        this.error = true
-        this.errorMsg = "Microservice not available!"
+      } else if (data.code == MessageCode.SERVICE_NOT_AVAILABLE) {
+        this.error = errors.getMicroserviceError()
       }
       else {
         this.apiError = data.message
@@ -95,10 +96,7 @@ export class CartComponent {
       }
     }
 
-    let cart = localStorage.getItem("cart")
-    if (cart != null) {
-      this.order = JSON.parse(cart)
-    }
+    this.order = cartStorage.getCartStorage()
   }
 
   formatOrder() {
@@ -115,32 +113,25 @@ export class CartComponent {
   }
 
   sendOrder() {
-    if (this.validateEmail()) {
-      this.errorEmail = false
-      if (this.type != undefined) {
-        this.errorType = false
-        if (this.order.length > 0) {
-          this.errorEmptyCart = false
-          const order: NewOrder = {
-            customerEmail: this.email,
-            price: this.totalAmount(this.order),
-            type: this.type,
-            items: this.formatOrder()
-          }
-          const req: RequestMessage = {
-            client_name: Service.ORDERS,
-            client_request: OrdersServiceMessages.CREATE_ORDER,
-            input: order
-          }
-          this.ws.send(JSON.stringify(req))
-        } else {
-          this.errorEmptyCart = true
-        }
-      } else {
-        this.errorType = true
+
+    this.errorEmail = !this.validateEmail()
+    this.errorType = this.type == undefined
+    this.errorEmptyCart = this.order.length <= 0
+
+    if (!this.errorEmail && !this.errorType && !this.errorEmptyCart) {
+      const order: NewOrder = {
+        customerEmail: this.email,
+        price: this.totalAmount(this.order),
+        type: this.type,
+        items: this.formatOrder()
       }
-    } else {
-      this.errorEmail = true
+      const req: RequestMessage = {
+        client_name: Service.ORDERS,
+        client_request: OrdersServiceMessages.CREATE_ORDER,
+        input: order
+      }
+      this.ws.send(JSON.stringify(req))
     }
+
   }
 }

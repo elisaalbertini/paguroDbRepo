@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand",
     "start": "npx ts-node ./src/app.ts",
     "prepare": "ts-patch install && typia patch"
   },
@@ -22,6 +22,7 @@
     "mongodb": "^6.8.0",
     "morgan": "~1.9.1",
     "nodemailer": "^6.9.14",
+    "ts-node": "^10.9.2",
     "typia": "^6.4.3"
   },
   "devDependencies": {

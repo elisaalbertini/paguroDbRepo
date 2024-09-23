@@ -1,12 +1,14 @@
 import { catchErrorAndSendMsg, http, httpMenu, httpOrders } from './utils/axios'
 import {
 	MenuServiceMessages, OrdersServiceMessages,
-	RequestMessage, WarehouseServiceMessages
+	WarehouseServiceMessages
 } from './utils/messages'
+import { RequestMessage } from './schema/messages'
 import { Service } from './utils/service'
 import WebSocket from 'ws'
-import { checkOrder, createErrorMessage, handleNewOrder, handleResponse } from './utils/utils'
+import { checkOrder, createErrorMessage, handleNewOrder, handleResponse } from './utils/handlers'
 import { StatusCodes } from 'http-status-codes'
+import { WarehouseIngredient } from './schema/item'
 
 /**
  * This function is used to call the correct microservice and API based on the received RequestMessage. 
@@ -14,8 +16,9 @@ import { StatusCodes } from 'http-status-codes'
  * @param message sent by the client through the websocket
  * @param currentWs the websocket communication used
  * @param managerWs list of manager application web socket 
+ * @param employeeWs list of employee application web socket 
  */
-export function checkService(message: RequestMessage, currentWs: WebSocket, managerWs: WebSocket[]) {
+export function checkService(message: RequestMessage, currentWs: WebSocket, managerWs: WebSocket[], employeeWs: WebSocket[]) {
 	switch (message.client_name) {
 		case Service.WAREHOUSE:
 			warehouseApi(message.client_request, message.input, currentWs)
@@ -24,7 +27,7 @@ export function checkService(message: RequestMessage, currentWs: WebSocket, mana
 			menuApi(message.client_request, message.input, currentWs)
 			break
 		default:
-			ordersApi(message.client_request, message.input, currentWs, managerWs)
+			ordersApi(message.client_request, message.input, currentWs, managerWs, employeeWs)
 			break
 	}
 }
@@ -43,7 +46,7 @@ async function menuApi(message: string, input: any, ws: WebSocket) {
 			break
 		case MenuServiceMessages.GET_AVAILABLE_ITEMS:
 			catchErrorAndSendMsg(http.get('/warehouse/available/').then((res) => {
-				const availableIng: any[] = res.data
+				const availableIng = res.data as WarehouseIngredient[]
 
 				availableIng.forEach(e => {
 					names.push(e.name)
@@ -58,13 +61,13 @@ async function menuApi(message: string, input: any, ws: WebSocket) {
 	}
 }
 
-function ordersApi(message: string, input: any, ws: WebSocket, managerWs: WebSocket[]) {
+function ordersApi(message: string, input: any, ws: WebSocket, managerWs: WebSocket[], employeeWs: WebSocket[]) {
 	switch (message) {
 		case OrdersServiceMessages.CREATE_ORDER:
 			checkOrder(input).then((res) => {
 				switch (res) {
 					case StatusCodes.OK:
-						handleNewOrder(httpOrders.post('/orders/', input), input, ws, managerWs)
+						handleNewOrder(httpOrders.post('/orders/', input), ws, managerWs, employeeWs)
 						break
 					case StatusCodes.INTERNAL_SERVER_ERROR:
 						ws.send(createErrorMessage(res, "ERROR_MICROSERVICE_NOT_AVAILABLE"))
@@ -81,6 +84,7 @@ function ordersApi(message: string, input: any, ws: WebSocket, managerWs: WebSoc
 			catchErrorAndSendMsg(httpOrders.get('/orders/' + input._id).then((res) => {
 				res.data["state"] = input.state
 				catchErrorAndSendMsg(httpOrders.put('/orders/', res.data).then(() => {
+
 					handleResponse(httpOrders.get('/orders/'), ws)
 				}), ws)
 			}), ws)

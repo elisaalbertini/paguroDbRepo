@@ -1,22 +1,3 @@
-import { Service } from './service'
-
-/**
- * This interface represents the request the client sends to the server
- */
-export interface RequestMessage {
-	client_name: Service
-	client_request: string
-	input: any
-}
-
-/**
- * This interface represents the response the client receives from the server
- */
-export interface ResponseMessage {
-	message: string,
-	code: number,
-	data: string
-}
 
 /**
  * Different messages handled by the warehouse microservice
@@ -54,16 +35,6 @@ export const MenuServiceMessages = {
 Object.freeze(MenuServiceMessages)
 
 /**
- * This interface represents the notification sent when an element is missing in the warehouse
+ * Message sent to the Employee application when a new order is created
  */
-export interface MissingIngredientNotification {
-	message: string,
-	data: string
-}
-
-/**
- * This interface represents the first message sent by a frontend
- */
-export interface Log {
-	message: string
-}
+export const NEW_ORDER_CREATED = "NEW_ORDER_CREATED"

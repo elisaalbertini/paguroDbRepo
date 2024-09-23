@@ -2,7 +2,7 @@ import express from 'express'
 import { createServer } from 'http'
 import WebSocket, { Server as WebSocketServer } from 'ws'
 import { checkService } from './check-service'
-import { Log } from './utils/messages'
+import { Log } from './schema/messages'
 import { is } from 'typia'
 
 /**
@@ -12,8 +12,10 @@ const app = express()
 const server = createServer(app)
 
 const wss = new WebSocketServer({ server })
+const manager = "MANAGER"
 
 let managerWs = Array()
+let employyWs = Array()
 
 wss.on('connection', (ws: WebSocket) => {
 
@@ -22,11 +24,10 @@ wss.on('connection', (ws: WebSocket) => {
 	ws.on('message', (data: string) => {
 		console.log('received: %s', data)
 		const parsedData = JSON.parse(data)
-
 		if (is<Log>(parsedData)) {
-			managerWs.push(ws)
+			parsedData.message == manager ? managerWs.push(ws) : employyWs.push(ws)
 		} else {
-			checkService(parsedData, ws, managerWs)
+			checkService(parsedData, ws, managerWs, employyWs)
 		}
 	})
 

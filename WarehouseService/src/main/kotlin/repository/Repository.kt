@@ -1,5 +1,5 @@
 package repository
-import WarehouseMessage
+import Message
 import domain.Ingredient
 
 /**
@@ -29,7 +29,7 @@ interface Repository {
      *      if the ingredient is in the warehouse,
      *      otherwise it returns WarehouseMessage.ERROR_INGREDIENT_NOT_FOUND
      */
-    suspend fun isIngredientPresent(name: String): WarehouseMessage
+    suspend fun isIngredientPresent(name: String): Message
 
     /**
      * @param name of the ingredient

@@ -48,12 +48,6 @@ class Server(private val mongoInfo: MongoInfo, private val port: Int) : Coroutin
             launch(Vertx.currentContext().dispatcher()) { handler.getAllAvailableIngredients(ctx) }
         }
 
-        vertx.createHttpServer(
-            httpServerOptionsOf(
-                port = port,
-                host = "localhost",
-            ),
-        ).requestHandler(router).listen()
-        print("Server started on 8080")
+        vertx.createHttpServer().requestHandler(router).listen(port)
     }
 }

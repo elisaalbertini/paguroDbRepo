@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { ItemCardComponent } from "../item-card/item-card.component";
-import { Item } from '../../utils/Item';
-import { MenuServiceMessages, RequestMessage, ResponseMessage } from '../../utils/message';
+import { Item } from '../../utils/schema/item';
+import { MenuServiceMessages, RequestMessage, ResponseMessage } from '../../utils/schema/message';
 import { Service } from '../../utils/service';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MessageCode } from '../../utils/codes';
+import * as errors from '../../utils/error'
 
 /**
  * Component that implements the menu page.
@@ -22,9 +24,8 @@ export class MenuComponent {
 
   ws!: WebSocket
   items: Item[] = []
-  errorMsg = ""
+  error = errors.createError()
   display = false
-  error = false
 
   constructor() {
     this.ws = new WebSocket('ws://localhost:3000')
@@ -37,8 +38,7 @@ export class MenuComponent {
 
     this.ws.onerror = () => {
       this.display = true
-      this.error = true
-      this.errorMsg = "Server not available!"
+      this.error = errors.getServerError()
       this.ws.close()
     }
 
@@ -50,20 +50,16 @@ export class MenuComponent {
       let data = JSON.parse(e.data) as ResponseMessage
       this.display = true
       switch (data.code) {
-        case 200:
-          this.items = JSON.parse(data.data)
+        case MessageCode.OK:
+          this.items = data.data
           break
-        case 404:
-          this.setError("Warehouse empty!")
+        case MessageCode.NOT_FOUND:
+          this.error = errors.getWarehouseError()
           break
-        case 500:
-          this.setError("Microservice not available!")
+        case MessageCode.SERVICE_NOT_AVAILABLE:
+          this.error = errors.getMicroserviceError()
       }
     }
   }
 
-  setError(msg: string) {
-    this.error = true
-    this.errorMsg = msg
-  }
 }

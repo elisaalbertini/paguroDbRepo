@@ -1,7 +1,8 @@
 package application
 
+import Message
 import MongoInfo
-import WarehouseMessage
+import UpdateQuantity
 import domain.Ingredient
 import repository.RepositoryImpl
 
@@ -18,7 +19,7 @@ class WarehouseServiceImpl(mongoInfo: MongoInfo) : WarehouseService {
             val repositoryRes = repository.createIngredient(ingredient.name, ingredient.quantity)
             WarehouseServiceResponse(repositoryRes.data, repositoryRes.message)
         } else {
-            WarehouseServiceResponse(null, WarehouseMessage.ERROR_WRONG_PARAMETERS)
+            WarehouseServiceResponse(null, Message.ERROR_WRONG_PARAMETERS)
         }
     }
 
@@ -27,9 +28,9 @@ class WarehouseServiceImpl(mongoInfo: MongoInfo) : WarehouseService {
         if (availableIngredients != null) {
             ingredients.forEach {
                 if (availableIngredients.none { i -> i.name == it.name }) {
-                    return WarehouseServiceResponse(null, WarehouseMessage.ERROR_INGREDIENT_NOT_FOUND)
+                    return WarehouseServiceResponse(null, Message.ERROR_INGREDIENT_NOT_FOUND)
                 } else if (availableIngredients.find { i -> i.name == it.name }?.quantity!! < it.quantity) {
-                    return WarehouseServiceResponse(null, WarehouseMessage.ERROR_INGREDIENT_QUANTITY)
+                    return WarehouseServiceResponse(null, Message.ERROR_INGREDIENT_QUANTITY)
                 }
             }
         }
@@ -38,7 +39,7 @@ class WarehouseServiceImpl(mongoInfo: MongoInfo) : WarehouseService {
                 i ->
             repository.decreaseIngredientQuantity(i.name, i.quantity)
         }
-        return WarehouseServiceResponse(repository.getAllIngredients().data, WarehouseMessage.OK)
+        return WarehouseServiceResponse(repository.getAllIngredients().data, Message.OK)
     }
 
     override suspend fun restock(ingredient: UpdateQuantity): WarehouseServiceResponse<Ingredient> {
@@ -46,7 +47,7 @@ class WarehouseServiceImpl(mongoInfo: MongoInfo) : WarehouseService {
             val repositoryRes = repository.restock(ingredient.name, ingredient.quantity)
             WarehouseServiceResponse(repositoryRes.data, repositoryRes.message)
         } else {
-            WarehouseServiceResponse(null, WarehouseMessage.ERROR_WRONG_PARAMETERS)
+            WarehouseServiceResponse(null, Message.ERROR_WRONG_PARAMETERS)
         }
     }
 
@@ -59,9 +60,9 @@ class WarehouseServiceImpl(mongoInfo: MongoInfo) : WarehouseService {
         return WarehouseServiceResponse(
             ingredients,
             if (ingredients.isNotEmpty()) {
-                WarehouseMessage.OK
+                Message.OK
             } else {
-                WarehouseMessage.ERROR_EMPTY_WAREHOUSE
+                Message.ERROR_EMPTY_WAREHOUSE
             },
         )
     }

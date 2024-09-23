@@ -1,5 +1,6 @@
 import { createServer, IncomingMessage, Server, ServerResponse } from "http"
-import { OrdersServiceMessages, RequestMessage, ResponseMessage } from "../../src/utils/messages"
+import { NEW_ORDER_CREATED, OrdersServiceMessages } from "../../src/utils/messages"
+import { RequestMessage, ResponseMessage } from '../../src/schema/messages'
 import { Service } from "../../src/utils/service"
 import { ApiResponse } from "./api-response"
 import { DbCollections, DbNames, getCollection } from "./db-connection"
@@ -16,7 +17,9 @@ let wsCheckService: WebSocket
 let wss: WebSocketServer
 let server: Server<typeof IncomingMessage, typeof ServerResponse>
 let wsManager: WebSocket
+let wsEmployee: WebSocket
 const managerWsMsg = "Manager frontend web socket"
+const employeeWsMsg = "Employee frontend web socket"
 const orderWsMsg = "New order web socket"
 
 interface IArray {
@@ -50,6 +53,7 @@ export function closeWs() {
 	closeWsIfOpened(wsCheckService)
 	closeWsIfOpened(wsRoute)
 	closeWsIfOpened(wsManager)
+	closeWsIfOpened(wsEmployee)
 }
 
 function openWsRoute(address: string) {
@@ -66,7 +70,7 @@ export function openWsCheckService(address: string) {
 
 function onMessage(ws: WebSocket, expectedResponse: ResponseMessage, request: RequestMessage, callback: jest.DoneCallback) {
 	ws.on('message', async (msg: string) => {
-		await checkOrderMessage(JSON.parse(msg), expectedResponse, request)
+		await checkMessage(JSON.parse(msg), expectedResponse, request)
 		callback()
 	})
 }
@@ -102,7 +106,8 @@ export function createConnectionAndCall(requestMessage: RequestMessage, expected
 	openWsCheckService('ws://localhost:8081')
 	wsCheckService.on('open', () => {
 		const managerWsArray = Array()
-		checkService(requestMessage, wsCheckService, managerWsArray)
+		const employeeWsArray = Array()
+		checkService(requestMessage, wsCheckService, managerWsArray, employeeWsArray)
 	})
 }
 
@@ -112,13 +117,13 @@ export function createConnectionAndCall(requestMessage: RequestMessage, expected
  * @param expectedResponse correct response
  * @param request request of the client (if needed)
  */
-export async function checkOrderMessage(msg: ResponseMessage, expectedResponse: ResponseMessage, request?: RequestMessage) {
+export async function checkMessage(msg: ResponseMessage, expectedResponse: ResponseMessage, request?: RequestMessage) {
 	const expectedData = expectedResponse.data
 	expect(msg.code).toBe(expectedResponse.code)
 	expect(msg.message).toBe(expectedResponse.message)
 	if (msg.code == StatusCodes.OK) {
 		if (request?.client_request == OrdersServiceMessages.CREATE_ORDER) {
-			expect(JSON.parse(msg.data)).toStrictEqual(await addIdandState(expectedData))
+			expect(msg.data).toStrictEqual(await addIdandState(expectedData))
 			//check ingredient db
 			let ingredients = {} as IArray
 			request.input.items.forEach(async (i: any) => {
@@ -139,10 +144,10 @@ export async function checkOrderMessage(msg: ResponseMessage, expectedResponse: 
 				expect(dbQty).toBe(createOrderIngredients[ing] - ingredients[ing])
 			})
 		} else {
-			expect(JSON.parse(msg.data)).toStrictEqual(expectedData)
+			expect(msg.data).toStrictEqual(expectedData)
 		}
 	} else {
-		expect(msg.data).toBe("")
+		expect(msg.data).toBe(undefined)
 	}
 }
 
@@ -217,18 +222,23 @@ export function createConnectionAndCallNewOrder(requestMessage: RequestMessage, 
 				wsArray[managerWsMsg] = ws
 			} else if (msg == orderWsMsg) {
 				wsArray[orderWsMsg] = ws
+			} else if (msg == employeeWsMsg) {
+				wsArray[employeeWsMsg] = ws
 			} else {
 				connections.set(ws, msg)
-				if (connections.size == 2) {
+				if (connections.size == 3) {
 					const orederRes = JSON.parse(connections.get(wsArray[orderWsMsg])!)
 					const managerRes = JSON.parse(connections.get(wsArray[managerWsMsg])!)
+					const employeeRes = JSON.parse(connections.get(wsArray[employeeWsMsg])!)
 
 					expect(wsArray[managerWsMsg]).toBe(ws)
 					expect(wsArray[orderWsMsg] == ws).toBeFalsy
+					expect(wsArray[employeeWsMsg] == ws).toBeFalsy
 
 					// server
 					expectedResponse.data = await addIdandState(expectedResponse.data)
-					checkOrderMessage(orederRes, expectedResponse, requestMessage).then(() => {
+					checkMessage(orederRes, expectedResponse, requestMessage).then(() => {
+						expect(employeeRes.message).toBe(NEW_ORDER_CREATED)
 						expect(managerRes.message).toBe("NEW_MISSING_INGREDIENTS")
 						expect(managerRes.data).toStrictEqual([egg])
 						callback()
@@ -243,13 +253,20 @@ export function createConnectionAndCallNewOrder(requestMessage: RequestMessage, 
 	wsCheckService.on('open', () => {
 		let managerWsArray = Array()
 		managerWsArray.push(wsManager)
-		checkService(requestMessage, wsCheckService, managerWsArray)
+		const employeeWsArray = Array()
+		employeeWsArray.push(wsEmployee)
+		checkService(requestMessage, wsCheckService, managerWsArray, employeeWsArray)
 		wsCheckService.send(orderWsMsg)
 	})
 
 	wsManager = new WebSocket('ws://localhost:8081')
 	wsManager.on('open', () => {
 		wsManager.send(managerWsMsg)
+	})
+
+	wsEmployee = new WebSocket('ws://localhost:8081')
+	wsEmployee.on('open', () => {
+		wsEmployee.send(employeeWsMsg)
 	})
 }
 

@@ -1,5 +1,6 @@
 package application
 
+import UpdateQuantity
 import domain.Ingredient
 
 interface WarehouseService {

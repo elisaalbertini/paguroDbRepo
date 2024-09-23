@@ -1,5 +1,6 @@
 import { Service } from '../src/utils/service'
-import { MenuServiceMessages, ResponseMessage } from '../src/utils/messages'
+import { MenuServiceMessages } from '../src/utils/messages'
+import { ResponseMessage } from '../src/schema/messages'
 import { add, cleanCollection, closeMongoClient, DbCollections, DbNames, getCollection } from './utils/db-connection'
 import {
 	closeServer,
@@ -123,13 +124,13 @@ test('Update item Test - 200 (check-service)', done => {
 test('Get all available items Test - 404', done => {
 	cleanCollection(DbNames.WAREHOUSE, DbCollections.WAREHOUSE).then(() => {
 		testApi(MenuServiceMessages.GET_AVAILABLE_ITEMS, "",
-			createResponseMessage(ERROR_EMPTY_WAREHOUSE, ""), done)
+			createResponseMessage(ERROR_EMPTY_WAREHOUSE, undefined), done)
 	})
 })
 
 test('Get all available items Test (check-service) - 404', done => {
 	cleanCollection(DbNames.WAREHOUSE, DbCollections.WAREHOUSE).then(() => {
 		testCheckService(MenuServiceMessages.GET_AVAILABLE_ITEMS, "",
-			createResponseMessage(ERROR_EMPTY_WAREHOUSE, ""), done)
+			createResponseMessage(ERROR_EMPTY_WAREHOUSE, undefined), done)
 	})
 })
