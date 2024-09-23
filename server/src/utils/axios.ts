@@ -13,15 +13,16 @@ export const http = axios.create({
  * Connection with the orders microservice
  */
 export const httpOrders = axios.create({
-	baseURL: 'http://orders-service:8090'
+	baseURL: 'http://' + (process.env.ORDER_ADDRESS != undefined ? process.env.ORDER_ADDRESS : 'localhost') + ':8090'
 })
 
 /**
  * Connection with the menu microservice
  */
 export const httpMenu = axios.create({
-	baseURL: 'http://menu-service:8085'
+	baseURL: 'http://' + (process.env.MENU_ADDRESS != undefined ? process.env.MENU_ADDRESS : 'localhost') + ':8085'
 })
+
 
 /**
  * This function catches the error of a promise and sends a message
