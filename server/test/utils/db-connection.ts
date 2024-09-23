@@ -24,7 +24,7 @@ Object.freeze(DbCollections)
 /**
  * Mongo Client
  */
-const DB_CONN_STRING = process.env.DB_CONNECTION_ADDRESS!
+const DB_CONN_STRING = process.env.DB_CONNECTION_ADDRESS != undefined ? process.env.DB_CONNECTION_ADDRESS : "mongodb://localhost:27017"
 
 const client: mongoDB.MongoClient = new mongoDB.MongoClient(DB_CONN_STRING)
 
