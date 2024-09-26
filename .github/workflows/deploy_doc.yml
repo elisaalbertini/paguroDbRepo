@@ -21,8 +21,6 @@ jobs:
     #uses: ./.github/workflows/typescript_doc.yml
 
   javaDoc:
-    needs:
-      - typeDoc
     name: deploy javadoc
     uses: ./.github/workflows/javadoc.yml
   
