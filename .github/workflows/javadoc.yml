@@ -18,6 +18,11 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew javadoc
+      - name: Install and Build typescript
+        working-directory: ${{ matrix.dir }}
+        run: |
+          npm install
+          npx typedoc --entryPointStrategy expand ./src
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
@@ -25,3 +30,7 @@ jobs:
           folder: ./EmployeeApplication/build/docs/javadoc
           branch: report
           target-folder: ./docs/javadoc
+        with:
+          folder: ./server/docs
+          branch: report
+          target-folder: ./docs/typedoc/server
