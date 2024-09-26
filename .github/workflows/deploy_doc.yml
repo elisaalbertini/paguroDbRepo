@@ -9,9 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  javaDoc:
-    name: deploy javadoc
-    uses: ./.github/workflows/javadoc.yml
+
   kotlinDoc:
     name: deploy kotlin doc
     uses: ./.github/workflows/kotlin_doc.yml
@@ -21,4 +19,10 @@ jobs:
       - kotlinDoc
     name: deploy typescript doc
     uses: ./.github/workflows/typescript_doc.yml
+
+  javaDoc:
+    needs:
+      - typeDoc
+    name: deploy javadoc
+    uses: ./.github/workflows/javadoc.yml
   

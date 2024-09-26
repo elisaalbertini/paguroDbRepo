@@ -3,10 +3,9 @@ import { StatusCodes } from 'http-status-codes';
 import { assertEquals } from 'typia'
 import { IngredientInRecipe, Item } from "../domain/item";
 import { addNewItem, getItemByName, getAllMenuItems, updateMenuItem, getAllAvailableMenuItems } from "../application/menu-service";
-import { MenuMessage } from "../../menu-message";
+import { MenuMessage } from "../menu-message";
 
 const router = express.Router();
-
 
 /**
  * POST '/menu' API handles the addition of a new Item delegating to the service.
@@ -58,7 +57,7 @@ function serviceMessageToCode(service_message: string) {
  * GET '/menu' API handles the retrieval of all the Items delegating to the service
  */
 router.get('/', async (req: Request, res: Response) => {
-	let service_res = await getAllMenuItems()
+	const service_res = await getAllMenuItems()
 	sendResponse(res, service_res.message, service_res.data)
 })
 
@@ -68,16 +67,14 @@ router.get('/', async (req: Request, res: Response) => {
 router.put('/', async (req: Request, res: Response) => {
 
 	try {
-		const name = assertEquals<string>(req.body.name)
-		const recipe = assertEquals<IngredientInRecipe[]>(req.body.recipe)
-		const price = assertEquals<number>(req.body.price)
+
 		const set = {
 			$set: {
-				recipe: recipe,
-				price: price
+				recipe: assertEquals<IngredientInRecipe[]>(req.body.recipe),
+				price: assertEquals<number>(req.body.price)
 			}
 		}
-		let service_res = await updateMenuItem(name, set)
+		let service_res = await updateMenuItem(assertEquals<string>(req.body.name), set)
 		sendResponse(res, service_res.message, service_res.data)
 	} catch (error) {
 		sendResponse(res, MenuMessage.ERROR_WRONG_PARAMETERS)
@@ -102,5 +99,3 @@ router.get('/available/:availableIngredients', async (req: Request, res: Respons
 })
 
 export default router;
-
-

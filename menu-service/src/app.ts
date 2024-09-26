@@ -13,5 +13,5 @@ app.use('/menu', menuRouter)
 let PORT = 8085
 
 export const server = app.listen(PORT, () => {
-	console.log(`Server running on http://localhost:${PORT}`);
+	console.log(`listening on port :${PORT}`);
 });

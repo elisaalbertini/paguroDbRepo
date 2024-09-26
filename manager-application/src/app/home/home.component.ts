@@ -5,10 +5,11 @@ import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { MenuComponent } from "../menu/menu.component";
 import { WarehouseComponent } from "../warehouse/warehouse.component";
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Frontend, Log, MissingIngredientNotification } from '../../utils/messages';
+import { Frontend, Log, MissingIngredientNotification } from '../../utils/schema/messages';
 import { equals } from 'typia';
+import { Ingredient } from '../../utils/schema/ingredient';
 
-interface ILink {
+interface Route {
 	path: string;
 	label: string;
 }
@@ -35,7 +36,7 @@ export class HomeComponent {
 	activePath: string = ""
 	ws!: WebSocket
 
-	constructor(router: Router, private notification: MatSnackBar) {
+	constructor(router: Router, notification: MatSnackBar) {
 		if (localStorage.getItem(this.activePath) == undefined) {
 			localStorage.setItem(this.activePath, "")
 		} else {
@@ -51,9 +52,9 @@ export class HomeComponent {
 			this.send(JSON.stringify(msg))
 		}
 		this.ws.onmessage = function(e) {
-			const data = JSON.parse(e.data)
+			const data = JSON.parse(e.data) as MissingIngredientNotification
 			if (equals<MissingIngredientNotification>(data)) {
-				const missingIngredients = JSON.parse(data.data)
+				const missingIngredients = data.data
 				notify(createMsg(missingIngredients), "OK")
 			}
 		}
@@ -61,26 +62,27 @@ export class HomeComponent {
 			notification.open(message, action);
 		}
 
-		function createMsg(missingIngredients: any) {
-			let notificationMsg
+		function createMsg(missingIngredients: Ingredient[]) {
+			const msg = "missing from the warehouse!"
+			let notificationMsg = ""
 			let missingNames = ""
 			if (missingIngredients.length == 1) {
-				notificationMsg = missingIngredients[0].name + " is missing from the warehouse!"
+				notificationMsg = missingIngredients[0].name + " is " + msg
 			} else {
 				Array.from(missingIngredients).forEach((i: any) => {
 					missingNames = missingNames + i.name + ", "
 				});
-				notificationMsg = missingNames + "are missing from the warehouse!"
+				notificationMsg = missingNames + "are " + msg
 			}
 			return notificationMsg
 		}
 	}
-	links: ILink[] = [
+	routes: Route[] = [
 		{ path: '', label: 'WAREHOUSE' },
 		{ path: 'menu', label: 'MENU' },
 	];
 
-	setActiveLink(path: string) {
+	setActiveRoute(path: string) {
 		localStorage.setItem(this.activePath, path)
 	}
 

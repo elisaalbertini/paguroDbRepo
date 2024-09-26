@@ -21,7 +21,7 @@ export async function sendNotifyEmail(customerEmail: string): Promise<SentMessag
 		from: "distributedcafe@gmail.com",
 		to: customerEmail,
 		subject: "Distributed Cafe Order Ready",
-		text: "Dear customer, your order is ready",
+		text: "Dear customer, your order is ready!",
 	};
 
 	await transporter.sendMail(mailOptions)

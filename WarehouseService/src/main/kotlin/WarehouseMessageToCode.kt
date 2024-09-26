@@ -4,17 +4,17 @@ import java.net.HttpURLConnection
  * Object that maps WarehouseMessage into Http codes
  */
 object WarehouseMessageToCode {
-    fun convert(warehouseMessage: WarehouseMessage): Int {
+    fun convert(warehouseMessage: Message): Int {
         return when (warehouseMessage) {
-            WarehouseMessage.OK -> {
+            Message.OK -> {
                 HttpURLConnection.HTTP_OK
             }
-            WarehouseMessage.ERROR_DB_NOT_AVAILABLE -> {
+            Message.ERROR_DB_NOT_AVAILABLE -> {
                 HttpURLConnection.HTTP_INTERNAL_ERROR
             }
-            WarehouseMessage.ERROR_INGREDIENT_ALREADY_EXISTS,
-            WarehouseMessage.ERROR_INGREDIENT_QUANTITY,
-            WarehouseMessage.ERROR_WRONG_PARAMETERS,
+            Message.ERROR_INGREDIENT_ALREADY_EXISTS,
+            Message.ERROR_INGREDIENT_QUANTITY,
+            Message.ERROR_WRONG_PARAMETERS,
             -> {
                 HttpURLConnection.HTTP_BAD_REQUEST
             }

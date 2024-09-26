@@ -1,24 +1,23 @@
 package handlers
 
+import Message
 import MongoInfo
-import WarehouseMessage
+import Quantity
+import UpdateQuantity
 import WarehouseMessageToCode
-import application.UpdateQuantity
 import application.WarehouseServiceImpl
 import application.WarehouseServiceResponse
 import domain.Ingredient
 import io.vertx.ext.web.RoutingContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import repository.Quantity
-import server.MongoUtils
 import java.net.HttpURLConnection
 
 class HandlerImpl(private val mongoInfo: MongoInfo) : Handler {
     private val warehouseService = WarehouseServiceImpl(mongoInfo)
 
     private fun checkIfError(
-        response: WarehouseMessage,
+        response: Message,
         body: String,
         context: RoutingContext,
     ) {
@@ -33,14 +32,12 @@ class HandlerImpl(private val mongoInfo: MongoInfo) : Handler {
         val body = context.body().asString()
         val response =
             if (body == null) {
-                WarehouseServiceResponse(null, WarehouseMessage.ERROR_WRONG_PARAMETERS)
-            } else if (!MongoUtils.isDbSuccessfullyConnected(mongoInfo)) {
-                WarehouseServiceResponse(null, WarehouseMessage.ERROR_DB_NOT_AVAILABLE)
+                WarehouseServiceResponse(null, Message.ERROR_WRONG_PARAMETERS)
             } else {
                 try {
                     warehouseService.createIngredient(Json.decodeFromString(body))
                 } catch (e: Exception) {
-                    WarehouseServiceResponse(null, WarehouseMessage.ERROR_WRONG_PARAMETERS)
+                    WarehouseServiceResponse(null, Message.ERROR_WRONG_PARAMETERS)
                 }
             }
         context.response().statusCode = WarehouseMessageToCode.convert(response.response)
@@ -51,16 +48,10 @@ class HandlerImpl(private val mongoInfo: MongoInfo) : Handler {
         getIngredients(warehouseService.getAllIngredients(), context)
     }
 
-    private suspend fun getIngredients(
-        warehouseServiceResponse: WarehouseServiceResponse<List<Ingredient>>,
+    private fun getIngredients(
+        response: WarehouseServiceResponse<List<Ingredient>>,
         context: RoutingContext,
     ) {
-        val response =
-            if (MongoUtils.isDbSuccessfullyConnected(mongoInfo)) {
-                warehouseServiceResponse
-            } else {
-                WarehouseServiceResponse(null, WarehouseMessage.ERROR_DB_NOT_AVAILABLE)
-            }
         context.response().statusCode = WarehouseMessageToCode.convert(response.response)
         checkIfError(response.response, Json.encodeToString(response.data), context)
     }
@@ -73,14 +64,12 @@ class HandlerImpl(private val mongoInfo: MongoInfo) : Handler {
         val body = context.body().asString()
         val response =
             if (body == null) {
-                WarehouseServiceResponse(null, WarehouseMessage.ERROR_WRONG_PARAMETERS)
-            } else if (!MongoUtils.isDbSuccessfullyConnected(mongoInfo)) {
-                WarehouseServiceResponse(null, WarehouseMessage.ERROR_DB_NOT_AVAILABLE)
+                WarehouseServiceResponse(null, Message.ERROR_WRONG_PARAMETERS)
             } else {
                 try {
                     warehouseService.updateConsumedIngredientsQuantity(Json.decodeFromString(body))
                 } catch (e: Exception) {
-                    WarehouseServiceResponse(null, WarehouseMessage.ERROR_WRONG_PARAMETERS)
+                    WarehouseServiceResponse(null, Message.ERROR_WRONG_PARAMETERS)
                 }
             }
         context.response().statusCode = WarehouseMessageToCode.convert(response.response)
@@ -92,14 +81,17 @@ class HandlerImpl(private val mongoInfo: MongoInfo) : Handler {
         val ingredientName = context.request().params()["ingredient"]
         val response =
             if (ingredientName == null || quantity == null) {
-                WarehouseServiceResponse(null, WarehouseMessage.ERROR_WRONG_PARAMETERS)
-            } else if (!MongoUtils.isDbSuccessfullyConnected(mongoInfo)) {
-                WarehouseServiceResponse(null, WarehouseMessage.ERROR_DB_NOT_AVAILABLE)
+                WarehouseServiceResponse(null, Message.ERROR_WRONG_PARAMETERS)
             } else {
                 try {
-                    warehouseService.restock(UpdateQuantity(ingredientName, Json.decodeFromString<Quantity>(quantity).quantity))
+                    warehouseService.restock(
+                        UpdateQuantity(
+                            ingredientName,
+                            Json.decodeFromString<Quantity>(quantity).quantity,
+                        ),
+                    )
                 } catch (e: Exception) {
-                    WarehouseServiceResponse(null, WarehouseMessage.ERROR_WRONG_PARAMETERS)
+                    WarehouseServiceResponse(null, Message.ERROR_WRONG_PARAMETERS)
                 }
             }
         context.response().statusCode = WarehouseMessageToCode.convert(response.response)

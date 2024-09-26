@@ -1,7 +1,8 @@
 import express, { Request, Response } from "express"
 import { StatusCodes } from 'http-status-codes';
 import { assertEquals } from 'typia'
-import { NewOrder, Order, OrderState } from "../domain/order"
+import { Order, OrderState } from "../domain/order"
+import { NewOrder } from "./new-order";
 import { OrdersMessage } from "../orders-message"
 import * as service from "../application/orders-service"
 

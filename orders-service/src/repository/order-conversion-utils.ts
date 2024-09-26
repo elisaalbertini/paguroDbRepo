@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb"
-import { OrderItem, OrderType, OrderState, InsertOrder, Order } from "../domain/order"
+import { OrderItem, OrderType, OrderState, Order } from "../domain/order"
+import { InsertOrder } from "./insert-order"
 
 /**
  * @param customerEmail 
@@ -22,22 +23,13 @@ export function toInsertOrder(customerEmail: string, price: number, type: OrderT
 /**
  * Converts a MongoOrder to an Order trasforming the Mongo id into a string
  * @param id 
- * @param customerEmail 
- * @param price 
- * @param type 
- * @param state 
- * @param items 
+ * @param order 
  * @returns the converted Order
  */
-export function fromMongoOrderToOrder(id: ObjectId, customerEmail: string, price: number, type: OrderType, state: OrderState, items: OrderItem[]): Order {
-	return {
-		_id: id.toString(),
-		customerEmail: customerEmail,
-		price: price,
-		type: type,
-		state: state,
-		items: items
-	}
+export function fromMongoOrderToOrder(order: MongoOrder): Order {
+	let newOrder: any = { ...order }
+	newOrder._id = newOrder._id.toString()
+	return newOrder
 }
 
 /**
@@ -45,7 +37,7 @@ export function fromMongoOrderToOrder(id: ObjectId, customerEmail: string, price
  * @param order 
  * @returns the converted InsertOrder
  */
-export function removeIndexOrder(order: Order): InsertOrder {
+export function removeIndexOrder(order: InsertOrder): InsertOrder {
 	return toInsertOrder(order.customerEmail, order.price, order.type, order.state, order.items)
 }
 

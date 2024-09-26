@@ -2,7 +2,7 @@ package repository.features.stepDefinition
 
 import ApiUtils
 import BaseTest
-import application.UpdateQuantity
+import UpdateQuantity
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import io.vertx.core.buffer.Buffer

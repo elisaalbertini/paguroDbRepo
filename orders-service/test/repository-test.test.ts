@@ -10,81 +10,72 @@ let non_existing_id = "000000000000000000000000"
 
 afterAll(() => { client.closeMongoClient() })
 
+function checkResponse<T>(message: OrdersMessage, data: T, expectedMsg: OrdersMessage, expectedData?: T) {
+	expect(message).toBe(expectedMsg)
+	if (expectedData != undefined) {
+		expect(data).toStrictEqual(expectedData)
+	}
+}
+
+beforeEach(async () => { await db_test.emptyOrders() })
+
 // read
 test('Get All Orders', async () => {
 
 	// empty repository test
-	await db_test.emptyOrders()
 	let value = await repository.getAllOrders()
-	expect(value.message).toBe(OrdersMessage.EMPTY_ORDERS_DB)
-	expect(value.data?.length).toBe(0)
+	checkResponse(value.message, value.data, OrdersMessage.EMPTY_ORDERS_DB, [])
 
 	// repository with orders test
 	await db_test.fillOrders()
 	value = await repository.getAllOrders()
-	expect(value.message).toBe(OrdersMessage.OK)
-	expect(value.data?.length).toBe(4)
 
-	let expectedValues = value.data?.map(o => conversion.removeIndexOrder(o))
+	let actualValues = value.data?.map(o => conversion.removeIndexOrder(o))
 
-	expect(expectedValues).toStrictEqual(db_test.getTestOrders())
+	checkResponse(value.message, actualValues, OrdersMessage.OK, db_test.getTestOrders())
 
 })
 
 test('Find Order by Id', async () => {
 	//prepare
-	await db_test.emptyOrders()
 	await db_test.fillOrders()
 
 	// wrong id string
 	let res = await repository.findOrderById(wrong_id)
-	expect(res.data).toBe(undefined)
-	expect(res.message).toBe(OrdersMessage.ORDER_ID_NOT_FOUND)
+	checkResponse(res.message, res.data, OrdersMessage.ORDER_ID_NOT_FOUND)
 
 	// correct but non existing id 
 	res = await repository.findOrderById(non_existing_id)
-	expect(res.data).toBe(undefined)
-	expect(res.message).toBe(OrdersMessage.ORDER_ID_NOT_FOUND)
+	checkResponse(res.message, res.data, OrdersMessage.ORDER_ID_NOT_FOUND)
 
 	//existing id 
 	let existingOrder = (await db_test.getLastInsertedOrder())
 	res = await repository.findOrderById(existingOrder._id)
-	expect(res.data).toStrictEqual(existingOrder)
-	expect(res.message).toBe(OrdersMessage.OK)
+	checkResponse(res.message, res.data, OrdersMessage.OK, existingOrder)
 })
 
 // write
 test('Create Order', async () => {
-	await db_test.emptyOrders()
 	let expectedOrder = conversion.toInsertOrder("user@gmail.com", 10, OrderType.AT_THE_TABLE, OrderState.PENDING, db_test.getTestItems())
 	let res = await repository.createOrder(expectedOrder.customerEmail, expectedOrder.price, expectedOrder.type, expectedOrder.items)
-	expect(res.message).toBe(OrdersMessage.OK)
-	if (res.data != undefined) {
-		expect(conversion.removeIndexOrder(res.data)).toStrictEqual(expectedOrder)
-	}
-
+	checkResponse(res.message, conversion.removeIndexOrder(res.data!), OrdersMessage.OK, expectedOrder)
 })
 
 test('Update Order', async () => {
 	//prepare
-	await db_test.emptyOrders()
 	await db_test.fillOrders()
 
 	//wrong id string
 	let res = await repository.updateOrder(wrong_id, OrderState.COMPLETED)
-	expect(res.data).toBe(undefined)
-	expect(res.message).toBe(OrdersMessage.ORDER_ID_NOT_FOUND)
+	checkResponse(res.message, res.data, OrdersMessage.ORDER_ID_NOT_FOUND)
 
 	// correct but not existing id
 	res = await repository.updateOrder(non_existing_id, OrderState.COMPLETED)
-	expect(res.data).toBe(undefined)
-	expect(res.message).toBe(OrdersMessage.ORDER_ID_NOT_FOUND)
+	checkResponse(res.message, res.data, OrdersMessage.ORDER_ID_NOT_FOUND)
 
 	//existing id
 	let order = await db_test.getLastInsertedOrder()
 	res = await repository.updateOrder(order._id, OrderState.COMPLETED)
 	order = await db_test.getLastInsertedOrder()
-	expect(res.data).toStrictEqual(order)
-	expect(res.message).toBe(OrdersMessage.OK)
-
+	checkResponse(res.message, res.data, OrdersMessage.OK, order)
 })

@@ -6,24 +6,32 @@
   "scripts": {
     "test": "jest --runInBand",
     "start": "npx ts-node ./src/server.ts",
-    "prepare": "ts-patch install && typia patch"
+    "prepare": "ts-patch install && typia patch",
+    "build": "webpack --mode=production --config webpack.node.config.js"
   },
   "author": "Elisa Albertini and Eleonora Bertoni",
   "license": "MIT",
   "dependencies": {
-    "@types/ws": "^8.5.10",
     "axios": "^1.7.2",
     "express": "^4.19.2",
+    "http-status-codes": "^2.3.0",
     "mongodb": "^6.8.0",
     "typia": "^6.6.2",
     "ws": "^8.17.1"
   },
   "devDependencies": {
+    "dotenv": "^16.4.5",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4",
+    "@ryoppippi/unplugin-typia": "npm:@jsr/ryoppippi__unplugin-typia@^1.0.6",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.14.6",
+    "@types/ws": "^8.5.10",
     "jest": "^29.7.0",
+    "ts-node": "^10.9.2",
     "ts-jest": "^29.1.5",
+    "ts-loader": "^9.5.1",
     "ts-patch": "^3.2.1",
     "typescript": "^5.5.2",
     "typescript-formatter": "^7.2.2"

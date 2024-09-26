@@ -1,6 +1,6 @@
 package application
 
-import WarehouseMessage
+import Message
 
 /**
  * Data class representing the response of the WarehouseService
@@ -9,5 +9,5 @@ import WarehouseMessage
  */
 data class WarehouseServiceResponse<Data>(
     val data: Data?,
-    val response: WarehouseMessage,
+    val response: Message,
 )

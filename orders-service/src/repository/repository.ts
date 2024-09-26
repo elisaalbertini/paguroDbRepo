@@ -25,11 +25,9 @@ export async function createOrder(customerEmail: string, price: number, type: Or
 
 	let newOrder = toInsertOrder(customerEmail, price, type, OrderState.PENDING, items)
 
-	let promise = await ordersCollection.insertOne(newOrder)
-	let order = fromMongoOrderToOrder(promise.insertedId, customerEmail, price, type, OrderState.PENDING, items)
+	await ordersCollection.insertOne(newOrder)
 
-	return { data: order, message: OrdersMessage.OK };
-
+	return repositoryResponse(OrdersMessage.OK, newOrder as Order)
 }
 
 /**
@@ -40,12 +38,13 @@ export async function getAllOrders(): Promise<RepositoryResponse<Order[]>> {
 
 	let ordersCollection = await collection
 	let mongoOrders = await ordersCollection.find().toArray() as MongoOrder[]
-	let orders = mongoOrders.map((o) => fromMongoOrderToOrder(o._id, o.customerEmail, o.price, o.type, o.state, o.items))
+
+	let orders = mongoOrders.map((o) => fromMongoOrderToOrder(o))
 
 	if (orders.length > 0) {
-		return { data: orders, message: OrdersMessage.OK }
+		return repositoryResponse(OrdersMessage.OK, orders)
 	} else {
-		return { data: orders, message: OrdersMessage.EMPTY_ORDERS_DB };
+		return repositoryResponse(OrdersMessage.EMPTY_ORDERS_DB, orders)
 	}
 }
 
@@ -57,19 +56,18 @@ export async function getAllOrders(): Promise<RepositoryResponse<Order[]>> {
  */
 export async function findOrderById(orderId: string): Promise<RepositoryResponse<Order>> {
 	if (!ObjectId.isValid(orderId)) {
-		return { data: undefined, message: OrdersMessage.ORDER_ID_NOT_FOUND }
+		return repositoryResponse(OrdersMessage.ORDER_ID_NOT_FOUND)
 	}
 
 	let ordersCollection = await collection
 	let id = new ObjectId(orderId)
 	let find = (await ordersCollection.find({ "_id": id }).toArray())
 	if (find.length == 0) {
-		return { data: undefined, message: OrdersMessage.ORDER_ID_NOT_FOUND }
+		return repositoryResponse(OrdersMessage.ORDER_ID_NOT_FOUND)
 	}
 	let mongoOrder = find.at(0) as MongoOrder
-	let order = fromMongoOrderToOrder(mongoOrder._id, mongoOrder.customerEmail, mongoOrder.price, mongoOrder.type, mongoOrder.state, mongoOrder.items)
-	return { data: order, message: OrdersMessage.OK }
-
+	let order = fromMongoOrderToOrder(mongoOrder)
+	return repositoryResponse(OrdersMessage.OK, order)
 }
 
 
@@ -82,7 +80,7 @@ export async function findOrderById(orderId: string): Promise<RepositoryResponse
  */
 export async function updateOrder(orderId: string, newState: OrderState): Promise<RepositoryResponse<Order>> {
 	if (!ObjectId.isValid(orderId)) {
-		return { data: undefined, message: OrdersMessage.ORDER_ID_NOT_FOUND }
+		return repositoryResponse(OrdersMessage.ORDER_ID_NOT_FOUND)
 	}
 	let filter = { "_id": new ObjectId(orderId) }
 	let update = { $set: { "state": newState } }
@@ -91,11 +89,14 @@ export async function updateOrder(orderId: string, newState: OrderState): Promis
 	let res = await ordersCollection.updateOne(filter, update)
 	if (res.modifiedCount == 1) {
 		let order = (await findOrderById(orderId)).data
-		return { data: order, message: OrdersMessage.OK }
+		return repositoryResponse(OrdersMessage.OK, order)
 	} else {
-		return { data: undefined, message: OrdersMessage.ORDER_ID_NOT_FOUND }
+		return repositoryResponse(OrdersMessage.ORDER_ID_NOT_FOUND)
 	}
+}
 
+function repositoryResponse<T>(msg: OrdersMessage, data?: T): RepositoryResponse<T> {
+	return data != undefined ? { data: data, message: msg } : { message: msg }
 }
 
 

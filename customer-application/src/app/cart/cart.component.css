@@ -1,0 +1,60 @@
+.recap{
+    margin-left: 15%;
+    margin-right: 10%;
+    width: 40%;
+}
+
+.title{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+button{
+    margin-top: 2%;
+    margin-left: 2%; 
+    background-color: #ff4081 !important;
+    color: white !important;
+}
+
+.order-button{
+    margin-bottom: 2%;
+    margin-top: 0;
+    margin-left: 6%;
+}
+
+.smaller-title{
+    font-weight: bold;
+}
+
+.box{
+    margin-top: 5%;
+    display: flex;
+}
+
+.right{
+    width: 30%;
+    margin-left: 5%;
+}
+
+.send-order{
+    display: flex;
+}
+
+.error{
+    color: red;
+    font-weight: bold;
+}
+
+.bigger-error{
+    color: red;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.empty{
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10%;
+    font-size: 300%;
+    line-height: 150%;
+}

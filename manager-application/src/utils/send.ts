@@ -1,4 +1,4 @@
-import { RequestMessage } from "./messages"
+import { RequestMessage } from "./schema/messages"
 
 /**
  * This function returns if the web socket passed is opened or not. 

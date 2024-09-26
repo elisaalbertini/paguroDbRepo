@@ -20,10 +20,10 @@ type ServiceResponse<T> = { data?: T, message: OrdersMessage };
 export async function addNewOrder(customerEmail: string, price: number, type: OrderType, items: OrderItem[]): Promise<ServiceResponse<Order>> {
 	if (validator.validate(customerEmail)) {
 		let res = await repository.createOrder(customerEmail, price, type, items)
-		return { data: res.data, message: res.message }
+		return serviceResponse(res.message, res.data)
 	}
 
-	return { data: undefined, message: OrdersMessage.ERROR_WRONG_PARAMETERS }
+	return serviceResponse(OrdersMessage.ERROR_WRONG_PARAMETERS)
 }
 
 /**
@@ -32,7 +32,7 @@ export async function addNewOrder(customerEmail: string, price: number, type: Or
  */
 export async function getAllOrders(): Promise<ServiceResponse<Order[]>> {
 	let res = await repository.getAllOrders()
-	return { data: res.data, message: res.message }
+	return serviceResponse(res.message, res.data)
 }
 
 /**
@@ -42,7 +42,7 @@ export async function getAllOrders(): Promise<ServiceResponse<Order[]>> {
  */
 export async function getOrderById(orderId: string): Promise<ServiceResponse<Order>> {
 	let res = await repository.findOrderById(orderId)
-	return { data: res.data, message: res.message }
+	return serviceResponse(res.message, res.data)
 }
 
 /**
@@ -58,16 +58,20 @@ export async function updateOrder(orderId: string, newState: OrderState): Promis
 	if (order.message == OrdersMessage.OK && order.data) {
 
 		if (!isChangeStateValid(order.data.type, order.data.state, newState)) {
-			return { data: undefined, message: OrdersMessage.CHANGE_STATE_NOT_VALID }
+			return serviceResponse(OrdersMessage.CHANGE_STATE_NOT_VALID)
 		}
 
 		return await repository.updateOrder(orderId, newState)
 
 
 	} else {
-		return { data: order.data, message: order.message }
+		return serviceResponse(order.message, order.data)
 	}
 
+}
+
+function serviceResponse<T>(msg: OrdersMessage, data?: T): ServiceResponse<T> {
+	return data != undefined ? { data: data, message: msg } : { message: msg }
 }
 
 /**

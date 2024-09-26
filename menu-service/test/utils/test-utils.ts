@@ -5,8 +5,7 @@ import { getMenuItems } from "../../src/repository/connection"
  * Utility function to empty the collection
  */
 export async function emptyMenuDb() {
-	let collection = await getMenuItems()
-	await collection.deleteMany()
+	await (await getMenuItems()).deleteMany()
 }
 
 /**
@@ -14,8 +13,7 @@ export async function emptyMenuDb() {
  * @param item 
  */
 export async function addItem(item: Item) {
-	let collection = await getMenuItems()
-	await collection.insertOne(item, { forceServerObjectId: true })
+	await (await getMenuItems()).insertOne(item, { forceServerObjectId: true })
 }
 
 /**

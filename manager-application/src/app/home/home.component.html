@@ -4,10 +4,10 @@
   <nav
   mat-tab-nav-bar
   [tabPanel]="tabPanel">
-  @for (link of links; track link) {
+  @for (link of routes; track link) {
   <a
     mat-tab-link
-    (click)="setActiveLink(link.path)"
+    (click)="setActiveRoute(link.path)"
     [active]="checkIfActive(link.path)"
     [routerLink]="link.path">
     {{ link.label }}

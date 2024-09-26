@@ -1,6 +1,8 @@
+import { StatusCodes } from 'http-status-codes'
 import { Item, Order, OrderItem, OrderState, OrderType } from '../src/domain/order'
 import { getOrdersCollection } from '../src/repository/connection'
 import * as conversion from '../src/repository/order-conversion-utils'
+import { OrdersMessage } from '../src/orders-message'
 
 
 /**
@@ -82,5 +84,38 @@ export async function insertPendingAtTheTable() {
 export async function getLastInsertedOrder(): Promise<Order> {
 	let orders = (await getOrdersCollection()).find()
 	let last = (await orders.toArray()).pop() as conversion.MongoOrder
-	return conversion.fromMongoOrderToOrder(last._id, last.customerEmail, last.price, last.type, last.state, last.items)
+	return conversion.fromMongoOrderToOrder(last)
+}
+
+/**
+ * This interface represents the response given by an API
+ */
+export interface ApiResponse {
+	code: number,
+	message: string
+}
+
+export const OK: ApiResponse = {
+	code: StatusCodes.OK,
+	message: OrdersMessage.OK
+}
+
+export const EMPTY_ORDERS_DB: ApiResponse = {
+	code: StatusCodes.NOT_FOUND,
+	message: OrdersMessage.EMPTY_ORDERS_DB
+}
+
+export const ORDER_ID_NOT_FOUND: ApiResponse = {
+	code: StatusCodes.NOT_FOUND,
+	message: OrdersMessage.ORDER_ID_NOT_FOUND
+}
+
+export const ERROR_WRONG_PARAMETERS: ApiResponse = {
+	code: StatusCodes.BAD_REQUEST,
+	message: OrdersMessage.ERROR_WRONG_PARAMETERS
+}
+
+export const CHANGE_STATE_NOT_VALID: ApiResponse = {
+	code: StatusCodes.BAD_REQUEST,
+	message: OrdersMessage.CHANGE_STATE_NOT_VALID
 }

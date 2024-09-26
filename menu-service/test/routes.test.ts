@@ -1,25 +1,15 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import * as client from '../src/repository/connection'
 import { server } from '../src/app'
 import { assertEquals } from 'typia'
 import { addItem, emptyMenuDb, getLastInsertedItem } from './utils/test-utils'
 import { Item } from '../src/domain/item'
-import { MenuMessage } from '../menu-message'
+import { ApiResponse, EMPTY_MENU_DB, ERROR_ITEM_ALREADY_EXISTS, ERROR_ITEM_NOT_FOUND, ERROR_WRONG_PARAMETERS, OK } from './utils/ApiResponse'
+import { friedEgg, omelette, pizza, scrambledEgg, updatedOmelette, wrongItem } from './utils/test-data'
 
 const http = axios.create({
 	baseURL: 'http://localhost:8085'
 })
-
-const omelette: Item = {
-	name: "omelette",
-	recipe: [
-		{
-			ingredient_name: "egg",
-			quantity: 2
-		}
-	],
-	price: 3
-}
 
 beforeEach(async () => {
 	await emptyMenuDb()
@@ -31,210 +21,119 @@ afterAll(() => {
 	server.close()
 })
 
+function checkResponse<T>(res: AxiosResponse, expectedResponse: ApiResponse, expectedData: T, actualData?: T) {
+	expect(res.status).toBe(expectedResponse.code)
+	expect(res.statusText).toBe(expectedResponse.message)
+	if (actualData != undefined) {
+		expect(actualData).toStrictEqual(expectedData)
+	} else {
+		expect(res.data).toStrictEqual(expectedData)
+	}
+}
+
 // read
 test('Get Item by name', async () => {
 	// ok
 	const res = await http.get('/menu/omelette')
-	expect(res.status).toBe(200)
-	expect(res.statusText).toBe(MenuMessage.OK)
-	const item = assertEquals<Item>(res.data)
-	expect(item).toStrictEqual(omelette)
+	checkResponse(res, OK, omelette, assertEquals<Item>(res.data))
 
 	// empty
 	await emptyMenuDb()
 	await http.get('/menu/omelette').catch((error) => {
-		expect(error.response.status).toBe(404)
-		expect(error.response.statusText).toBe(MenuMessage.ERROR_ITEM_NOT_FOUND)
-		expect(error.response.data).toStrictEqual("")
+		checkResponse(error.response, ERROR_ITEM_NOT_FOUND, error.response.data)
 	})
 
 })
 
 test('Get All Available Items', async () => {
-	const pizza: Item = {
-		name: "pizza",
-		recipe: [
-			{
-				ingredient_name: "tomato",
-				quantity: 2
-			},
-			{
-				ingredient_name: "mozzarella",
-				quantity: 2
-			}
-		],
-		price: 5
-	}
 
 	// ok
-	const ok_ingredient = []
-	ok_ingredient.push("egg")
+	const ok_ingredient = ["egg"]
 	await addItem(pizza)
 	const res = await http.get('/menu/available/' + JSON.stringify(ok_ingredient))
-	expect(res.status).toBe(200)
-	expect(res.statusText).toBe(MenuMessage.OK)
-	const item = assertEquals<Item[]>(res.data)
-	expect(item).toStrictEqual([omelette])
+	checkResponse(res, OK, [omelette], assertEquals<Item[]>(res.data))
 
 	//wrong parameters
-	const wrong_param_ingredient = []
-	wrong_param_ingredient.push(2)
-	wrong_param_ingredient.push("salt")
+	const wrong_param_ingredient = [2, "salt"]
 	await http.get('/menu/available/' + JSON.stringify(wrong_param_ingredient)).catch((error) => {
-		expect(error.response.status).toBe(400)
-		expect(error.response.statusText).toBe(MenuMessage.ERROR_WRONG_PARAMETERS)
-		expect(error.response.data).toStrictEqual("")
+		checkResponse(error.response, ERROR_WRONG_PARAMETERS, "")
 	})
 
 	// not found
 	await emptyMenuDb()
 	await addItem(pizza)
-	const not_found_ingredient = []
-	not_found_ingredient.push("salt")
+	const not_found_ingredient = ["salt"]
 	await http.get('/menu/available/' + JSON.stringify(not_found_ingredient)).catch((error) => {
-		expect(error.response.status).toBe(404)
-		expect(error.response.statusText).toBe(MenuMessage.EMPTY_MENU_DB)
-		expect(error.response.data).toStrictEqual("")
+		checkResponse(error.response, EMPTY_MENU_DB, "")
 	})
 })
 
 // write
 test('Add new item', async () => {
 
-	const friedEgg: Item = {
-		name: "fried_egg",
-		recipe: [
-			{
-				ingredient_name: "egg",
-				quantity: 1
-			}
-		],
-		price: 1
-	}
-
-	const wrongItem: any = {
-		name: "boiled_egg",
-		recipe: [
-			{
-				ingredient_name: "egg",
-				quantity: 1
-			}
-		],
-		price: "1"
-	}
-
 	let res = await http.post('/menu', friedEgg)
-	expect(res.status).toBe(200)
-	expect(res.statusText).toBe(MenuMessage.OK)
-	const data = assertEquals<Item>(res.data)
 	let last = await getLastInsertedItem()
-	expect(data).toStrictEqual(last)
+	checkResponse(res, OK, assertEquals<Item>(res.data), last)
 
 	// send wrong format
 	await http.post('/menu', wrongItem).catch((error) => {
-		expect(error.response.status).toBe(400)
-		expect(error.response.statusText).toBe(MenuMessage.ERROR_WRONG_PARAMETERS)
-		expect(error.response.data).toStrictEqual("")
+
+		checkResponse(error.response, ERROR_WRONG_PARAMETERS, "")
 
 	})
 	// name already existing
 	await http.post('/menu', friedEgg).catch((error) => {
-		expect(error.response.status).toBe(400)
-		expect(error.response.statusText).toBe(MenuMessage.ERROR_ITEM_ALREADY_EXISTS)
-		expect(error.response.data).toStrictEqual("")
-
+		checkResponse(error.response, ERROR_ITEM_ALREADY_EXISTS, "")
 	})
 })
 
 test('Get All Item', async () => {
 	// ok
 	const res = await http.get('/menu')
-	expect(res.status).toBe(200)
-	expect(res.statusText).toBe(MenuMessage.OK)
-	const item = assertEquals<Item[]>(res.data)
-	expect(item).toStrictEqual([omelette])
+	checkResponse(res, OK, [omelette], assertEquals<Item[]>(res.data))
 
 	// empty
 	await emptyMenuDb()
 	await http.get('/menu').catch((error) => {
-		expect(error.response.status).toBe(404)
-		expect(error.response.statusText).toBe(MenuMessage.EMPTY_MENU_DB)
-		expect(error.response.data).toStrictEqual("")
+		checkResponse(error.response, EMPTY_MENU_DB, "")
 	})
 })
 
 test('Update Item', async () => {
-
-	let omelette: any = {
-		name: "omelette",
-		recipe: [
-			{
-				ingredient_name: "egg",
-				quantity: 1
-			},
-			{
-				ingredient_name: "salt",
-				quantity: 1
-			}
-		],
-		price: 1
-	}
-	const scrambledEgg = {
-		name: "scrambled_egg",
-		recipe: [
-			{
-				ingredient_name: "egg",
-				quantity: 1
-			}
-		],
-		price: 1
-	}
 	// ok
-	let res = await http.put('/menu', omelette)
-	expect(res.status).toBe(200)
-	expect(res.statusText).toBe(MenuMessage.OK)
-	const item = assertEquals<Item>(res.data)
-	expect(item).toStrictEqual(omelette)
+	let res = await http.put('/menu', updatedOmelette)
+	checkResponse(res, OK, updatedOmelette, assertEquals<Item>(res.data))
 
 	// wrong parameters - price
-	omelette['price'] = "2"
-	await http.put('/menu', omelette).catch((error) => {
-		expect(error.response.status).toBe(400)
-		expect(error.response.statusText).toBe(MenuMessage.ERROR_WRONG_PARAMETERS)
-		expect(error.response.data).toStrictEqual("")
+	updatedOmelette.price = "2"
+	await http.put('/menu', updatedOmelette).catch((error) => {
+		checkResponse(error.response, ERROR_WRONG_PARAMETERS, "")
 	})
 
 	// wrong parameters - recipe (wrong type)
-	omelette['price'] = 2
-	omelette['recipe'] = [
+	updatedOmelette.price = 2
+	updatedOmelette.recipe = [
 		{
 			ingredient_name: "egg",
 			quantity: "2"
 		}
 	]
 	await http.put('/menu', omelette).catch((error) => {
-		expect(error.response.status).toBe(400)
-		expect(error.response.statusText).toBe(MenuMessage.ERROR_WRONG_PARAMETERS)
-		expect(error.response.data).toStrictEqual("")
+		checkResponse(error.response, ERROR_WRONG_PARAMETERS, "")
 	})
 
 	// wrong parameters - recipe (wrong recipe)
-	omelette['recipe'] = {
+	updatedOmelette.recipe = {
 		ingredient_name: "egg",
 		quantity: "2"
 	}
 
-	await http.put('/menu', omelette).catch((error) => {
-		expect(error.response.status).toBe(400)
-		expect(error.response.statusText).toBe(MenuMessage.ERROR_WRONG_PARAMETERS)
-		expect(error.response.data).toStrictEqual("")
+	await http.put('/menu', updatedOmelette).catch((error) => {
+		checkResponse(error.response, ERROR_WRONG_PARAMETERS, "")
 	})
 
 	// not found
-	omelette.name = "omelettes"
 	await http.put('/menu', scrambledEgg).catch((error) => {
-		expect(error.response.status).toBe(404)
-		expect(error.response.statusText).toBe(MenuMessage.ERROR_ITEM_NOT_FOUND)
-		expect(error.response.data).toStrictEqual("")
+		checkResponse(error.response, ERROR_ITEM_NOT_FOUND, "")
 	})
 })

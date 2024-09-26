@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.serialization)
     id("application")
     id("jacoco")
+    id("java")
+    alias(libs.plugins.johnrengelman.shadow)
 }
 
 jacoco {
@@ -13,6 +15,17 @@ jacoco {
 
 repositories {
     mavenCentral()
+}
+
+tasks.compileJava {
+    sourceCompatibility = JavaVersion.VERSION_17.toString()
+    targetCompatibility = JavaVersion.VERSION_17.toString()
+}
+
+tasks.compileKotlin {
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 }
 
 dependencies {
@@ -27,6 +40,9 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
     finalizedBy(tasks.jacocoTestReport)
+    jvmArgs("--add-opens=java.base/java.util=ALL-UNNAMED")
+    jvmArgs("--add-opens=java.base/java.lang=ALL-UNNAMED")
+
 }
 
 tasks.jacocoTestReport {
@@ -44,8 +60,13 @@ ktlint {
     }
 }
 
-
 application {
     mainClass.set("server.Main")
 }
 
+tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+    mergeServiceFiles()
+    manifest.attributes["Main-Class"] = application.mainClass
+    archiveFileName.set("${project.name}.jar")
+    destinationDirectory.set(file("${layout.buildDirectory.get()}/output"))
+}

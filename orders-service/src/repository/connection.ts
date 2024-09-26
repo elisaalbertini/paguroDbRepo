@@ -1,9 +1,10 @@
 import * as mongoDB from "mongodb"
+require('dotenv').config()
 
 /**
  * Mongo Client
  */
-const DB_CONN_STRING = "mongodb://localhost:27017"
+const DB_CONN_STRING = process.env.DB_CONNECTION_ADDRESS ?? "mongodb://localhost:27017"
 const DB_NAME = "Orders"
 const COLLECTION_NAME = "Orders"
 

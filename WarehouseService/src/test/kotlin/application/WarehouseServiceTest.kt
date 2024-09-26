@@ -2,6 +2,7 @@ package application
 
 import BaseTest
 import MongoInfo
+import UpdateQuantity
 import com.mongodb.client.model.Filters
 import domain.Ingredient
 import io.kotest.matchers.shouldBe
@@ -11,23 +12,23 @@ class WarehouseServiceTest : BaseTest() {
 
     @Test
     suspend fun getAllIngredientsTest() {
-        warehouseService.getAllIngredients() shouldBe WarehouseServiceResponse(ingredients, WarehouseMessage.OK)
+        warehouseService.getAllIngredients() shouldBe WarehouseServiceResponse(ingredients, Message.OK)
     }
 
     @Test
     suspend fun getAllIngredientsEmpty() {
         collection.deleteMany(Filters.empty())
-        warehouseService.getAllIngredients() shouldBe WarehouseServiceResponse(emptyList(), WarehouseMessage.ERROR_EMPTY_WAREHOUSE)
+        warehouseService.getAllIngredients() shouldBe WarehouseServiceResponse(emptyList(), Message.ERROR_EMPTY_WAREHOUSE)
     }
 
     @Test
     suspend fun createNewIngredientTest() {
-        warehouseService.createIngredient(coffee) shouldBe WarehouseServiceResponse(coffee, WarehouseMessage.OK)
+        warehouseService.createIngredient(coffee) shouldBe WarehouseServiceResponse(coffee, Message.OK)
     }
 
     @Test
     suspend fun createExistingIngredientTest() {
-        warehouseService.createIngredient(milk) shouldBe WarehouseServiceResponse(null, WarehouseMessage.ERROR_INGREDIENT_ALREADY_EXISTS)
+        warehouseService.createIngredient(milk) shouldBe WarehouseServiceResponse(null, Message.ERROR_INGREDIENT_ALREADY_EXISTS)
     }
 
     @Test
@@ -39,7 +40,7 @@ class WarehouseServiceTest : BaseTest() {
             listOf(Ingredient(milk.name, milk.quantity - decreaseMilk), Ingredient(tea.name, tea.quantity - decreaseTea))
         warehouseService
             .updateConsumedIngredientsQuantity(decreaseIngredients) shouldBe
-            WarehouseServiceResponse(expectedIngredients, WarehouseMessage.OK)
+            WarehouseServiceResponse(expectedIngredients, Message.OK)
 
         val updatedIngredients = warehouseService.getAllIngredients().data
         updatedIngredients shouldBe expectedIngredients
@@ -52,7 +53,7 @@ class WarehouseServiceTest : BaseTest() {
         val decreaseIngredients = listOf(UpdateQuantity(milk.name, decreaseMilk), UpdateQuantity(tea.name, decreaseTea))
         warehouseService
             .updateConsumedIngredientsQuantity(decreaseIngredients) shouldBe
-            WarehouseServiceResponse(null, WarehouseMessage.ERROR_INGREDIENT_QUANTITY)
+            WarehouseServiceResponse(null, Message.ERROR_INGREDIENT_QUANTITY)
 
         val updatedIngredients = warehouseService.getAllIngredients().data
         updatedIngredients shouldBe ingredients
@@ -61,22 +62,22 @@ class WarehouseServiceTest : BaseTest() {
     @Test
     suspend fun restockTest() {
         warehouseService.restock(UpdateQuantity(tea.name, tea.quantity)) shouldBe
-            WarehouseServiceResponse(Ingredient(tea.name, tea.quantity * 2), WarehouseMessage.OK)
+            WarehouseServiceResponse(Ingredient(tea.name, tea.quantity * 2), Message.OK)
         warehouseService.restock(UpdateQuantity(coffee.name, coffee.quantity)) shouldBe
-            WarehouseServiceResponse(null, WarehouseMessage.ERROR_INGREDIENT_NOT_FOUND)
+            WarehouseServiceResponse(null, Message.ERROR_INGREDIENT_NOT_FOUND)
     }
 
     @Test
     suspend fun getAllAvailableIngredientsTest() {
         collection.insertOne(notAvailableCoffee)
         warehouseService
-            .getAllAvailableIngredients() shouldBe WarehouseServiceResponse(ingredients, WarehouseMessage.OK)
+            .getAllAvailableIngredients() shouldBe WarehouseServiceResponse(ingredients, Message.OK)
     }
 
     @Test
     suspend fun getAllAvailableIngredientsEmpty() {
         collection.deleteMany(Filters.empty())
         warehouseService
-            .getAllAvailableIngredients() shouldBe WarehouseServiceResponse(emptyList(), WarehouseMessage.ERROR_EMPTY_WAREHOUSE)
+            .getAllAvailableIngredients() shouldBe WarehouseServiceResponse(emptyList(), Message.ERROR_EMPTY_WAREHOUSE)
     }
 }
