@@ -3,7 +3,7 @@ package application
 import Message
 
 /**
- * Data class representing the response of the WarehouseService
+ * Data class representing the response of the WarehouseService modifica
  * @param data returned by the query
  * @param response returned by the WarehouseService
  */
