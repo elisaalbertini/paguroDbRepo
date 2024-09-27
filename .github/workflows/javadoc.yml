@@ -22,21 +22,11 @@ jobs:
       - name: Install and Build server
         #working-directory: server
         run: |
-          cd ${{ github.workspace }}/server
-          npm install
-          npx typedoc --entryPointStrategy expand ./src
-          cd ${{ github.workspace }}/menu-service
-          npm install
-          npx typedoc --entryPointStrategy expand ./src
-          cd ${{ github.workspace }}/orders-service
-          npm install
-          npx typedoc --entryPointStrategy expand ./src
-          cd ${{ github.workspace }}/manager-application
-          npm install
-          npx typedoc --entryPointStrategy expand ./src
-          cd ${{ github.workspace }}/customer-application
-          npm install
-          npx typedoc --entryPointStrategy expand ./src
+          for x in ['server', 'manager-application', 'orders-service', 'menu-service', 'customer-application']; do
+            cd ${{ github.workspace }}/$x
+            npm install
+            npx typedoc --entryPointStrategy expand ./src
+          done
 
       #- name: Install and Build menu-service
        # working-directory: menu-service
