@@ -17,7 +17,7 @@ import { DialogData } from '../../utils/dialog-data';
 import { MessageCode } from '../../utils/codes';
 
 /**
- * Component that implements a dialog containing a wertyrewqertyasdfghasdfghjk
+ * Component thaqwertytrewq
  * form to insert all the necessary information 
  * about the new item or to update one
  */

@@ -22,8 +22,8 @@ jobs:
       - name: Install and Build server
         #working-directory: server
         run: |
-          dir=('server' 'manager-application' 'orders-service' 'menu-service' 'customer-application')
-          for x in ${{dir}}; do
+          declare -a dir=('server' 'manager-application' 'orders-service' 'menu-service' 'customer-application')
+          for x in ${dir[@]}; do
             cd ${{ github.workspace }}/$x
             npm install
             npx typedoc --entryPointStrategy expand ./src
