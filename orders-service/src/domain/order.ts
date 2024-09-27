@@ -1,7 +1,7 @@
 import { InsertOrder } from "../repository/insert-order"
 
 /**
- * this interface represents an Order modifica
+ * this interface represents an Order modifica ciao
  */
 export interface Order extends InsertOrder {
 	_id: string
