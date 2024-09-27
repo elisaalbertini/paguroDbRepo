@@ -54,10 +54,10 @@ jobs:
           cd ${{ github.workspace }}/docs
           cp -r ${{ github.workspace }}/EmployeeApplication/build/docs/javadoc ${{ github.workspace }}/docs
           cp -r ${{ github.workspace }}/WarehouseService/build/dokka/html ${{ github.workspace }}/docs
-          cp -r ${{ github.workspace }}/docs/typedoc/menu-service ${{ github.workspace }}/docs
-          cp -r ${{ github.workspace }}/docs/typedoc/server ${{ github.workspace }}/docs
-          cp -r ${{ github.workspace }}/docs/typedoc/orders-service ${{ github.workspace }}/docs
-          cp -r ${{ github.workspace }}/docs/typedoc/manager-application ${{ github.workspace }}/docs
+          cp -r ${{ github.workspace }}/menu-service/docs ${{ github.workspace }}/docs
+          cp -r ${{ github.workspace }}/server/docs ${{ github.workspace }}/docs
+          cp -r ${{ github.workspace }}orders-service/docs ${{ github.workspace }}/docs
+          cp -r ${{ github.workspace }}manager-application/docs ${{ github.workspace }}/docs
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
