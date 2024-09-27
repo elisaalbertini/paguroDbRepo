@@ -58,12 +58,12 @@ jobs:
           mkdir ${{ github.workspace }}/docs/typedoc/menu-service
           mkdir ${{ github.workspace }}/docs/typedoc/orders-service
           mkdir ${{ github.workspace }}/docs/typedoc/manager-application
-          cp -r ${{ github.workspace }}/EmployeeApplication/build/docs/javadoc ${{ github.workspace }}/docs/javadoc
-          cp -r ${{ github.workspace }}/WarehouseService/build/dokka/html ${{ github.workspace }}/docs/dokka
-          cp -r ${{ github.workspace }}/menu-service/docs ${{ github.workspace }}/docs/typedoc/menu-service
-          cp -r ${{ github.workspace }}/server/docs ${{ github.workspace }}/docs/typedoc/server
-          cp -r ${{ github.workspace }}/orders-service/docs ${{ github.workspace }}/docs/typedoc/orders-service
-          cp -r ${{ github.workspace }}/manager-application/docs ${{ github.workspace }}/docs/typedoc/manager-application
+          cp -r ${{ github.workspace }}/EmployeeApplication/build/docs/javadoc/. ${{ github.workspace }}/docs/javadoc
+          cp -r ${{ github.workspace }}/WarehouseService/build/dokka/html/. ${{ github.workspace }}/docs/dokka
+          cp -r ${{ github.workspace }}/menu-service/docs/. ${{ github.workspace }}/docs/typedoc/menu-service
+          cp -r ${{ github.workspace }}/server/docs/. ${{ github.workspace }}/docs/typedoc/server
+          cp -r ${{ github.workspace }}/orders-service/docs/. ${{ github.workspace }}/docs/typedoc/orders-service
+          cp -r ${{ github.workspace }}/manager-application/docs/. ${{ github.workspace }}/docs/typedoc/manager-application
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
