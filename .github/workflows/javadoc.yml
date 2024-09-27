@@ -64,4 +64,4 @@ jobs:
         with:
           folder: ${{ github.workspace }}/docs
           branch: report
-          target-folder: ./docs/prova
+          target-folder: ./docs
