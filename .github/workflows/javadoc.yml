@@ -68,7 +68,7 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
+          clean: false
           folder: ${{ github.workspace }}/docs/
           branch: report
           target-folder: ./docs
-          clean-exclude: ./docs/index.html
