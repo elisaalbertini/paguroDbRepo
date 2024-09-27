@@ -48,9 +48,20 @@ jobs:
           chmod +x gradlew
           ./gradlew dokkaHtml
 
+      - name: collect doc
+        run: |
+          mkdir ${{ github.workspace }}/docs
+          cd ${{ github.workspace }}/docs
+          cp -r ${{ github.workspace }}/EmployeeApplication/build/docs/javadoc ${{ github.workspace }}/docs
+          cp -r ${{ github.workspace }}/WarehouseService/build/dokka/html ${{ github.workspace }}/docs
+          cp -r ${{ github.workspace }}/docs/typedoc/menu-service ${{ github.workspace }}/docs
+          cp -r ${{ github.workspace }}/docs/typedoc/server ${{ github.workspace }}/docs
+          cp -r ${{ github.workspace }}/docs/typedoc/orders-service ${{ github.workspace }}/docs
+          cp -r ${{ github.workspace }}/docs/typedoc/manager-application ${{ github.workspace }}/docs
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./EmployeeApplication/build/docs/javadoc ./WarehouseService/build/dokka/html ./docs/typedoc/server ./docs/typedoc/menu-service ./docs/typedoc/orders-service ./docs/typedoc/manager-application
+          folder: ${{ github.workspace }}/docs
           branch: report
           target-folder: ./docs/prova
