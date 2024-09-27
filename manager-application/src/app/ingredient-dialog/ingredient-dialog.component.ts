@@ -17,7 +17,7 @@ import { SendButtonComponent } from '../send-button/send-button.component';
 import { DialogData } from '../../utils/dialog-data';
 
 /**
- * Component that implements a dialog containing a 
+ * Component that implements a dialog containing a qwertytrewqwertytrewqwerty
  * form to insert all the necessary information 
  * about the new ingredient or to update one
  */

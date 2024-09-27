@@ -20,28 +20,41 @@ jobs:
           ./gradlew javadoc
 
       - name: Install and Build server
-        working-directory: server
+        #working-directory: server
         run: |
+          cd ${{ github.workspace }}/server
+          npm install
+          npx typedoc --entryPointStrategy expand ./src
+          cd ${{ github.workspace }}/menu-service
+          npm install
+          npx typedoc --entryPointStrategy expand ./src
+          cd ${{ github.workspace }}/orders-service
+          npm install
+          npx typedoc --entryPointStrategy expand ./src
+          cd ${{ github.workspace }}/manager-application
+          npm install
+          npx typedoc --entryPointStrategy expand ./src
+          cd ${{ github.workspace }}/customer-application
           npm install
           npx typedoc --entryPointStrategy expand ./src
 
-      - name: Install and Build menu-service
-        working-directory: menu-service
-        run: |
-          npm install
-          npx typedoc --entryPointStrategy expand ./src
+      #- name: Install and Build menu-service
+       # working-directory: menu-service
+        #run: |
+         # npm install
+          #npx typedoc --entryPointStrategy expand ./src
 
-      - name: Install and Build orders-service
-        working-directory: orders-service
-        run: |
-          npm install
-          npx typedoc --entryPointStrategy expand ./src
+      #- name: Install and Build orders-service
+       # working-directory: orders-service
+        #run: |
+         # npm install
+          #npx typedoc --entryPointStrategy expand ./src
 
-      - name: Install and Build manager-application
-        working-directory: manager-application
-        run: |
-          npm install
-          npx typedoc --entryPointStrategy expand ./src
+      #- name: Install and Build manager-application
+       # working-directory: manager-application
+        #run: |
+         # npm install
+          #npx typedoc --entryPointStrategy expand ./src
 
       - name: Install and Build
         run: |
@@ -57,6 +70,7 @@ jobs:
           mkdir ${{ github.workspace }}/docs/typedoc/menu-service && cp -r ${{ github.workspace }}/menu-service/docs/. $_
           mkdir ${{ github.workspace }}/docs/typedoc/orders-service && cp -r ${{ github.workspace }}/orders-service/docs/. $_
           mkdir ${{ github.workspace }}/docs/typedoc/manager-application && cp -r ${{ github.workspace }}/manager-application/docs/. $_
+          mkdir ${{ github.workspace }}/docs/typedoc/customer-application && cp -r ${{ github.workspace }}/customer-application/docs/. $_
           mkdir ${{ github.workspace }}/docs/typedoc/server && cp -r ${{ github.workspace }}/server/docs/. $_
 
       - name: Deploy
