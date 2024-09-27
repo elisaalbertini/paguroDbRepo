@@ -19,9 +19,38 @@ jobs:
           chmod +x gradlew
           ./gradlew javadoc
 
+      - name: Install and Build server
+        working-directory: server
+        run: |
+          npm install
+          npx typedoc --entryPointStrategy expand ./src
+
+      - name: Install and Build menu-service
+        working-directory: menu-service
+        run: |
+          npm install
+          npx typedoc --entryPointStrategy expand ./src
+
+      - name: Install and Build orders-service
+        working-directory: orders-service
+        run: |
+          npm install
+          npx typedoc --entryPointStrategy expand ./src
+
+      - name: Install and Build manager-application
+        working-directory: manager-application
+        run: |
+          npm install
+          npx typedoc --entryPointStrategy expand ./src
+
+      - name: Install and Build
+        run: |
+          chmod +x gradlew
+          ./gradlew dokkaHtml
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./EmployeeApplication/build/docs/javadoc
+          folder: ./EmployeeApplication/build/docs/javadoc, ./WarehouseService/build/dokka/html, ./docs/typedoc/server, ./docs/typedoc/menu-service, ./docs/typedoc/orders-service, ./docs/typedoc/manager-application 
           branch: report
-          target-folder: ./docs/javadoc
+          target-folder: ./docs/prova
