@@ -20,7 +20,6 @@ jobs:
           ./gradlew javadoc
 
       - name: Install and Build server
-        #working-directory: server
         run: |
           declare -a dir=('server' 'manager-application' 'orders-service' 'menu-service' 'customer-application')
           for x in ${dir[@]}; do
@@ -28,24 +27,6 @@ jobs:
             npm install
             npx typedoc --entryPointStrategy expand ./src
           done
-
-      #- name: Install and Build menu-service
-       # working-directory: menu-service
-        #run: |
-         # npm install
-          #npx typedoc --entryPointStrategy expand ./src
-
-      #- name: Install and Build orders-service
-       # working-directory: orders-service
-        #run: |
-         # npm install
-          #npx typedoc --entryPointStrategy expand ./src
-
-      #- name: Install and Build manager-application
-       # working-directory: manager-application
-        #run: |
-         # npm install
-          #npx typedoc --entryPointStrategy expand ./src
 
       - name: Install and Build
         run: |
@@ -56,13 +37,13 @@ jobs:
         run: |
           mkdir ${{ github.workspace }}/docs/
           mkdir ${{ github.workspace }}/docs/typedoc/
+          declare -a dir=('server' 'manager-application' 'orders-service' 'menu-service' 'customer-application')
+          
+          for d in ${dir[@]}; do
+            mkdir ${{ github.workspace }}/docs/typedoc/$d && cp -r ${{ github.workspace }}/$d/docs/. $_
+          done
           mkdir ${{ github.workspace }}/docs/javadoc && cp -r ${{ github.workspace }}/EmployeeApplication/build/docs/javadoc/. $_
           mkdir ${{ github.workspace }}/docs/dokka && cp -r ${{ github.workspace }}/WarehouseService/build/dokka/html/. $_
-          mkdir ${{ github.workspace }}/docs/typedoc/menu-service && cp -r ${{ github.workspace }}/menu-service/docs/. $_
-          mkdir ${{ github.workspace }}/docs/typedoc/orders-service && cp -r ${{ github.workspace }}/orders-service/docs/. $_
-          mkdir ${{ github.workspace }}/docs/typedoc/manager-application && cp -r ${{ github.workspace }}/manager-application/docs/. $_
-          mkdir ${{ github.workspace }}/docs/typedoc/customer-application && cp -r ${{ github.workspace }}/customer-application/docs/. $_
-          mkdir ${{ github.workspace }}/docs/typedoc/server && cp -r ${{ github.workspace }}/server/docs/. $_
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
