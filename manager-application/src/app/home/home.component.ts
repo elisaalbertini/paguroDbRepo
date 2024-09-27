@@ -15,7 +15,7 @@ interface Route {
 }
 
 /**
- * Component that implements the main page of the website.
+ * Component that implements the main page of the website. ciao
  */
 @Component({
 	selector: 'home',

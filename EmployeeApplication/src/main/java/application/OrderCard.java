@@ -12,7 +12,7 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
-/** Graphic Panel Representation for an Order */
+/** Graphic Panel Representation for an Order modifica*/
 public class OrderCard extends JPanel {
 
   private static final String READY = "READY";
