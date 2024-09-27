@@ -9,7 +9,7 @@ import java.util.List;
  * @param customerEmail email of the customer that made the order qwertytrewqwertytrewqwertyrewq asdfghjhgfdsa drgzdgdrhzdrg qwrttrewq qwerewqwerewq
  * @param price total price of the order
  * @param type type of the order wdefgrthgrfdewsdfgthgrfdes
- * @param state current state of the order
+ * @param state current state of the order qwertytrewqwertrewertytrewertytrewqwertrewqwertrewqwert
  * @param items ordered menu items
  */
 public record Order(
