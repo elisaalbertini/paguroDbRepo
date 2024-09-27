@@ -18,7 +18,7 @@ import { MessageCode } from '../../utils/codes';
 
 /**
  * Component thaqwertytrewq
- * form to insert all the necessary information aqtytrewqwertyasdxfcgvhbnjkl
+ * form to insert all the necessary information aqtytrewqwertyasdxfcgvhbnjklstdxfygvhbjkml
  * about the new item or to update one
  */
 @Component({
