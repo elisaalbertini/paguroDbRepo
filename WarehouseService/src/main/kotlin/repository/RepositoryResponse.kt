@@ -3,7 +3,7 @@ package repository
 import Message
 
 /**
- *  Data class representing the response of Repository modifica uffauffauffauffauffa
+ *  Data class representing the response of Repository modifica uffauffauffauffauffa qawsedrtfgyhuijko
  *  @param data represent what the query return
  *  @param message returned by the Repository
  */
