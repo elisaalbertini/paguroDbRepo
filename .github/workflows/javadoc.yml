@@ -51,7 +51,7 @@ jobs:
       - name: collect doc
         run: |
           mkdir ${{ github.workspace }}/docs/
-          mkdir ${{ github.workspace }}/typedoc/
+          mkdir ${{ github.workspace }}/docs/typedoc/
           mkdir ${{ github.workspace }}/docs/javadoc && cp -r ${{ github.workspace }}/EmployeeApplication/build/docs/javadoc/. $_
           mkdir ${{ github.workspace }}/docs/dokka && cp -r ${{ github.workspace }}/WarehouseService/build/dokka/html/.
           mkdir ${{ github.workspace }}/docs/typedoc/menu-service && cp -r ${{ github.workspace }}/menu-service/docs/.
