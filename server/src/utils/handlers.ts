@@ -11,7 +11,7 @@ interface IArray {
 }
 
 /**
- * This function creates an error message given the code and the message returned by an API
+ * This function creates an error message given the code and the message returned by an API lalalalalalalal
  * @param code 
  * @param msg 
  * @returns a new response message with empty data

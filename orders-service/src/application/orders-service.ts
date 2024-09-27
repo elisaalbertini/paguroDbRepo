@@ -5,7 +5,7 @@ import * as mailSender from "./email-sender"
 import validator from 'email-validator'
 
 /**
- * This type represents the Response given by the Service. It consists of the generic data and an OrdersMessage
+ * This type represents the Response given by the Service. It consists of the generic data and an OrdersMessage uffauffauffa
  */
 type ServiceResponse<T> = { data?: T, message: OrdersMessage };
 

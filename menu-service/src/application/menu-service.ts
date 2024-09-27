@@ -3,7 +3,7 @@ import { IngredientInRecipe, Item } from "../domain/item"
 import * as repository from "../repository/repository"
 
 /**
- * This type represents the Response given by the Service. It consists of the generic data and an MenuMessage
+ * This type represents the Response given by the Service. It consists of the generic data and an MenuMessage blablabla
  */
 type ServiceResponse<T> = { data?: T, message: MenuMessage }
 
