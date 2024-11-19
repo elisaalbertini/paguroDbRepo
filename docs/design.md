@@ -6,7 +6,7 @@ nav_order: 6
 # Design
 
 ## Context
-// TODO introduction
+// TODO introduction ciao
 * *Orders (Core domain)*: context concerning the management of an order. They are made by the customer using a web application and they are received by the employees using a PC software. This involves different orders and the cart
 * *Menu (Generic domain)*: context concerning the management of the menu. Everything related to the menu from the choice of the menu items to what it’s displayed to the customer
 * *Warehouse (Generic domain)*: context concerning the management of the warehouse. Everything related to the menu from the choice of the ingredients to the restock
