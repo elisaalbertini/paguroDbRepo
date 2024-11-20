@@ -47,7 +47,7 @@ jobs:
         run: | 
           mkdir ${{ github.workspace }}/menu-service/final-coverage
           cd ${{ github.workspace }}/menu-service/final-coverage
-          npx nyc merge coverage.json ${{ github.workspace }}/menu-service/coverage/coverage-final.json ${{ github.workspace }}/orders-service/coverage/coverage-final.json ${{ github.workspace }}/server/coverage/coverage-final.json
+          npx nyc merge ${{ github.workspace }}/menu-service/coverage/ ${{ github.workspace }}/orders-service/coverage/ ${{ github.workspace }}/server/coverage/ --output=coverage.json
           npx nyc report --reporter=lcov --dir=coverage --include=${{ github.workspace }}/menu-service/final-coverage/coverage.json
 
       - name: SonarQube Scan
