@@ -49,7 +49,7 @@ jobs:
           cp ${{ github.workspace }}/menu-service/coverage/coverage-final.json ${{ github.workspace }}/.nyc_output/coverage_menu_service.json
           cp ${{ github.workspace }}/orders-service/coverage/coverage-final.json ${{ github.workspace }}/.nyc_output/coverage_orders_service.json
           npx nyc report --reporter=lcov --report-dir=destination-dir
-          ls ${{ github.workspace }}.nyc_output
+          ls ${{ github.workspace }}/.nyc_output
 
 
       #- name: SonarQube Scan
