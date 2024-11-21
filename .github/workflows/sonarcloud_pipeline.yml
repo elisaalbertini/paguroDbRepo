@@ -55,7 +55,7 @@ jobs:
       - name: SonarQube Scan
         run: |
           chmod +x gradlew
-          ./gradlew build sonar
+          ./gradlew jar sonar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
