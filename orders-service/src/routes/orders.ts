@@ -39,14 +39,15 @@ router.get('/:orderId', async (req: Request, res: Response) => {
 })
 
 /**
- * PUT '/orders' API handles the update of one specific Order delegating to the service and sending a notify email when needed
+ * PUT '/orders' API handles the update of one specific Order delegating to the service and
+ * sending a notify email when needed
  */
 router.put('/', async (req: Request, res: Response) => {
 	try {
 		let order = assertEquals<Order>(req.body)
 		let service_res = await service.updateOrder(order._id, order.state)
 		if (service_res.data?.customerEmail && service_res.message == OrdersMessage.OK && order.state == OrderState.READY) {
-			await service.sendNotifyEmail(service_res.data.customerEmail)
+			service.sendNotifyEmail(service_res.data.customerEmail)
 		}
 		sendResponse(res, service_res.message, service_res.data)
 	} catch (error) {

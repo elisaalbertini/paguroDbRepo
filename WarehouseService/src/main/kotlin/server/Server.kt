@@ -10,7 +10,7 @@ import io.vertx.kotlin.coroutines.dispatcher
 import kotlinx.coroutines.launch
 
 /**
- * Class that exposes the routes of the API modifica
+ * Class that exposes the routes of the API
  * @param mongoInfo that contains the information necessary to connect to the database
  * @param port for the server connection
  */
@@ -48,5 +48,6 @@ class Server(private val mongoInfo: MongoInfo, private val port: Int) : Coroutin
         }
 
         vertx.createHttpServer().requestHandler(router).listen(port)
+        println("listening on port :$port")
     }
 }

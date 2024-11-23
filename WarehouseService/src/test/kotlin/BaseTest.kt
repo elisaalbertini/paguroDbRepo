@@ -4,6 +4,10 @@ import io.kotest.core.spec.style.AnnotationSpec
 import server.MongoUtils
 
 open class BaseTest : AnnotationSpec() {
+    init {
+        SetupLogger().setupLogger()
+    }
+
     protected val collection = MongoUtils.getMongoCollection(MongoInfo())
     protected val milk = Ingredient("milk", 99)
     protected val tea = Ingredient("tea", 4)
@@ -16,9 +20,5 @@ open class BaseTest : AnnotationSpec() {
     suspend fun beforeTest() {
         collection.deleteMany(Filters.empty())
         collection.insertMany(ingredients)
-    }
-
-    fun getWrongInfo(): MongoInfo {
-        return MongoInfo("mongodb://localhost:27016/")
     }
 }

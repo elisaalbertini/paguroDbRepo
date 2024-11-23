@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "test": "jest --runInBand",
-    "start": "npx ts-node ./src/app.ts",
+    "start": "ts-node ./src/app.ts",
     "prepare": "ts-patch install && typia patch",
     "build": "webpack --mode=production --config webpack.node.config.js"
   },
@@ -13,7 +13,7 @@
     "debug": "~2.6.9",
     "email-validator": "^2.0.4",
     "emailjs": "^4.0.3",
-    "express": "~4.16.1",
+    "express": "^4.21.0",
     "helmet": "^7.1.0",
     "http-errors": "~1.6.3",
     "http-status-codes": "^2.3.0",
@@ -22,8 +22,7 @@
     "typia": "^6.4.3"
   },
   "devDependencies": {
-    "@ryoppippi/unplugin-typia": "npm:@jsr/ryoppippi__unplugin-typia@^1.0.6",
-    "@types/dotenv": "^8.2.0",
+    "@ryoppippi/unplugin-typia": "^1.0.6",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
     "@types/nodemailer": "^6.4.15",

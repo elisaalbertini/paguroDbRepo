@@ -91,10 +91,10 @@ export async function updateItem(name: string, item: any): Promise<RepositoryRes
 }
 
 /**
- * It returs a Promise with the repository response and all the items in the repository all recipes 
- * whose ingredients are contained in the available ingredient list
+ * It returs a Promise with the RepositoryResponse and all the available items in the repository.
+ * An item is available when its recipe ingredients are contained in the available ingredient list
  * @param availableIngredients 
- * @returns MenuMessage.OK if there are items, MenuMessage.EMPTY_MENU_DB otherwise
+ * @returns MenuMessage.OK if there are available items, MenuMessage.EMPTY_MENU_DB otherwise
  */
 export async function getAllAvailableItems(availableIngredients: string[]): Promise<RepositoryResponse<Item[]>> {
 

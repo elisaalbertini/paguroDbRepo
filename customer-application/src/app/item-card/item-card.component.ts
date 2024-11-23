@@ -13,62 +13,62 @@ import * as cartStorage from '../../utils/cart-storage'
  * Component that implements the card of a menu item.
  */
 @Component({
-  selector: 'item-card',
-  standalone: true,
-  imports: [MatCardModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    CommonModule
-  ],
-  templateUrl: './item-card.component.html',
-  styleUrl: './item-card.component.css'
+	selector: 'item-card',
+	standalone: true,
+	imports: [MatCardModule,
+		MatButtonModule,
+		MatFormFieldModule,
+		MatInputModule,
+		FormsModule,
+		CommonModule
+	],
+	templateUrl: './item-card.component.html',
+	styleUrl: './item-card.component.css'
 })
 export class ItemCardComponent {
-  beautifyDbName(name: string) {
-    return beautifyDbName(name)
-  }
+	beautifyDbName(name: string) {
+		return beautifyDbName(name)
+	}
 
-  @Input()
-  item!: Item
-  error = false
-  quantity = 1
+	@Input()
+	item!: Item
+	error = false
+	quantity = 1
 
-  idItemAdded(cart: any[]) {
-    let isPresent = false
-    cart.forEach((i: any) => {
-      if (i.name == this.item.name) {
-        isPresent = true
-      }
-    })
-    return isPresent
-  }
+	idItemAdded(cart: any[]) {
+		let isPresent = false
+		cart.forEach((i: any) => {
+			if (i.name == this.item.name) {
+				isPresent = true
+			}
+		})
+		return isPresent
+	}
 
-  onClick() {
-    if (this.quantity > 0) {
-      this.error = false
-      let newOrderItem = {
-        "name": this.item.name,
-        "quantity": this.quantity,
-        "price": this.item.price
-      }
+	onClick() {
+		if (this.quantity > 0) {
+			this.error = false
+			let newOrderItem = {
+				"name": this.item.name,
+				"quantity": this.quantity,
+				"price": this.item.price
+			}
 
-      let cart: any[] = cartStorage.getCartStorage()
+			let cart: any[] = cartStorage.getCartStorage()
 
-      if (!this.idItemAdded(cart)) {
-        cart.push(newOrderItem)
-      } else {
-        cart.forEach((item: any) => {
-          if (item.name == this.item.name) {
-            item.quantity = item.quantity + this.quantity
-          }
-        })
-      }
+			if (!this.idItemAdded(cart)) {
+				cart.push(newOrderItem)
+			} else {
+				cart.forEach((item: any) => {
+					if (item.name == this.item.name) {
+						item.quantity = item.quantity + this.quantity
+					}
+				})
+			}
 
-      cartStorage.setCartStorage(cart)
-    } else {
-      this.error = true
-    }
-  }
+			cartStorage.setCartStorage(cart)
+		} else {
+			this.error = true
+		}
+	}
 }

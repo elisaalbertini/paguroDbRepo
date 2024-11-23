@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import { RequestMessage, ResponseMessage } from '../../utils/schema/messages';
-import { Service } from '../../utils/service';
+import { RequestMessage, ResponseMessage, WarehouseServiceMessages } from '../../utils/schema/messages';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { IngredientDialogComponent } from '../ingredient-dialog/ingredient-dialog.component';
@@ -14,7 +13,7 @@ import { MessageCode } from '../../utils/codes';
 
 /**
  * Component that implements a table displaying the ingredients or items 
- * present in the warehouse. If the db is empty or an 
+ * present in the dbs. If the db is empty or an 
  * error occurs it shows it.
  */
 @Component({
@@ -55,7 +54,7 @@ export class TableComponent implements OnInit {
 	}
 
 	openDialog(data?: any) {
-		if (this.initialRequest.client_name == Service.WAREHOUSE) {
+		if (this.initialRequest.client_request == WarehouseServiceMessages.GET_ALL_INGREDIENT) {
 			let title = data == undefined ? "Add a new ingredient" : "Ingredient: " + data.name
 			let buttonMsg = data == undefined ? "Add" : "Restock"
 
@@ -67,7 +66,7 @@ export class TableComponent implements OnInit {
 		}
 	}
 
-	constructor(private dialog: MatDialog) { }
+	constructor(private readonly dialog: MatDialog) { }
 
 	ngOnInit(): void {
 		this.ws = new WebSocket('ws://localhost:3000')
@@ -104,7 +103,7 @@ export class TableComponent implements OnInit {
 		}
 
 		const setData = (data: any[]) => {
-			if (this.initialRequest.client_name == Service.WAREHOUSE) {
+			if (this.initialRequest.client_request == WarehouseServiceMessages.GET_ALL_INGREDIENT) {
 				this.dataSource = data
 			} else {
 				let items = Array()

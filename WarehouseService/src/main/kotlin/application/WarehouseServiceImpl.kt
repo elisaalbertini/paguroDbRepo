@@ -11,7 +11,7 @@ class WarehouseServiceImpl(mongoInfo: MongoInfo) : WarehouseService {
 
     override suspend fun getAllIngredients(): WarehouseServiceResponse<List<Ingredient>> {
         val ingredients = repository.getAllIngredients()
-        return correctIngredientList(ingredients.data!!)
+        return correctIngredientList(ingredients.data)
     }
 
     override suspend fun createIngredient(ingredient: Ingredient): WarehouseServiceResponse<Ingredient> {
@@ -27,9 +27,10 @@ class WarehouseServiceImpl(mongoInfo: MongoInfo) : WarehouseService {
         val availableIngredients = repository.getAllAvailableIngredients().data
         if (availableIngredients != null) {
             ingredients.forEach {
+                val qty = availableIngredients.find { i -> i.name == it.name }?.quantity
                 if (availableIngredients.none { i -> i.name == it.name }) {
                     return WarehouseServiceResponse(null, Message.ERROR_INGREDIENT_NOT_FOUND)
-                } else if (availableIngredients.find { i -> i.name == it.name }?.quantity!! < it.quantity) {
+                } else if (qty != null && qty < it.quantity) {
                     return WarehouseServiceResponse(null, Message.ERROR_INGREDIENT_QUANTITY)
                 }
             }
@@ -53,13 +54,13 @@ class WarehouseServiceImpl(mongoInfo: MongoInfo) : WarehouseService {
 
     override suspend fun getAllAvailableIngredients(): WarehouseServiceResponse<List<Ingredient>> {
         val ingredients = repository.getAllAvailableIngredients()
-        return correctIngredientList(ingredients.data!!)
+        return correctIngredientList(ingredients.data)
     }
 
-    private fun correctIngredientList(ingredients: List<Ingredient>): WarehouseServiceResponse<List<Ingredient>> {
+    private fun correctIngredientList(ingredients: List<Ingredient>?): WarehouseServiceResponse<List<Ingredient>> {
         return WarehouseServiceResponse(
             ingredients,
-            if (ingredients.isNotEmpty()) {
+            if (!ingredients.isNullOrEmpty()) {
                 Message.OK
             } else {
                 Message.ERROR_EMPTY_WAREHOUSE

@@ -17,85 +17,85 @@ import java.util.Objects;
  * initializes the message handler. The handler updates the GUI when order data arrives, if the
  * server is not able to provide the data the websocket resends the request. If the connection is
  * successful it asks all the orders from the server. If the connection is not successful it keeps
- * trying to reconnect. modifica
+ * trying to reconnect.
  */
 public class WebSocketConnection extends AbstractVerticle {
 
-  private final View view;
+    private final View view;
 
-  /**
-   * Class Constructor
-   *
-   * @param view the application.Main GUI
-   */
-  public WebSocketConnection(View view) {
-    this.view = view;
-  }
-
-  @Override
-  public void start() {
-    startClient(vertx);
-  }
-
-  private void startClient(Vertx vertx) {
-    var request = Request.createJsonRequest(Message.GET_ALL_ORDERS, new JsonObject());
-    WebSocketClient client = vertx.createWebSocketClient();
-    connect(client, request);
-  }
-
-  private void checkResponseAndUpdateView(Response res, AsyncResult<WebSocket> ctx) {
-    if (res.isCodeOk()) {
-      view.addPanels(res.data(), ctx);
+    /**
+     * Class Constructor
+     *
+     * @param view the application.Main GUI
+     */
+    public WebSocketConnection(View view) {
+        this.view = view;
     }
-  }
 
-  private void checkResponseAndReconnect(Response res, WebSocket ws, JsonObject request) {
-    if (!res.isCodeOk() && res.isServerNotAvailable()) {
-      try {
-        Thread.sleep(1000);
-        ws.write(Buffer.buffer(String.valueOf(request)));
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-      }
+    @Override
+    public void start() {
+        startClient(vertx);
     }
-  }
 
-  private boolean checkMessage(Buffer message) {
-    return Objects.equals(message.toJsonObject().getString("message"), "NEW_ORDER_CREATED");
-  }
+    private void startClient(Vertx vertx) {
+        var request = Request.createJsonRequest(Message.GET_ALL_ORDERS, new JsonObject());
+        WebSocketClient client = vertx.createWebSocketClient();
+        connect(client, request);
+    }
 
-  private Buffer log() {
-    JsonObject json = new JsonObject();
-    json.put("message", "EMPLOYEE");
-    return Buffer.buffer(json.toString());
-  }
+    private void checkResponseAndUpdateView(Response res, AsyncResult<WebSocket> ctx) {
+        if (res.isCodeOk()) {
+            view.addPanels(res.data(), ctx);
+        }
+    }
 
-  private void connect(WebSocketClient client, JsonObject request) {
-    client.connect(
-        3000,
-        "localhost",
-        "/",
-        ctx -> {
-          var ws = ctx.result();
-          if (ws != null) {
+    private void checkResponseAndReconnect(Response res, WebSocket ws, JsonObject request) {
+        if (!res.isCodeOk() && res.isServerNotAvailable()) {
+            try {
+                Thread.sleep(1000);
+                ws.write(Buffer.buffer(String.valueOf(request)));
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
 
-            ws.handler(
-                message -> {
-                  if (checkMessage(message)) {
-                    ws.write(Buffer.buffer(String.valueOf(request)));
-                  } else {
-                    Response res = message.toJsonObject().mapTo(Response.class);
-                    checkResponseAndUpdateView(res, ctx);
-                    checkResponseAndReconnect(res, ws, request);
-                    view.setMessageLabel(res.message());
-                  }
+    private boolean checkMessage(Buffer message) {
+        return Objects.equals(message.toJsonObject().getString("message"), "NEW_ORDER_CREATED");
+    }
+
+    private Buffer log() {
+        JsonObject json = new JsonObject();
+        json.put("message", "EMPLOYEE");
+        return Buffer.buffer(json.toString());
+    }
+
+    private void connect(WebSocketClient client, JsonObject request) {
+        client.connect(
+                3000,
+                "localhost",
+                "/",
+                ctx -> {
+                    var ws = ctx.result();
+                    if (ws != null) {
+
+                        ws.handler(
+                                message -> {
+                                    if (checkMessage(message)) {
+                                        ws.write(Buffer.buffer(String.valueOf(request)));
+                                    } else {
+                                        Response res = message.toJsonObject().mapTo(Response.class);
+                                        checkResponseAndUpdateView(res, ctx);
+                                        checkResponseAndReconnect(res, ws, request);
+                                        view.setMessageLabel(res.message());
+                                    }
+                                });
+
+                        ws.write(log());
+                        ws.write(Buffer.buffer(String.valueOf(request)));
+                    } else {
+                        connect(client, request);
+                    }
                 });
-
-            ws.write(log());
-            ws.write(Buffer.buffer(String.valueOf(request)));
-          } else {
-            connect(client, request);
-          }
-        });
-  }
+    }
 }

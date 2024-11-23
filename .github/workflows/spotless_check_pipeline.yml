@@ -3,7 +3,7 @@ name: Ktlint and Java check workflow
 on:
   workflow_call:
 jobs:
-  ktlintCheck:
+  formatCheck:
     strategy:
       matrix:
         os: [ ubuntu-latest, windows-latest ]
@@ -16,11 +16,7 @@ jobs:
         with:
           java-version: 17
           distribution: 'temurin'
-      - name: Ktlint Check format
+      - name: Kotlin and Java Check format
         run: |
           chmod +x gradlew
-          ./gradlew ktlintCheck
-      - name: Java Check format
-        run: |
-          chmod +x gradlew
-          ./gradlew spotlessJavaCheck
+          ./gradlew spotlessCheck

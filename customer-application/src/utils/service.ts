@@ -1,8 +1,9 @@
 /**
- * This enum lists the microservices names
+ * Names of the microservices
  */
-export enum Service {
-  WAREHOUSE,
-  MENU,
-  ORDERS
+export const Service = {
+	WAREHOUSE: "Warehouse",
+	MENU: "Menu",
+	ORDERS: "Orders"
 }
+Object.freeze(Service)

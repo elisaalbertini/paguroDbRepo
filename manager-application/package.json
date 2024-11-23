@@ -41,6 +41,6 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "ts-patch": "^3.2.1",
     "typescript": "~5.4.2",
-    "typescript-formatter": "^4.1.0"
+    "typescript-formatter": "^7.2.2"
   }
 }

@@ -5,7 +5,7 @@ import * as mailSender from "./email-sender"
 import validator from 'email-validator'
 
 /**
- * This type represents the Response given by the Service. It consists of the generic data and an OrdersMessage uffauffauffa
+ * This type represents the Response given by the service. It consists of the generic data and an OrdersMessage
  */
 type ServiceResponse<T> = { data?: T, message: OrdersMessage };
 
@@ -15,7 +15,9 @@ type ServiceResponse<T> = { data?: T, message: OrdersMessage };
  * @param price 
  * @param type 
  * @param items 
- * @returns a Promise of Service Response. If the customerEmail is not valid the message is ERROR_WRONG_PARAMETERS. Otherwise it contains the new Order data and an OK message.
+ * @returns a Promise of ServiceResponse. 
+ * 	If the customerEmail is not valid the message is ERROR_WRONG_PARAMETERS. 
+ * 	Otherwise it contains the new Order data and an OK message.
  */
 export async function addNewOrder(customerEmail: string, price: number, type: OrderType, items: OrderItem[]): Promise<ServiceResponse<Order>> {
 	if (validator.validate(customerEmail)) {
@@ -38,7 +40,7 @@ export async function getAllOrders(): Promise<ServiceResponse<Order[]>> {
 /**
  * Service functionality to get a specific order given the id.
  * @param orderId the id of the order
- * @returns the repository response.
+ * @returns a Promise with the ServiceResponse containing the searched order data and the message returned by the repository 
  */
 export async function getOrderById(orderId: string): Promise<ServiceResponse<Order>> {
 	let res = await repository.findOrderById(orderId)
@@ -49,9 +51,10 @@ export async function getOrderById(orderId: string): Promise<ServiceResponse<Ord
  * Service functionality to update a specific existing order to a new state.
  * @param orderId
  * @param newState 
- * @returns a ServiceResponse. If the update is not correct due to domain restrictions the message is CHANGE_STATE_NOT_VALID and the data undefined.
- * It checks with the repository if the order exists, if not returns the repository response. Otherwise it updates the order through the repository and returns
- * the repository response.
+ * @returns a Promise with the ServiceResponse containing the updated order data and the message returned by the repository. 
+ * If the update is not correct due to domain restrictions the message is CHANGE_STATE_NOT_VALID and the data undefined.
+ * It checks with the repository if the order exists, if not returns the repository response. 
+ * Otherwise it updates the order through the repository and returns the repository response.
  */
 export async function updateOrder(orderId: string, newState: OrderState): Promise<ServiceResponse<Order>> {
 	let order = await repository.findOrderById(orderId)

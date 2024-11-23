@@ -38,7 +38,7 @@ export class SendButtonComponent {
 	@Input()
 	isDisabled!: boolean
 
-	constructor(private errorDialog: MatDialog) { }
+	constructor(private readonly errorDialog: MatDialog) { }
 
 	onClick() {
 		const openDialog = (msg: ResponseMessage) => {

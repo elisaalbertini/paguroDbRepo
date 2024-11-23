@@ -1,7 +1,7 @@
 import { InsertOrder } from "../repository/insert-order"
 
 /**
- * this interface represents an Order modifica ciao ciao ciaoo ciao ciao ciao ciao ciao ciao ciaocia
+ * this interface represents an Order
  */
 export interface Order extends InsertOrder {
 	_id: string
@@ -32,7 +32,7 @@ export enum OrderType {
 }
 
 /**
- * this enum represents the three different states of an order.
+ * This enum represents the three different states of an order.
  * PENDING: the order has to be processed
  * READY: the order can be collected by the customer or it’s going to be delivered
  * COMPLETED: the order it has been served at the table, or it has been collected by the customer, or it has been delivered to the customer house.

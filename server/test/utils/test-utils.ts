@@ -1,7 +1,6 @@
 import { createServer, IncomingMessage, Server, ServerResponse } from "http"
 import { NEW_ORDER_CREATED, OrdersServiceMessages } from "../../src/utils/messages"
 import { RequestMessage, ResponseMessage } from '../../src/schema/messages'
-import { Service } from "../../src/utils/service"
 import { ApiResponse } from "./api-response"
 import { DbCollections, DbNames, getCollection } from "./db-connection"
 import { addIdandState } from "./order-json-utils"
@@ -61,7 +60,7 @@ function openWsRoute(address: string) {
 }
 
 /**
- * This function opems the check service used for the routes tests
+ * This function opens the web socket used for the routes tests
  * @param address 
  */
 export function openWsCheckService(address: string) {
@@ -158,9 +157,8 @@ export async function checkMessage(msg: ResponseMessage, expectedResponse: Respo
  * @param input body of the request
  * @returns a request message
  */
-export function createRequestMessage(client: Service, request: string, input: any) {
+export function createRequestMessage(client: string, request: string, input: any) {
 	return {
-		client_name: client,
 		client_request: request,
 		input: input
 	}
@@ -182,7 +180,7 @@ export function createResponseMessage(response: ApiResponse, data: any): Respons
 }
 
 /**
- * Check if a web socket is open and closes it if it is
+ * Check if a web socket is open and closes it
  * @param ws web socket that have to be close
  */
 export function closeWsIfOpened(ws: WebSocket) {

@@ -77,9 +77,9 @@ class RepositoryImpl(mongoInfo: MongoInfo) : Repository {
         quantity: Int,
     ): RepositoryResponse<Ingredient> {
         val oldQuantity = getIngredientQuantity(name)
-        return if (oldQuantity.message == Message.OK) {
+        return if (oldQuantity.data != null && oldQuantity.message == Message.OK) {
             val filter = eq(Ingredient::name.name, name)
-            val updates = Updates.combine(Updates.set(Ingredient::quantity.name, oldQuantity.data!! + quantity))
+            val updates = Updates.combine(Updates.set(Ingredient::quantity.name, oldQuantity.data + quantity))
             val res = collection.updateOne(filter, updates)
             if (res.modifiedCount > 0) {
                 RepositoryResponse(getIngredient(name), Message.OK)
@@ -107,9 +107,9 @@ class RepositoryImpl(mongoInfo: MongoInfo) : Repository {
 
     override suspend fun getAllAvailableIngredients(): RepositoryResponse<List<Ingredient>> {
         val availableIngredients =
-            getAllIngredients().data!!.filter { i ->
+            getAllIngredients().data?.filter { i ->
                 val qty = getIngredientQuantity(i.name)
-                qty.message == Message.OK && qty.data!! > 0
+                qty.message == Message.OK && qty.data != null && qty.data > 0
             }
         return RepositoryResponse(availableIngredients, Message.OK)
     }

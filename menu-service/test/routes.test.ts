@@ -68,6 +68,19 @@ test('Get All Available Items', async () => {
 	})
 })
 
+test('Get All Item', async () => {
+	// ok
+	const res = await http.get('/menu')
+	checkResponse(res, OK, [omelette], assertEquals<Item[]>(res.data))
+
+	// empty
+	await emptyMenuDb()
+	await http.get('/menu').catch((error) => {
+		checkResponse(error.response, EMPTY_MENU_DB, "")
+	})
+})
+
+
 // write
 test('Add new item', async () => {
 
@@ -84,18 +97,6 @@ test('Add new item', async () => {
 	// name already existing
 	await http.post('/menu', friedEgg).catch((error) => {
 		checkResponse(error.response, ERROR_ITEM_ALREADY_EXISTS, "")
-	})
-})
-
-test('Get All Item', async () => {
-	// ok
-	const res = await http.get('/menu')
-	checkResponse(res, OK, [omelette], assertEquals<Item[]>(res.data))
-
-	// empty
-	await emptyMenuDb()
-	await http.get('/menu').catch((error) => {
-		checkResponse(error.response, EMPTY_MENU_DB, "")
 	})
 })
 

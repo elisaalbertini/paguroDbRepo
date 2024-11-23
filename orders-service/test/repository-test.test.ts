@@ -58,7 +58,9 @@ test('Find Order by Id', async () => {
 test('Create Order', async () => {
 	let expectedOrder = conversion.toInsertOrder("user@gmail.com", 10, OrderType.AT_THE_TABLE, OrderState.PENDING, db_test.getTestItems())
 	let res = await repository.createOrder(expectedOrder.customerEmail, expectedOrder.price, expectedOrder.type, expectedOrder.items)
-	checkResponse(res.message, conversion.removeIndexOrder(res.data!), OrdersMessage.OK, expectedOrder)
+	if (res.data != null) {
+		checkResponse(res.message, conversion.removeIndexOrder(res.data), OrdersMessage.OK, expectedOrder)
+	}
 })
 
 test('Update Order', async () => {

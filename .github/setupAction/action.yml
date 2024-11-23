@@ -1,4 +1,4 @@
-name: Setup sonarcloud workflow
+name: Setup test workflow
 
 runs:
   using: "composite"

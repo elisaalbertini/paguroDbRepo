@@ -6,7 +6,7 @@ import { Log } from './schema/messages'
 import { is } from 'typia'
 
 /**
- * Script used to initialize the server modifica
+ * Script used to initialize the server
  */
 const app = express()
 const server = createServer(app)

@@ -14,12 +14,12 @@ import { WarehouseIngredient } from './schema/item'
  * This function is used to call the correct microservice and API based on the received RequestMessage. 
  * It also sends the answer back through the websocket
  * @param message sent by the client through the websocket
- * @param currentWs the websocket communication used
+ * @param currentWs the websocket used for the communication
  * @param managerWs list of manager application web socket 
  * @param employeeWs list of employee application web socket 
  */
 export function checkService(message: RequestMessage, currentWs: WebSocket, managerWs: WebSocket[], employeeWs: WebSocket[]) {
-	switch (message.client_name) {
+	switch (fromRequestToMicroservice(message.client_request)) {
 		case Service.WAREHOUSE:
 			warehouseApi(message.client_request, message.input, currentWs)
 			break
@@ -117,4 +117,16 @@ function warehouseApi(message: string, input: any, ws: WebSocket) {
 			break;
 		}
 	}
+}
+
+interface ArrayStringBool {
+	[index: string]: boolean;
+}
+
+function fromRequestToMicroservice(request: string) {
+	const conditions = {} as ArrayStringBool
+	conditions[Service.MENU] = Object.values(MenuServiceMessages).includes(request)
+	conditions[Service.ORDERS] = Object.values(OrdersServiceMessages).includes(request)
+	conditions[Service.WAREHOUSE] = Object.values(WarehouseServiceMessages).includes(request)
+	return Object.keys(conditions).filter((c: string) => conditions[c])[0]
 }

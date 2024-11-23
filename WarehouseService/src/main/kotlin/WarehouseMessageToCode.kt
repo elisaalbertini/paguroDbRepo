@@ -9,9 +9,6 @@ object WarehouseMessageToCode {
             Message.OK -> {
                 HttpURLConnection.HTTP_OK
             }
-            Message.ERROR_DB_NOT_AVAILABLE -> {
-                HttpURLConnection.HTTP_INTERNAL_ERROR
-            }
             Message.ERROR_INGREDIENT_ALREADY_EXISTS,
             Message.ERROR_INGREDIENT_QUANTITY,
             Message.ERROR_WRONG_PARAMETERS,

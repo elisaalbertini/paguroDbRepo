@@ -22,7 +22,7 @@ router.post('/', async (req: Request, res: Response) => {
 });
 
 /**
- * GET '/menu/:name' API handles the retrieval of an Item given the paramete name delegating to the service
+ * GET '/menu/:name' API handles the retrieval of an Item given the name as a query parameter delegating to the service
  */
 router.get('/:name', async (req: Request, res: Response) => {
 	let service_res = await getItemByName(req.params['name'])
@@ -54,7 +54,7 @@ function serviceMessageToCode(service_message: string) {
 }
 
 /**
- * GET '/menu' API handles the retrieval of all the Items delegating to the service
+ * GET '/menu' API handles the retrieval of all the items delegating to the service
  */
 router.get('/', async (req: Request, res: Response) => {
 	const service_res = await getAllMenuItems()
@@ -84,8 +84,8 @@ router.put('/', async (req: Request, res: Response) => {
 })
 
 /**
- * GET '/available/:availableIngredients' API handles the retrieval of an Item 
- * given the parameter availableIngredients delegating to the service
+ * GET '/available/:availableIngredients' API handles the retrieval of an item 
+ * given availableIngredients as a query parameter delegating to the service
  */
 router.get('/available/:availableIngredients', async (req: Request, res: Response) => {
 	try {

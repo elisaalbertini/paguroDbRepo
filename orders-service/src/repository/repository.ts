@@ -17,7 +17,7 @@ let collection = mongoConnection.getOrdersCollection()
  * @param price of the order
  * @param type of the order
  * @param items ordered
- * @returns a Promise with the repository response and the created Order as data
+ * @returns a Promise with the RepositoryResponse and the created Order as data
  */
 export async function createOrder(customerEmail: string, price: number, type: OrderType, items: OrderItem[]): Promise<RepositoryResponse<Order>> {
 
@@ -51,8 +51,9 @@ export async function getAllOrders(): Promise<RepositoryResponse<Order[]>> {
 /**
  * It finds a specific Order given the id.
  * @param orderId 
- * @returns a Promise with the repository response. If the provided id is not valid or does not exist in the database, the message is ORDER_ID_NOT_FOUND
- * and the data is undefined. Otherwsise, the message is OK and the data is the order
+ * @returns a Promise with the RepositoryResponse. If the provided id is not valid or does not exist in the database, 
+ * the message is ORDER_ID_NOT_FOUND and the data is undefined. 
+ * Otherwsise, the message is OK and the data is the order
  */
 export async function findOrderById(orderId: string): Promise<RepositoryResponse<Order>> {
 	if (!ObjectId.isValid(orderId)) {
@@ -75,8 +76,9 @@ export async function findOrderById(orderId: string): Promise<RepositoryResponse
  * It updates a specific Order to a new state given the id.
  * @param orderId 
  * @param newState 
- * @returns a Promise with the repository response. If the provided id is not valid or the update is not successful, the message is ORDER_ID_NOT_FOUND
- * and the data is undefined. Otherwsise, the message is OK and the data is the updated order.
+ * @returns a Promise with the RepositoryResponse. If the provided id is not valid or the update is not successful, 
+ * the message is ORDER_ID_NOT_FOUND and the data is undefined. 
+ * Otherwsise, the message is OK and the data is the updated order.
  */
 export async function updateOrder(orderId: string, newState: OrderState): Promise<RepositoryResponse<Order>> {
 	if (!ObjectId.isValid(orderId)) {

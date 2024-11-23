@@ -4,5 +4,5 @@
  * @returns the beautified name
  */
 export function beautifyDbName(name: string) {
-  return name.replaceAll("_", " ")
+	return name.replaceAll("_", " ")
 }

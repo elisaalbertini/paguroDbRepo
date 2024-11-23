@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "test": "jest --runInBand",
-    "start": "npx ts-node ./src/server.ts",
+    "start": "ts-node ./src/server.ts",
     "prepare": "ts-patch install && typia patch",
     "build": "webpack --mode=production --config webpack.node.config.js"
   },
@@ -23,7 +23,7 @@
     "dotenv": "^16.4.5",
     "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4",
-    "@ryoppippi/unplugin-typia": "npm:@jsr/ryoppippi__unplugin-typia@^1.0.6",
+    "@ryoppippi/unplugin-typia": "^1.0.6",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.14.6",

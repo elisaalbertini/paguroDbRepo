@@ -3,7 +3,7 @@ import { IngredientInRecipe, Item } from "../domain/item"
 import * as repository from "../repository/repository"
 
 /**
- * This type represents the Response given by the Service. It consists of the generic data and an MenuMessage blablabla
+ * This type represents the Response given by the service. It consists of the generic data and an MenuMessage
  */
 type ServiceResponse<T> = { data?: T, message: MenuMessage }
 
@@ -12,7 +12,7 @@ type ServiceResponse<T> = { data?: T, message: MenuMessage }
  * @param name
  * @param price 
  * @param recipe
- * @returns a Promise with the Service Response containing the new Item data and the message returned by the repository 
+ * @returns a Promise with the ServiceResponse containing the new Item data and the message returned by the repository 
  */
 export async function addNewItem(name: string, price: number, recipe: IngredientInRecipe[]): Promise<ServiceResponse<Item>> {
 	let res = await repository.createItem(name, price, recipe)
@@ -23,7 +23,7 @@ export async function addNewItem(name: string, price: number, recipe: Ingredient
 /**
  * Service functionality to get an item given its name
  * @param name 
- * @returns a Promise with the Service Response containing the searched Item data and the message returned by the repository 
+ * @returns a Promise with the ServiceResponse containing the searched Item data and the message returned by the repository 
  */
 export async function getItemByName(name: string): Promise<ServiceResponse<Item>> {
 	let res = await repository.getItemByName(name)
@@ -32,7 +32,7 @@ export async function getItemByName(name: string): Promise<ServiceResponse<Item>
 
 /**
  * Service functionality to get all the items
- * @returns a Promise with the Service Response containing the searched Item data and the message returned by the repository 
+ * @returns a Promise with the ServiceResponse containing the searched Item data and the message returned by the repository 
  */
 export async function getAllMenuItems(): Promise<ServiceResponse<Item[]>> {
 	let res = await repository.getAllItems()
@@ -43,7 +43,7 @@ export async function getAllMenuItems(): Promise<ServiceResponse<Item[]>> {
  * Service functionality to update an item
  * @param name 
  * @param item 
- * @returns a Promise with the Service Response containing the searched Item data and the message returned by the repository 
+ * @returns a Promise with the ServiceResponse containing the searched Item data and the message returned by the repository 
  */
 export async function updateMenuItem(name: string, item: any): Promise<ServiceResponse<Item>> {
 	let res = await repository.updateItem(name, item)
@@ -53,7 +53,7 @@ export async function updateMenuItem(name: string, item: any): Promise<ServiceRe
 /**
  * Service functionality to get all the items whose ingredients are contained in the available ingredient name list
  * @param availableIngredient 
- * @returns a Promise with the Service Response containing the searched Item data and the message returned by the repository 
+ * @returns a Promise with the ServiceResponse containing the searched Item data and the message returned by the repository 
  */
 export async function getAllAvailableMenuItems(availableIngredient: string[]): Promise<ServiceResponse<Item[]>> {
 	let res = await repository.getAllAvailableItems(availableIngredient)

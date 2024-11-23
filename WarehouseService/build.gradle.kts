@@ -1,31 +1,11 @@
 plugins {
-    alias(libs.plugins.kotlin)
     alias(libs.plugins.dokka)
-    alias(libs.plugins.ktlint)
     alias(libs.plugins.serialization)
-    id("application")
     id("jacoco")
-    id("java")
-    alias(libs.plugins.johnrengelman.shadow)
 }
 
 jacoco {
     toolVersion = libs.versions.jacoco.get()
-}
-
-repositories {
-    mavenCentral()
-}
-
-tasks.compileJava {
-    sourceCompatibility = JavaVersion.VERSION_17.toString()
-    targetCompatibility = JavaVersion.VERSION_17.toString()
-}
-
-tasks.compileKotlin {
-    kotlinOptions {
-        jvmTarget = "17"
-    }
 }
 
 dependencies {
@@ -35,6 +15,7 @@ dependencies {
     implementation(libs.bundles.vertx)
     implementation(libs.mongodb.driver)
     implementation(libs.bundles.kotlinx)
+    implementation(libs.logback)
 }
 
 tasks.test {
@@ -42,7 +23,6 @@ tasks.test {
     finalizedBy(tasks.jacocoTestReport)
     jvmArgs("--add-opens=java.base/java.util=ALL-UNNAMED")
     jvmArgs("--add-opens=java.base/java.lang=ALL-UNNAMED")
-
 }
 
 tasks.jacocoTestReport {
@@ -53,20 +33,6 @@ tasks.jacocoTestReport {
     }
 }
 
-ktlint {
-    filter {
-        include("**/main/kotlin/**/*.kt")
-        exclude("**/*.gradle.kts")
-    }
-}
-
 application {
     mainClass.set("server.Main")
-}
-
-tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
-    mergeServiceFiles()
-    manifest.attributes["Main-Class"] = application.mainClass
-    archiveFileName.set("${project.name}.jar")
-    destinationDirectory.set(file("${layout.buildDirectory.get()}/output"))
 }

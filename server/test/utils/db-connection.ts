@@ -54,7 +54,7 @@ export async function getCollection(dbName: string, dbCollection: string) {
 }
 
 /**
- * Delete all the orders present in the collection
+ * Delete all the data present in the collection
  * @param dbName 
  * @param dbCollection 
  */
@@ -70,7 +70,7 @@ export async function cleanCollection(dbName: string, dbCollection: string) {
 export async function getLastInsertedItem() {
 	let menuItems = client.db(DbNames.MENU).collection(DbCollections.MENU).find({}, { projection: { _id: 0 } })
 	let last = (await menuItems.toArray()).pop()
-	return last!
+	return last
 }
 /**
   * Utility function to get the last inserted Order

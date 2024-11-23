@@ -18,26 +18,26 @@ runs:
       working-directory: server
       run: |
         npm install
-        npx ts-node ./src/server &
+        npm start &
       shell: bash
 
     - name: Start orders-service
       working-directory: orders-service
       run: |
         npm install
-        npx ts-node ./src/app &
+        npm start &
       shell: bash
 
     - name: Start menu-service
       working-directory: menu-service
       run: |
         npm install
-        npx ts-node ./src/app &
+        npm start &
       shell: bash
 
     - name: Run Tests websocket
       working-directory: server
       run: |
         sleep 60
-        npx jest --runInBand
+        npm test
       shell: bash

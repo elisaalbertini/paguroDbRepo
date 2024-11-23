@@ -17,7 +17,7 @@ jobs:
       - name: Setup
         uses: DistributedCafe/DistributedCafeProject/.github/setupAction@develop
       
-      - name: Gradle (build and coverage)
+      - name: Coverage WarehouseService
         run: |
           chmod +x gradlew
           ./gradlew jacocoTestReport
@@ -32,14 +32,14 @@ jobs:
         working-directory: orders-service
         run: |
           npm install
-          npx jest --coverage
+          npm test
         shell: bash
 
       - name: Coverage menu-service
         working-directory: menu-service
         run: |
           npm install
-          npx jest --coverage
+          npm test
         shell: bash
 
       - name: Merge coverage
@@ -48,16 +48,14 @@ jobs:
           mkdir ${{ github.workspace }}/.nyc_output
           declare -a dir=('server' 'orders-service' 'menu-service')
           for d in ${dir[@]}; do
-            cp ${{ github.workspace }}/$d/coverage/coverage-final.json ${{ github.workspace }}/.nyc_output/coverage_$d.json
+            cp ${{ github.workspace }}/$d/coverage/coverage-final.json ${{ github.workspace }}/.nyc_output/coverage-$d.json
           done
-          ls ${{ github.workspace }}/.nyc_output
           npx nyc report --reporter=lcov --cwd=${{ github.workspace }} --report-dir=${{ github.workspace }}/.nyc_output
 
-
-      - name: SonarQube Scan
+      - name: Sonar Scan
         run: |
           chmod +x gradlew
-          ./gradlew jar sonar
+          ./gradlew shadowJar sonar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

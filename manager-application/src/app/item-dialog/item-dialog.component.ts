@@ -9,7 +9,6 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogContent } from '@angular/material/
 import { Ingredient } from '../../utils/schema/ingredient';
 import { IArray } from '../../utils/array';
 import { MenuServiceMessages, RequestMessage, ResponseMessage, WarehouseServiceMessages } from '../../utils/schema/messages';
-import { Service } from '../../utils/service';
 import { checkWsConnectionAndSend } from '../../utils/send';
 import { buildRecipe } from '../../utils/recipe';
 import { SendButtonComponent } from '../send-button/send-button.component';
@@ -17,8 +16,8 @@ import { DialogData } from '../../utils/dialog-data';
 import { MessageCode } from '../../utils/codes';
 
 /**
- * Component thaqwertytrewq
- * form to insert all the necessary information aqtytrewqwertyasdxfcgvhbnjklstdxfygvhbjkml
+ * Component that implements a dialog containing a 
+ * form to insert all the necessary information 
  * about the new item or to update one
  */
 @Component({
@@ -47,7 +46,6 @@ export class ItemDialogComponent {
 
 	constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, public dialog: MatDialog) {
 		const initialRequest: RequestMessage = {
-			client_name: Service.WAREHOUSE,
 			client_request: WarehouseServiceMessages.GET_ALL_INGREDIENT,
 			input: ''
 		}
@@ -95,17 +93,15 @@ export class ItemDialogComponent {
 
 		if (this.isUpdate) {
 			request = {
-				client_name: Service.MENU,
 				client_request: MenuServiceMessages.UPDATE_ITEM,
 				input: {
-					name: data.data!.name,
+					name: data.data.name,
 					recipe: recipe,
 					price: this.price
 				}
 			}
 		} else {
 			request = {
-				client_name: Service.MENU,
 				client_request: MenuServiceMessages.CREATE_ITEM,
 				input: {
 					name: this.name,

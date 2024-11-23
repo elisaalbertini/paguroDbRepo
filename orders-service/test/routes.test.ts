@@ -87,7 +87,7 @@ test('Add New Order', async () => {
 		checkResponse(error.response, error.response.data, db_test.ERROR_WRONG_PARAMETERS)
 	})
 
-	// send wrong concact
+	// send wrong contact
 	let wrong_email: any = { ...json }
 	wrong_email["customerEmail"] = "c1"
 	await http.post('/orders', wrong_email).catch((error) => {
