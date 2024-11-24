@@ -27,7 +27,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Extract metadata (tags, labels) for Docker
-        working-directory: menu-service
+        #working-directory: menu-service
         id: meta
         uses: docker/metadata-action@v5
         with:
