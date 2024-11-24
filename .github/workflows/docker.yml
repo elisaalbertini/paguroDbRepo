@@ -6,7 +6,6 @@ on:
   push:
     branches:
       - develop
-
 jobs:
   deploy:
     strategy:
@@ -21,9 +20,9 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: WarehouseService shadowJar
-        run: | 
-          chmod +x gradlew
-          ./gradlew :WarehouseService:shadowJar
+        run: chmod +x gradlew
+      - name: WarehouseService shadowJar pt.2
+        run: ./gradlew :WarehouseService:shadowJar
 
       - name: Build and push
         uses: docker/build-push-action@v5
