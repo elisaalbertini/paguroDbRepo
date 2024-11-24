@@ -32,7 +32,7 @@ jobs:
           ./gradlew :WarehouseService:shadowJar
           
       - name: to lower case
-        run: echo "REPO=${ ${{matrix.directory}} }" >>${GITHUB_ENV}
+        run: echo "REPO=${{matrix.directory}}" >>${GITHUB_ENV}
 
       - name: Build and push
         uses: docker/build-push-action@v5
@@ -40,4 +40,4 @@ jobs:
           context: "{{defaultContext}}:${{ matrix.directory }}"
           file: ./Dockerfile
           push: true
-          tags: elisaalbertini/${{ env.REPO }}
+          tags: elisaalbertini/${ env.REPO }
