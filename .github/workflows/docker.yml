@@ -10,7 +10,8 @@ jobs:
   deploy:
     strategy:
       matrix:
-        directory: ['WarehouseService', 'menu-service'] #, 'orders-service', 'server', 'manager-application', 'customer-application']
+        #directory: ['WarehouseService', 'menu-service'] #, 'orders-service', 'server', 'manager-application', 'customer-application']
+        directory: [ {dir: 'WarehouseService', repo: 'warehouse-service'}, {dir: 'menu-service', repo: 'menu-service'},]
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
@@ -29,7 +30,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: "{{defaultContext}}:${{ matrix.directory }}"
+          context: "{{defaultContext}}:${{ matrix.directory.dir }}"
           file: ./Dockerfile
           push: true
-          tags: elisaalbertini/${{ matrix.directory }}
+          tags: elisaalbertini/${{ matrix.directory.repo }}
