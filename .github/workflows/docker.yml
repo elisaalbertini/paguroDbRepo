@@ -6,12 +6,14 @@ on:
   push:
     branches:
       - develop
+env:
+  REPO: ''
 jobs:
   deploy:
     strategy:
       matrix:
-        #directory: ['WarehouseService', 'menu-service'] #, 'orders-service', 'server', 'manager-application', 'customer-application']
-        directory: [ {dir: 'WarehouseService', repo: 'warehouse-service'}, {dir: 'menu-service', repo: 'menu-service'},]
+        directory: ['WarehouseService', 'menu-service'] #, 'orders-service', 'server', 'manager-application', 'customer-application']
+        #directory: [ {dir: 'WarehouseService', repo: 'warehouse-service'}, {dir: 'menu-service', repo: 'menu-service'},]
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
@@ -21,19 +23,21 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Checkout
-        if: ${{ matrix.directory.dir == 'WarehouseService' }}
+        if: ${{ matrix.directory == 'WarehouseService' }}
         uses: actions/checkout@v4
       - name: WarehouseService shadowJar
         if: ${{ matrix.directory == 'WarehouseService' }}
         run: |
           chmod +x gradlew
           ./gradlew :WarehouseService:shadowJar
-        
+          
+      - name: to lower case
+        run: echo "REPO=${ ${{matrix.directory}} }" >>${GITHUB_ENV}
 
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: "{{defaultContext}}:${{ matrix.directory.dir }}"
+          context: "{{defaultContext}}:${{ matrix.directory }}"
           file: ./Dockerfile
           push: true
-          tags: elisaalbertini/${{ matrix.directory.repo }}
+          tags: elisaalbertini/${{ env.REPO }}
