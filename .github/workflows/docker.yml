@@ -9,6 +9,9 @@ on:
 
 jobs:
   deploy:
+    strategy:
+      matrix:
+        directory: ['WarehouseService', 'menu-service'] #, 'orders-service', 'server', 'manager-application', 'customer-application']
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
@@ -17,10 +20,16 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Build WarehouseService
+         run: | 
+          chmod +x gradlew
+          ./gradlew :WarehouseService:shadowJar
+
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: "{{defaultContext}}:menu-service"
+          context: "{{defaultContext}}:${{ matrix.directory }}"
           file: ./Dockerfile
           push: true
-          tags: elisaalbertini/pagutodbrepo
+          tags: elisaalbertini/pagurodbrepo
