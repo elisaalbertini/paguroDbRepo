@@ -23,11 +23,11 @@ jobs:
       - name: Checkout
         if: ${{ matrix.directory.dir == 'WarehouseService' }}
         uses: actions/checkout@v4
+      - name: WarehouseService shadowJar
+        if: ${{ matrix.directory == 'WarehouseService' }}
         run: |
           chmod +x gradlew
           ./gradlew :WarehouseService:shadowJar
-      #- name: WarehouseService shadowJar
-       # if: ${{ matrix.directory == 'WarehouseService' }}
         
 
       - name: Build and push
