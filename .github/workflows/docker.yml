@@ -13,7 +13,7 @@ jobs:
         directory: ['WarehouseService', 'menu-service'] #, 'orders-service', 'server', 'manager-application', 'customer-application']
         #directory: [ {dir: 'WarehouseService', repo: 'warehouse-service'}, {dir: 'menu-service', repo: 'menu-service'},]
     env:
-      REPO: ${{ matrix.directory }}
+      REPO: elisaalbertini/${{ matrix.directory }}
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
@@ -38,4 +38,4 @@ jobs:
           context: "{{defaultContext}}:${{ matrix.directory }}"
           file: ./Dockerfile
           push: true
-          tags: elisaalbertini/env.REPO
+          tags: env.REPO
