@@ -30,6 +30,7 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew :WarehouseService:shadowJar
+          echo ${env.REPO,,}
 
       - name: Build and push
         uses: docker/build-push-action@v5
@@ -37,4 +38,4 @@ jobs:
           context: "{{defaultContext}}:${{ matrix.directory }}"
           file: ./Dockerfile
           push: true
-          tags: "${{REPO,,}}"
+          tags: REPO
