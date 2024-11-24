@@ -20,11 +20,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build WarehouseService
-         run: | 
+      - name: WarehouseService shadowJar
+        run: | 
           chmod +x gradlew
           ./gradlew :WarehouseService:shadowJar
-
 
       - name: Build and push
         uses: docker/build-push-action@v5
