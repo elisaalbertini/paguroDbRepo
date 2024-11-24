@@ -37,4 +37,4 @@ jobs:
           context: "{{defaultContext}}:${{ matrix.directory }}"
           file: ./Dockerfile
           push: true
-          tags: "${{matrix.directory}},,"
+          tags: "${{matrix.directory},,}"
