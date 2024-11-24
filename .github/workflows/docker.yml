@@ -10,7 +10,7 @@ jobs:
   deploy:
     strategy:
       matrix:
-        directory: ['WarehouseService', 'menu-service'] #, 'orders-service', 'server', 'manager-application', 'customer-application']
+        directory: ['WarehouseService'] #'menu-service', 'orders-service', 'server', 'manager-application', 'customer-application']
         #directory: [ {dir: 'WarehouseService', repo: 'warehouse-service'}, {dir: 'menu-service', repo: 'menu-service'},]
     env:
       REPO: elisaalbertini/${{ matrix.directory }}
