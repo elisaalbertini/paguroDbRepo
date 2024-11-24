@@ -21,11 +21,14 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Checkout
+        if: ${{ matrix.directory.dir == 'WarehouseService' }}
         uses: actions/checkout@v4
-      - name: WarehouseService shadowJar
-        run: chmod +x gradlew
-      - name: WarehouseService shadowJar pt.2
-        run: ./gradlew :WarehouseService:shadowJar
+        run: |
+          chmod +x gradlew
+          ./gradlew :WarehouseService:shadowJar
+      #- name: WarehouseService shadowJar
+       # if: ${{ matrix.directory == 'WarehouseService' }}
+        
 
       - name: Build and push
         uses: docker/build-push-action@v5
