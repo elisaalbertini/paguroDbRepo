@@ -16,6 +16,9 @@ jobs:
       contents: read
       attestations: write
       id-token: write
+    env:
+      REGISTRY: ghcr.io
+      IMAGE_NAME: ${{ github.repository }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
