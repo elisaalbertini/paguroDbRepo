@@ -32,4 +32,4 @@ jobs:
           context: "{{defaultContext}}:${{ matrix.directory }}"
           file: ./Dockerfile
           push: true
-          tags: elisaalbertini/pagurodbrepo
+          tags: elisaalbertini/${{ matrix.directory }}
