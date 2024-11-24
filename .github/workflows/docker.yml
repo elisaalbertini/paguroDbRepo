@@ -38,4 +38,4 @@ jobs:
           context: "{{defaultContext}}:${{ matrix.directory }}"
           file: ./Dockerfile
           push: true
-          tags: elisaalbertini/$REPO
+          tags: elisaalbertini/env.REPO
