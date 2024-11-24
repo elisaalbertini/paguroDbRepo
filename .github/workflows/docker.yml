@@ -30,7 +30,7 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew :WarehouseService:shadowJar
-          echo "REPO=${{matrix.directory}}" >>$GITHUB_ENV
+          echo "REPO=${{matrix.directory}}" >>$env.REPO
           echo ${REPO}
 
       - name: Build and push
