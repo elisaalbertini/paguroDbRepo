@@ -31,7 +31,8 @@ jobs:
           chmod +x gradlew
           ./gradlew :WarehouseService:shadowJar
           echo "---->"
-          echo ${${{env.REPO}},,}
+          echo "${${{env.REPO}},,}"
+          echo "---->"
 
       - name: Build and push
         uses: docker/build-push-action@v5
