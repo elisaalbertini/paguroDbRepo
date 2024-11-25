@@ -40,7 +40,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: ./${{ matrix.directory }}
+          context: ${{ github.workspace }}/${{ matrix.directory }}
           file: ./Dockerfile
           push: true
           tags: ${{ steps.string.outputs.lowercase }}
