@@ -10,7 +10,7 @@ jobs:
   deploy:
     strategy:
       matrix:
-        directory: ['WarehouseService', 'menu-service', 'orders-service', 'server', 'manager-application', 'customer-application']
+        directory: ['WarehouseService'] # , 'menu-service', 'orders-service', 'server', 'manager-application', 'customer-application']
     env:
       REPO: elisaalbertini/${{ matrix.directory }}
     runs-on: ubuntu-latest
@@ -29,7 +29,11 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew :WarehouseService:shadowJar
-      
+          cd ./WarehouseService/build/
+          ls
+          cd ./output
+          ls
+
       - name: To lower case
         id: string
         uses: ASzc/change-string-case-action@v6
