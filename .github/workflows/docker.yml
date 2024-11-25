@@ -29,6 +29,9 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew :WarehouseService:shadowJar
+      - name: Checkout
+        if: ${{ matrix.directory == 'WarehouseService' }}
+        uses: actions/checkout@v4
 
       - name: To lower case
         id: string
