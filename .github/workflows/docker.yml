@@ -33,7 +33,7 @@ jobs:
       
       - name: To lower case
         id: string
-        uses: ASzc/change-string-case-action@v1
+        uses: ASzc/change-string-case-action@v6
         with:
           string: ${{ env.REPO }}
 
@@ -43,4 +43,4 @@ jobs:
           context: "{{defaultContext}}:${{ matrix.directory }}"
           file: ./Dockerfile
           push: true
-          tags: steps.string.outputs.lowercase
+          tags: ${{ steps.string.outputs.lowercase }}
