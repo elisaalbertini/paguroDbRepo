@@ -36,16 +36,10 @@ jobs:
         with:
           string: ${{ env.REPO }}
 
-      - name: check dir
-        run: |
-          cd ./WarehouseService/build/output
-          echo "---> "
-          ls
-
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: "{{defaultContext}}:${{ matrix.directory }}"
-          file: ./Dockerfile
+          context: "{{defaultContext}}"
+          file: ./WarehouseService/Dockerfile
           push: true
           tags: ${{ steps.string.outputs.lowercase }}

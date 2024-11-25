@@ -3,4 +3,4 @@ WORKDIR /DistributedCafeProject
 ENV DB_CONNECTION_ADDRESS "mongodb://mongo:27017"
 COPY . .
 EXPOSE 8080
-ENTRYPOINT java -jar ./build/output/WarehouseService.jar
+ENTRYPOINT java -jar .WarehouseService/build/output/WarehouseService.jar
