@@ -41,6 +41,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ${{ github.workspace }}/${{ matrix.directory }}
-          file: ./Dockerfile
+          #file: ./Dockerfile
           push: true
           tags: ${{ steps.string.outputs.lowercase }}
