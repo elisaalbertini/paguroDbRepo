@@ -39,7 +39,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: "{{defaultContext}}"
-          file: ./WarehouseService/Dockerfile
+          context: "{{defaultContext}}:${{ matrix.directory }}"
+          file: ./Dockerfile
           push: true
           tags: ${{ steps.string.outputs.lowercase }}
