@@ -29,16 +29,18 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew :WarehouseService:shadowJar
-          cd ./WarehouseService/build/
-          ls
-          cd ./output
-          ls
 
       - name: To lower case
         id: string
         uses: ASzc/change-string-case-action@v6
         with:
           string: ${{ env.REPO }}
+
+      - name: check dir
+        run: |
+          cd ./WarehouseService/build/output
+          echo "---> "
+          ls
 
       - name: Build and push
         uses: docker/build-push-action@v5
