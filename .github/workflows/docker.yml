@@ -12,7 +12,7 @@ jobs:
       matrix:
         directory: ['WarehouseService', 'menu-service', 'orders-service', 'server', 'manager-application', 'customer-application']
     env:
-      REPO: elisaalbertini/${{ matrix.directory }}
+      REPO: distributedcafe/${{ matrix.directory }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

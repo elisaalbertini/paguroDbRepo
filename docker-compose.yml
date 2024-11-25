@@ -10,14 +10,14 @@ services:
       - db_config:/data/configdb
  
   server:
-    image: elisaalbertini/server
+    image: distributedcafe/server
     ports:
       - "3000:3000"
     networks:
       - DistributedCafeNetwork
  
   orders-service:
-    image: elisaalbertini/orders-service
+    image: distributedcafe/orders-service
     ports:
       - "8090:8090"
     depends_on:
@@ -26,7 +26,7 @@ services:
       - DistributedCafeNetwork
  
   menu-service:
-    image: elisaalbertini/menu-service
+    image: distributedcafe/menu-service
     ports:
       - "8085:8085"
     depends_on:
@@ -35,7 +35,7 @@ services:
       - DistributedCafeNetwork
  
   warehouse-service:
-    image: elisaalbertini/warehouseservice
+    image: distributedcafe/warehouseservice
     ports:
       - "8080:8080"
     depends_on:
@@ -46,7 +46,7 @@ services:
       - warehouse-service:/home/gradle/.gradle
  
   manager-application:
-    image: elisaalbertini/manager-application
+    image: distributedcafe/manager-application
     ports:
       - "8095:80"
     depends_on:
@@ -59,7 +59,7 @@ services:
       - DistributedCafeNetwork
  
   customer-application:
-    image: elisaalbertini/customer-application
+    image: distributedcafe/customer-application
     ports:
       - "8100:80"
     depends_on:
