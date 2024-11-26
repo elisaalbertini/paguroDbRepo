@@ -6,7 +6,8 @@ show_downloads: false
 
 markdown: GFM
 
-exclude: ["./documentation.md"]
+exclude:
+- documentation.md
 
 mermaid:
   theme: "default"
