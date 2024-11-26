@@ -1,7 +1,6 @@
 $dokka.format:html-v1
 $dokka.linkExtension:html
 $dokka.location:////PointingToDeclaration/-warehouse-service/[root]/index.html
-$dokka.location:/Message.ERROR_DB_NOT_AVAILABLE///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-warehouse-service/[root]/-message/-e-r-r-o-r_-d-b_-n-o-t_-a-v-a-i-l-a-b-l-e/index.html
 $dokka.location:/Message.ERROR_EMPTY_WAREHOUSE///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-warehouse-service/[root]/-message/-e-r-r-o-r_-e-m-p-t-y_-w-a-r-e-h-o-u-s-e/index.html
 $dokka.location:/Message.ERROR_INGREDIENT_ALREADY_EXISTS///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-warehouse-service/[root]/-message/-e-r-r-o-r_-i-n-g-r-e-d-i-e-n-t_-a-l-r-e-a-d-y_-e-x-i-s-t-s/index.html
 $dokka.location:/Message.ERROR_INGREDIENT_NOT_FOUND///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-warehouse-service/[root]/-message/-e-r-r-o-r_-i-n-g-r-e-d-i-e-n-t_-n-o-t_-f-o-u-n-d/index.html
@@ -20,6 +19,9 @@ $dokka.location:/MongoInfo/mongoAddress/#/PointingToDeclaration/-warehouse-serv
 $dokka.location:/Quantity///PointingToDeclaration/-warehouse-service/[root]/-quantity/index.html
 $dokka.location:/Quantity/Quantity/#kotlin.Int/PointingToDeclaration/-warehouse-service/[root]/-quantity/-quantity.html
 $dokka.location:/Quantity/quantity/#/PointingToDeclaration/-warehouse-service/[root]/-quantity/quantity.html
+$dokka.location:/SetupLogger///PointingToDeclaration/-warehouse-service/[root]/-setup-logger/index.html
+$dokka.location:/SetupLogger/SetupLogger/#/PointingToDeclaration/-warehouse-service/[root]/-setup-logger/-setup-logger.html
+$dokka.location:/SetupLogger/setupLogger/#/PointingToDeclaration/-warehouse-service/[root]/-setup-logger/setup-logger.html
 $dokka.location:/UpdateQuantity///PointingToDeclaration/-warehouse-service/[root]/-update-quantity/index.html
 $dokka.location:/UpdateQuantity/UpdateQuantity/#kotlin.String#kotlin.Int/PointingToDeclaration/-warehouse-service/[root]/-update-quantity/-update-quantity.html
 $dokka.location:/UpdateQuantity/name/#/PointingToDeclaration/-warehouse-service/[root]/-update-quantity/name.html

@@ -4,7 +4,7 @@ layout: default
 nav_order: 5
 ---
 # Use Cases
-// TODO introduction
+These are the *use cases diagrams* made in order to have an easier way to collect the project requirements.
 
 ## Use case of the orders management
 ![Use case of the orders management](resources/images/use%20case%20customer-employee.png)  
@@ -12,7 +12,7 @@ This use case represents the interaction between the employees and the customers
 
 ## Use case of the manager modifying the menu
 ![Use case of the manager modifying the menu](resources/images/use%20case%20manager-menu.png)  
-This use case represents the management of the menu. The actor is the manager. He is allowed to do different actions: he can add a new recipe and remove an old one. He can also modify recipes and their information.
+This use case represents the management of the menu. The actor is the manager. He is allowed to do different actions: he can add a new recipe and modify old ones along with their information.
 
 ## Use case of the manager interacting with the warehouse
 ![Use case 3](resources/images/use%20case%20manager-warehouse.png)  

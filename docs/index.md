@@ -6,25 +6,24 @@ nav_order: 1
 ---
 
 # Introduction
-// TODO introduction
+This is the project report made for the course of **Software Process Engineering**.  
+The goal of the project is to build a distributed system to manage different aspects of a *cafe* such as:
+* Management of the warehouse
+* Management of the menu
+* Management of the orders (both for the customers and the employees)
 
-## API documentation - SWAGGER
-API documentation can be found at this link: [SWAGGER](https://app.swaggerhub.com/apis/ElisaAlbertini/DistributedCafe)
+## Project goal
 
-## WarehouseService documentation
-WarehouseService documentation can be found at this link: [WarehouseService documentation](./dokka/index.html)
+The goal of our project is to:
+* Front-end:
+  * implement a Java application (for the employees)
+  * implement an Angular application (for the customers)
+  * implement an Angular application (for the managers)
+* Back-end:
+  * implement microservices exposing REST API
+  * implement a WebSocket connection with a server that interacts behind the scenes with microservices
 
-## Menu Service documentation
-Menu Service documentation can be found at this link: [Menu Service documentation](./typedoc/menu-service/index.html)
-
-## Orders Service documentation
-Orders Service documentation can be found at this link: [Orders Service documentation](./typedoc/orders-service/index.html)
-
-## Server documentation
-Server documentation can be found at this link: [Server documentation](./typedoc/server/index.html)
-
-## Manager application documentation
-Manager application documentation can be found at this link: [Manager application documentation](./typedoc/manager-application/index.html)
-
-## Employee application documentation
-Employee application documentation can be found at this link: [Employee application documentation](./javadoc/index.html)
+The system will:
+* follow *Domain Driven Design* principles
+* follow *DevOps* principles such as *Build Automation*, *CI* and *CD*
+* implement *containerization* using Docker

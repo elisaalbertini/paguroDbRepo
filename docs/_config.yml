@@ -4,6 +4,8 @@ color_scheme: "light"
 
 show_downloads: false
 
+markdown: GFM
+
 mermaid:
   theme: "default"
   # Version of mermaid library
