@@ -24,7 +24,7 @@ In addiction, we used also conventional commits to enable semantic release based
 ### API documentation
 Since the app development required the web socket documentation and the server development required the API documentation, we used *Swagger* to publish both of the docs in order to have an easy way to consult them.
 
-The API documentation is available here: [Documentation](./docs/documentation.md).
+The API documentation is available here: [Documentation](./docs/_documentation.md).
 
 ## Build automation
 ### Multiproject structure
@@ -80,7 +80,7 @@ It's been used:
 
 In order to publish all the documentation at once, the task merge all of them together and deploy it in the *report* branch thank to a github action called *[github-pages-deploy-action](https://github.com/JamesIves/github-pages-deploy-action)*.
 
-The code documentation is available here: [Documentation](./docs/documentation.md).
+The code documentation is available here: [Documentation](./_documentation.md).
 
 #### Code formatting
 When a new pull request is created, it triggers tasks to check the code formatting. If any checker finds improperly formatted code, the action fails.
