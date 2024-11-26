@@ -24,7 +24,7 @@ In addiction, we used also conventional commits to enable semantic release based
 ### API documentation
 Since the app development required the web socket documentation and the server development required the API documentation, we used *Swagger* to publish both of the docs in order to have an easy way to consult them.
 
-The API documentation is available here: [Documentation](./docs/documentation.md).
+The API documentation is available here: [Documentation](https://elisaalbertini.github.io/paguroDbRepo/documentation.html).
 
 ## Build automation
 ### Multiproject structure

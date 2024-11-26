@@ -1,7 +1,6 @@
 ---
-title: DevOps
+title: Documentation
 layout: default
-tags: [noindex]
 ---
 
 # Documentation

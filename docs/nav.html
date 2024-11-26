@@ -1,9 +1,0 @@
-<nav>
-    <ul>
-      {% for page in site.pages %}
-        {% unless page.tags contains "noindex" %}
-          <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-        {% endunless %}
-      {% endfor %}
-    </ul>
-  </nav>
