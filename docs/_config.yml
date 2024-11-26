@@ -6,6 +6,8 @@ show_downloads: false
 
 markdown: GFM
 
+exclude: ["**/documentation.md"]
+
 mermaid:
   theme: "default"
   # Version of mermaid library
