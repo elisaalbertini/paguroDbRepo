@@ -1,7 +1,0 @@
-<ul>
-    {% for page in site.pages %}
-      {% unless page.name == "documentation.md" %}
-        <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-      {% endunless %}
-    {% endfor %}
-  </ul>
