@@ -1,6 +1,8 @@
 {
+  "name": "pagurodbrepo",
+  "description": "Progetto di prova",
   "devDependencies": {
-    "semantic-release": "^24.2.0",
-    "semantic-release-preconfigured-conventional-commits": "^1.1.115"
+    "semantic-release": "^23.0.8",
+    "semantic-release-preconfigured-conventional-commits": "latest"
   }
 }
