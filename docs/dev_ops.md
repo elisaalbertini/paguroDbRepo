@@ -24,7 +24,7 @@ In addiction, we used also conventional commits to enable semantic release based
 ### API documentation
 Since the app development required the web socket documentation and the server development required the API documentation, we used *Swagger* to publish both of the docs in order to have an easy way to consult them.
 
-The API documentation is available here: [Documentation](./documentation.html).
+The API documentation is available here: [Documentation](./documentation.md).
 
 ## Build automation
 ### Multiproject structure
@@ -63,7 +63,7 @@ To generate the coverage report for each back-end component we used *JaCoCo* and
 
 ### github action
 
-#### Reusable actions
+#### **Reusable actions**
 We decided to create two reusable actions for the repeated ones. One is meant to start the tests of *server* and one is meant to initialize the actions when a component needs to be tested.
 
 #### Testing
