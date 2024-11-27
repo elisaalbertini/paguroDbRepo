@@ -63,7 +63,7 @@ To generate the coverage report for each back-end component we used *JaCoCo* and
 
 ### github action
 
-#### ***Reusable actions***
+#### <ins>**Reusable actions**<ins>
 We decided to create two reusable actions for the repeated ones. One is meant to start the tests of *server* and one is meant to initialize the actions when a component needs to be tested.
 
 #### Testing
