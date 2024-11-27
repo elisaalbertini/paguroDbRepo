@@ -3,7 +3,7 @@ name: Main project workflow
 on:
   pull_request:
     branches:
-      - main
+      #- main
       - develop
 jobs:
 
