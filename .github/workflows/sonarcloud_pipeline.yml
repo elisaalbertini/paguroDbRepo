@@ -1,0 +1,61 @@
+name: Sonarcloud workflow
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+jobs:
+  sonarcloud:
+    name: Build and analyze
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup
+        uses: DistributedCafe/DistributedCafeProject/.github/setupAction@develop
+      
+      - name: Coverage WarehouseService
+        run: |
+          chmod +x gradlew
+          ./gradlew jacocoTestReport
+
+      - name: Coverage server
+        uses: DistributedCafe/DistributedCafeProject/.github/serverTest@develop
+
+      - name: Kill node 
+        run: killall node
+      
+      - name: Coverage orders-service
+        working-directory: orders-service
+        run: |
+          npm install
+          npm test
+        shell: bash
+
+      - name: Coverage menu-service
+        working-directory: menu-service
+        run: |
+          npm install
+          npm test
+        shell: bash
+
+      - name: Merge coverage
+        working-directory: ${{ github.workspace }}
+        run: | 
+          mkdir ${{ github.workspace }}/.nyc_output
+          declare -a dir=('server' 'orders-service' 'menu-service')
+          for d in ${dir[@]}; do
+            cp ${{ github.workspace }}/$d/coverage/coverage-final.json ${{ github.workspace }}/.nyc_output/coverage-$d.json
+          done
+          npx nyc report --reporter=lcov --cwd=${{ github.workspace }} --report-dir=${{ github.workspace }}/.nyc_output
+
+      - name: Sonar Scan
+        run: |
+          chmod +x gradlew
+          ./gradlew shadowJar sonar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

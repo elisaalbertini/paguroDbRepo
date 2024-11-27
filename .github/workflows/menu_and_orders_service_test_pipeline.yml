@@ -1,0 +1,19 @@
+name: Run menu-service and orders-service tests
+
+on:
+ workflow_call:
+jobs:
+  build:
+    strategy:
+      matrix:
+        directory: ['menu-service', 'orders-service']
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup
+        uses: DistributedCafe/DistributedCafeProject/.github/setupAction@develop
+      - name: Run Tests
+        working-directory: ${{ matrix.directory }}
+        run: |
+          npm install
+          npm test 
+        shell: bash

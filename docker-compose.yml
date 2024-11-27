@@ -1,0 +1,81 @@
+services:
+  mongo:
+    image: "mongo:latest"
+    ports:
+      - "27017:27017"
+    networks:
+      - DistributedCafeNetwork
+    volumes:
+      - db:/data/db
+      - db_config:/data/configdb
+ 
+  server:
+    image: distributedcafe/server
+    ports:
+      - "3000:3000"
+    networks:
+      - DistributedCafeNetwork
+ 
+  orders-service:
+    image: distributedcafe/orders-service
+    ports:
+      - "8090:8090"
+    depends_on:
+      - mongo
+    networks:
+      - DistributedCafeNetwork
+ 
+  menu-service:
+    image: distributedcafe/menu-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - mongo
+    networks:
+      - DistributedCafeNetwork
+ 
+  warehouse-service:
+    image: distributedcafe/warehouseservice
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+    networks:
+      - DistributedCafeNetwork
+    volumes:
+      - warehouse-service:/home/gradle/.gradle
+ 
+  manager-application:
+    image: distributedcafe/manager-application
+    ports:
+      - "8095:80"
+    depends_on:
+      - mongo
+      - server
+      - menu-service
+      - orders-service
+      - warehouse-service
+    networks:
+      - DistributedCafeNetwork
+ 
+  customer-application:
+    image: distributedcafe/customer-application
+    ports:
+      - "8100:80"
+    depends_on:
+      - mongo
+      - server
+      - menu-service
+      - orders-service
+      - warehouse-service
+    networks:
+      - DistributedCafeNetwork
+ 
+networks:
+  DistributedCafeNetwork:
+    driver: bridge
+ 
+volumes:
+  db:
+  db_config:
+  warehouse-service:
