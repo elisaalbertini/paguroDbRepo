@@ -1,5 +1,5 @@
 #!/bin/bash
-./gradlew shadowJar
+./gradlew EmployeeApplication:shadowJar
 
 docker-compose up -d
 

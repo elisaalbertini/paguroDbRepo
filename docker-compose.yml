@@ -8,52 +8,45 @@ services:
     volumes:
       - db:/data/db
       - db_config:/data/configdb
-
+ 
   server:
+    image: distributedcafe/server
     ports:
       - "3000:3000"
-    build:
-      context: ./server
-      dockerfile: Dockerfile
     networks:
       - DistributedCafeNetwork
-
+ 
   orders-service:
+    image: distributedcafe/orders-service
     ports:
       - "8090:8090"
     depends_on:
       - mongo
-    build:
-      context: ./orders-service
-      dockerfile: Dockerfile
     networks:
       - DistributedCafeNetwork
-
+ 
   menu-service:
+    image: distributedcafe/menu-service
     ports:
       - "8085:8085"
     depends_on:
       - mongo
-    build:
-      context: ./menu-service
-      dockerfile: Dockerfile
     networks:
       - DistributedCafeNetwork
-
+ 
   warehouse-service:
+    image: distributedcafe/warehouseservice
     ports:
       - "8080:8080"
     depends_on:
       - mongo
-    build:
-      context: ./WarehouseService
-      dockerfile: Dockerfile
     networks:
       - DistributedCafeNetwork
     volumes:
       - warehouse-service:/home/gradle/.gradle
-
+ 
   manager-application:
+    image: distributedcafe/manager-application
     ports:
       - "8095:80"
     depends_on:
@@ -62,13 +55,11 @@ services:
       - menu-service
       - orders-service
       - warehouse-service
-    build:
-      context: ./manager-application
-      dockerfile: Dockerfile
     networks:
       - DistributedCafeNetwork
-
+ 
   customer-application:
+    image: distributedcafe/customer-application
     ports:
       - "8100:80"
     depends_on:
@@ -77,18 +68,14 @@ services:
       - menu-service
       - orders-service
       - warehouse-service
-    build:
-      context: ./customer-application
-      dockerfile: Dockerfile
     networks:
       - DistributedCafeNetwork
-
+ 
 networks:
   DistributedCafeNetwork:
     driver: bridge
-
+ 
 volumes:
   db:
   db_config:
   warehouse-service:
- 
