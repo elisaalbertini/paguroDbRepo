@@ -1,0 +1,16 @@
+
+.add-button{
+   width: 100%;
+}
+
+.error{
+    color: red;
+    font-weight: bold;
+}
+.form{
+    padding-top: 5%;
+}
+
+.name{
+    margin-bottom: 5%;
+}

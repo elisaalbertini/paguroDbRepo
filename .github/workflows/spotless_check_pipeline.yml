@@ -1,0 +1,22 @@
+name: Ktlint and Java check workflow
+
+on:
+  workflow_call:
+jobs:
+  formatCheck:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: java version
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'temurin'
+      - name: Kotlin and Java Check format
+        run: |
+          chmod +x gradlew
+          ./gradlew spotlessCheck

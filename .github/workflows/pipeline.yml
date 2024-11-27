@@ -1,0 +1,36 @@
+name: Main project workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+jobs:
+
+  spotlessCheck:
+    name: check format kotlin and java
+    uses: ./.github/workflows/spotless_check_pipeline.yml
+
+  tsFormatCheck:
+    name: check format ts
+    uses: ./.github/workflows/ts_format_check_pipeline.yml
+
+  menuAndOrdersServiceTest:
+    needs:
+      - tsFormatCheck
+    name: test menu-service and orders-service
+    uses: ./.github/workflows/menu_and_orders_service_test_pipeline.yml
+
+  kotlinTest:
+    needs:
+      - spotlessCheck
+    name: test WarehouseService
+    uses: ./.github/workflows/warehouse_service_pipeline.yml
+
+  serverTest:
+    needs:
+      - tsFormatCheck
+      - kotlinTest
+      - menuAndOrdersServiceTest
+    name: test server
+    uses: ./.github/workflows/server_test_pipeline.yml

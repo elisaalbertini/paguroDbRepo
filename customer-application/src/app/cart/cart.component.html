@@ -1,0 +1,49 @@
+<button mat-raised-button (click)="navigateMenu()">
+    <mat-icon>arrow_back</mat-icon>
+    Back to the menu</button>
+<div *ngIf="error['error']" class="empty">
+    {{error["errorMsg"]}}
+    <p>
+        <img src="assets/cooking_mama.gif" alt="Cooking mama gif">
+    </p>
+</div>
+<div class="box" *ngIf="!error['error']">   
+    <div class="recap">
+        <div>
+            <h4>Order recap</h4>
+            <p *ngIf="errorEmptyCart" class="error">Empty cart!</p>
+            <div class="send-order">
+                <h5>Total: {{totalAmount(order)}}</h5>
+                <button mat-raised-button (click)="sendOrder()" class="order-button">Send order</button>
+            </div>
+            <div *ngIf="errorNewOrder">
+                <p class="bigger-error" >It was impossible to complete the operation!</p>
+            <p class="error">(error: {{apiError}})</p>
+            </div>
+        </div>
+        <div>
+            @for (item of order; track $index) {
+                <p>
+                    <cart-card [orderItem]="item"></cart-card>
+                </p>
+            }
+        </div>
+    </div>
+    <div class="right">
+        <p class="smaller-title">Customer contact:</p>
+        <p *ngIf="errorEmail" class="error">Email not valid!</p>
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input (change)="validateEmail()" type="email" matInput value=1 min="1" max="999" [(ngModel)]="email">
+        </mat-form-field>
+        <p class="smaller-title">Order type:</p>
+        <p *ngIf="errorType" class="error">Missing type!</p>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="type">
+            @for (type of orderTypes; track $index){
+                <p>
+                    <mat-radio-button [value]="type">{{type}}</mat-radio-button>
+                </p>
+            }
+        </mat-radio-group>
+    </div>
+</div>
