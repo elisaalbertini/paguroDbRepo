@@ -58,4 +58,6 @@ jobs:
             });
       - name: merge pull request
         run: gh pr merge ${{ steps.pr.outputs.pull_request_number }} --auto
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
             
