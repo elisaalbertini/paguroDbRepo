@@ -59,8 +59,4 @@ jobs:
               issue_number: result.data.number,
               labels: ['feature', 'automated pr']
             });
-            octokit.rest.pulls.requestReviewers({
-              owner,
-              repo,
-              pull_number,
-            });
+            
