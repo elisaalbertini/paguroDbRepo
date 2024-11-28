@@ -37,6 +37,7 @@ jobs:
         id: pr
         uses: actions/github-script@v6
         with:
+          github-token: ${{github.token}}
           script: |
             const { repo, owner } = context.repo;
             const result = await github.rest.pulls.create({
