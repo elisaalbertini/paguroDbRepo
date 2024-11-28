@@ -59,6 +59,7 @@ jobs:
               labels: ['feature', 'automated pr']
             });
             const prNumber = context.payload.number;
+            echo prNumber
             core.exportVariable('PULL_NUMBER', prNumber);
       - run: echo ${{ env.PULL_NUMBER }}
       - name: merge pull request
