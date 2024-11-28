@@ -17,10 +17,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '>=22.11'
-      - run: |
-          echo "-->"
-          echo ${{ secrets.GITHUB_TOKEN}}
-          echo "-->"
       - name: java version
         uses: actions/setup-java@v4
         with:
@@ -38,6 +34,7 @@ jobs:
           npm install
           npx semantic-release
       - name: pull request
+        id: pr
         uses: actions/github-script@v6
         with:
           script: |
@@ -59,4 +56,6 @@ jobs:
               issue_number: result.data.number,
               labels: ['feature', 'automated pr']
             });
+      - name: merge pull request
+        run: gh pr merge ${{ steps.pr.outputs.pull_request_number }} --auto
             
