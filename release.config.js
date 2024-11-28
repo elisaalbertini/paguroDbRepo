@@ -3,7 +3,7 @@ config.plugins.push(
     "@semantic-release/github",
      "@semantic-release/git",
      ["@semantic-release/github", {
-      "assets": ["dist/**/*.{js,css}", "docs", "package.json"]
+      "assets": ["./WarehouseService/build/output/WarehouseService.jar"]
   }]
 )
 module.exports = config
