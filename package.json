@@ -2,7 +2,10 @@
   "name": "pagurodbrepo",
   "description": "Progetto di prova",
   "devDependencies": {
-    "semantic-release": "^23.0.8",
+    "semantic-release": "^24.2.0",
     "semantic-release-preconfigured-conventional-commits": "latest"
+  },
+  "engines": {
+    "node": ">=22.11"
   }
 }
