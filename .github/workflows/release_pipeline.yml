@@ -58,8 +58,6 @@ jobs:
               repo,
               pull_number,
             });
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
