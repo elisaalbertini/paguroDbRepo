@@ -22,16 +22,9 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: create key
-        run: echo "$SIGNING_KEY" | base64 -d > key.jks
-        env:
-          SIGNING_KEY: ${{secrets.SIGNING_KEY}}
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
-          ALIAS: ${{ secrets.ALIAS }}
-          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           npm install
           npx semantic-release
