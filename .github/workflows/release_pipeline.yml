@@ -56,8 +56,10 @@ jobs:
               issue_number: result.data.number,
               labels: ['feature', 'automated pr']
             });
+            const prNumber = context.payload.number;
+            core.exportVariable('PULL_NUMBER', prNumber);
       - name: merge pull request
-        run: gh pr merge ${{ steps.pr.outputs.pull_request_number }} --auto
+        run: gh pr merge ${{ env.PULL_NUMBER }} --auto
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
             
