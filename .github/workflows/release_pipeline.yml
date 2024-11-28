@@ -35,7 +35,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
         run: |
-          git checkout -b release
           npm install
           npx semantic-release
       - name: pull request
