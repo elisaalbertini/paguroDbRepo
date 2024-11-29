@@ -60,10 +60,8 @@ jobs:
               labels: ['feature', 'automated pr']
             });
             return result.data.number
-      - name: stampa
-        run: echo "${{steps.pr.outputs.result}}"
-      #- name: merge pull request
-       # run: gh pr merge ${{ env.PULL_NUMBER }} --auto
-        #env:
-         # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+      - name: merge pull request
+        run: gh pr merge ${{steps.pr.outputs.result}} --auto
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
             
