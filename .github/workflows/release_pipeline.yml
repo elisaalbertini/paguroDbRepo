@@ -58,25 +58,10 @@ jobs:
               issue_number: result.data.number,
               labels: ['feature', 'automated pr']
             });
-      - uses: actions/github-script@v6
-        id: get_issue_number
-        with:
-          script: |
-            if (context.issue.number) {
-              // Return issue number if present
-              return context.issue.number;
-            } else {
-              // Otherwise return issue number from commit
-              return (
-                await github.rest.repos.listPullRequestsAssociatedWithCommit({
-                  commit_sha: context.sha,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                })
-              ).data[0].number;
-            }
-          result-encoding: string
-      - run: echo '${{steps.get_issue_number.outputs.result}}'
+      - name: stampa
+        env:
+          PR_NUMBER: ${{ github.event.number }}
+        run: echo '${{ env.PR_NUMBER }}'
       - name: merge pull request
         run: gh pr merge ${{ env.PULL_NUMBER }} --auto
         env:
