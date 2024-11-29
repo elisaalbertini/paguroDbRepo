@@ -39,6 +39,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
         with:
+          result-encoding: string
           script: |
             const { repo, owner } = context.repo;
             const result = await github.rest.pulls.create({
@@ -58,8 +59,9 @@ jobs:
               issue_number: result.data.number,
               labels: ['feature', 'automated pr']
             });
+            return pulls.data[0]
       - name: stampa
-        run: echo "${{github.event.pull_request.number}}"
+        run: echo "${{steps.pr.outputs.result}}"
       #- name: merge pull request
        # run: gh pr merge ${{ env.PULL_NUMBER }} --auto
         #env:
