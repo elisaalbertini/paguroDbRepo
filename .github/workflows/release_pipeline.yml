@@ -61,7 +61,7 @@ jobs:
             });
             return result.data.number
       - name: merge pull request
-        run: gh pr merge ${{steps.pr.outputs.result}} --auto
+        run: gh pr merge ${{steps.pr.outputs.result}} --auto --merge
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
             
