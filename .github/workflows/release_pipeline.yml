@@ -58,8 +58,8 @@ jobs:
               issue_number: result.data.number,
               labels: ['feature', 'automated pr']
             });
-            return context.payload.number;
-        result-encoding: string
+            return context.payload.number
+          result-encoding: string
       - run: echo "${{steps.pr.outputs.result}}"
       - name: merge pull request
         run: gh pr merge ${{ env.PULL_NUMBER }} --auto
