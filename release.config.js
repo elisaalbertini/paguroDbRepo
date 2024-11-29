@@ -1,6 +1,6 @@
 var config = require('semantic-release-preconfigured-conventional-commits');
 config.plugins.push(
-  ["@semantic-release/git", {"assets": ["package.json"]}],
+  //["@semantic-release/git", {"assets": ["package.json"]}],
 ["@semantic-release/github", {"assets": ["WarehouseService/build/output/WarehouseService.jar"]}],
 //["@semantic-release/git", {
   //"assets": ["dist/**/*.{js,css}", "docs", "package.json"],
