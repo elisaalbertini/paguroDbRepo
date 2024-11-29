@@ -59,7 +59,7 @@ jobs:
               issue_number: result.data.number,
               labels: ['feature', 'automated pr']
             });
-            return result
+            return result.number
       - name: stampa
         run: echo "${{steps.pr.outputs.result}}"
       #- name: merge pull request
