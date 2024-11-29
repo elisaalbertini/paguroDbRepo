@@ -7,22 +7,16 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    concurrency:
-      group: release
-      cancel-in-progress: false
+    #if: github.ref == 'refs/heads/main'
+    #concurrency:
+     # group: release
+      #cancel-in-progress: false
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
       - uses: actions/setup-node@v4
         with:
           node-version: '>=22.11'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
       #- name: java version
        # uses: actions/setup-java@v4
         #with:
@@ -37,7 +31,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
-          npm install
-          npx semantic-release
+        run: npx semantic-release
             
