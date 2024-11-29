@@ -3,7 +3,7 @@ config.plugins.push(
     "@semantic-release/github",
      "@semantic-release/git",
      ["@semantic-release/github", {
-      "assets": ["CHANGELOG.md"]
+      "assets": ["package.json"]
   }]
 )
 config.branches = ['main']
