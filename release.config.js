@@ -6,5 +6,5 @@ config.plugins.push(
       "assets": ["CHANGELOG.md"]
   }]
 )
-config.branches = ['release']
+config.branches = ['main']
 module.exports = config
