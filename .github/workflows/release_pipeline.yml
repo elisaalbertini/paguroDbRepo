@@ -72,8 +72,7 @@ jobs:
           --method POST \
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
-          /repos/elisaalbertini/paguroDbRepo/pulls/56reviews \
-          -f "commit_id=ecdd80bb57125d7ba9641ffaa4d7d2c19d3f3091" -f "body=OK" -f "event=REQUEST_CHANGES" -f "comments[][path]=file.md" -F "comments[][position]=6" -f "comments[][body]=Please add more information here, and fix this typo."
+          /repos/elisaalbertini/paguroDbRepo/pulls/${{steps.pr.outputs.result}}/reviews
           gh pr merge ${{steps.pr.outputs.result}} --auto --merge
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
