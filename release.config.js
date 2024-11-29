@@ -5,5 +5,4 @@ config.plugins.push(
       "assets": ["package.json"]
   }]
 )
-config.branches = ['main']
 module.exports = config
