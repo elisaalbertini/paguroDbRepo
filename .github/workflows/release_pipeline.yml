@@ -17,10 +17,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '>=22.11'
-      - run: |
-          echo "-->"
-          echo ${{ secrets.GITHUB_TOKEN}}
-          echo "-->"
       - name: java version
         uses: actions/setup-java@v4
         with:
@@ -35,12 +31,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
         run: |
-          git checkout -b release
           npm install
           npx semantic-release
       - name: pull request
+        id: pr
         uses: actions/github-script@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
         with:
+          result-encoding: string
           script: |
             const { repo, owner } = context.repo;
             const result = await github.rest.pulls.create({
@@ -60,8 +59,9 @@ jobs:
               issue_number: result.data.number,
               labels: ['feature', 'automated pr']
             });
-            octokit.rest.pulls.requestReviewers({
-              owner,
-              repo,
-              pull_number,
-            });
+            return result.data.number
+      - name: merge pull request
+        run: gh pr merge ${{steps.pr.outputs.result}} --auto --merge
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+            
