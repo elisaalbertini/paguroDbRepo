@@ -39,7 +39,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
         with:
-          result-encoding: string
+          result-encoding: json
           script: |
             const { repo, owner } = context.repo;
             const result = await github.rest.pulls.create({
