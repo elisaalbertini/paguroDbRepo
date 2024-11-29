@@ -60,7 +60,7 @@ jobs:
               issue_number: pull_num,
               labels: ['feature', 'automated pr']
             });
-            octokit.rest.pulls.requestReviewers({
+            github.rest.pulls.requestReviewers({
               owner,
               repo,
               pull_num,
