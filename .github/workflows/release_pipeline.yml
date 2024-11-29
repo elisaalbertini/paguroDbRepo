@@ -30,7 +30,7 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
-          SIGNING_KEY: ${{ secrets.SIGNING_KEYs}}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY}}
         run: |
           npm install
           npx semantic-release
