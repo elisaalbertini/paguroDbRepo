@@ -27,6 +27,7 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew :WarehouseService:shadowJar
+          ./gradlew :EmployeeApplication:shadowJar
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
