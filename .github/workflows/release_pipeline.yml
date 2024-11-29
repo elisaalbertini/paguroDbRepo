@@ -60,7 +60,7 @@ jobs:
             });
             const prNumber = context.payload.number;
             core.exportVariable('PULL_NUMBER', prNumber);
-      - run: echo "${{PULL_NUMBER}}"
+      - run: echo "$GITHUB_CONTEXT"
       - name: merge pull request
         run: gh pr merge ${{ env.PULL_NUMBER }} --auto
         env:
