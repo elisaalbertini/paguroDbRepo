@@ -17,16 +17,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '>=22.11'
-      #- name: java version
-       # uses: actions/setup-java@v4
-        #with:
-         # java-version: 17
-          #distribution: 'temurin'
+      - name: java version
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'temurin'
 
-      #- name: Generate shadowjar
-       # run: |
-        #  chmod +x gradlew
-         # ./gradlew :WarehouseService:shadowJar
+      - name: Generate shadowjar
+        run: |
+          chmod +x gradlew
+          ./gradlew :WarehouseService:shadowJar
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
