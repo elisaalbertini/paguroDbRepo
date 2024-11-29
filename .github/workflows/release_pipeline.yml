@@ -61,7 +61,7 @@ jobs:
       - name: stampa
         env:
           PR_NUMBER: ${{ github.event.number }}
-        run: echo '${{ env.PR_NUMBER }}'
+        run: echo '${{ PR_NUMBER }}'
       - name: merge pull request
         run: gh pr merge ${{ env.PULL_NUMBER }} --auto
         env:
