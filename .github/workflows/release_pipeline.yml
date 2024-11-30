@@ -20,11 +20,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '>=22.11'
-      - name: java version
-        uses: actions/setup-java@v4
-        with:
-          java-version: 17
-          distribution: 'temurin'
+      #- name: java version
+       # uses: actions/setup-java@v4
+        #with:
+         # java-version: 17
+          #distribution: 'temurin'
 
       - name: Generate shadowjar
         run: |
@@ -33,7 +33,6 @@ jobs:
           ./gradlew :EmployeeApplication:shadowJar
       - name: Release
         env:
-          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           npm install
