@@ -1,3 +1,13 @@
+## [1.30.0](https://github.com/elisaalbertini/paguroDbRepo/compare/1.29.0...1.30.0) (2024-11-30)
+
+### Features
+
+* tolte versioni ([ce7f7ab](https://github.com/elisaalbertini/paguroDbRepo/commit/ce7f7ab941ddca42151de0778f127ffbe5c8e3a8))
+
+### General maintenance
+
+* prova ([6bec0bb](https://github.com/elisaalbertini/paguroDbRepo/commit/6bec0bb77c41682f1db86f0c8e6ec0c28fb4ffae))
+
 ## [1.29.0](https://github.com/elisaalbertini/paguroDbRepo/compare/1.28.0...1.29.0) (2024-11-30)
 
 ### Features
