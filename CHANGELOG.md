@@ -1,3 +1,9 @@
+## [1.26.0](https://github.com/elisaalbertini/paguroDbRepo/compare/1.25.0...1.26.0) (2024-11-30)
+
+### Features
+
+* info ([7babdd7](https://github.com/elisaalbertini/paguroDbRepo/commit/7babdd751fd8b6ab7acfd84af175bf0f11c6848c))
+
 ## [1.25.0](https://github.com/elisaalbertini/paguroDbRepo/compare/1.24.0...1.25.0) (2024-11-30)
 
 ### Features
