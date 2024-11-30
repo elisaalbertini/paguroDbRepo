@@ -1,6 +1,4 @@
 {
-  "name": "pagurodbrepo",
-  "description": "Progetto di prova",
   "devDependencies": {
     "semantic-release-preconfigured-conventional-commits": "latest"
   },
