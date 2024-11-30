@@ -1,3 +1,9 @@
+## [1.29.0](https://github.com/elisaalbertini/paguroDbRepo/compare/1.28.0...1.29.0) (2024-11-30)
+
+### Features
+
+* package.json ([17c2939](https://github.com/elisaalbertini/paguroDbRepo/commit/17c293947038d09d0f1ba7aca9f119258765f9c0))
+
 ## [1.28.0](https://github.com/elisaalbertini/paguroDbRepo/compare/1.27.0...1.28.0) (2024-11-30)
 
 ### Features
