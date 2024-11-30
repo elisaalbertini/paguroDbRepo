@@ -3,7 +3,7 @@ config.plugins.push(
   "@semantic-release/git",
   ["@semantic-release/github", 
     {"assets": 
-      ["WarehouseService/build/output/WarehouseService.jar", 
+      ["package.json","WarehouseService/build/output/WarehouseService.jar", 
         "EmployeeApplication/build/output/EmployeeApplication.jar"],
   }],
 )
