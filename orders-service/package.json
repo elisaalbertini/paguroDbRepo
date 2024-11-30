@@ -1,6 +1,5 @@
 {
   "name": "orders-service",
-  "version": "0.0.0",
   "private": true,
   "scripts": {
     "test": "jest --runInBand",

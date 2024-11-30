@@ -1,6 +1,5 @@
 {
   "name": "server",
-  "version": "0.0.0",
   "description": "Middle server",
   "main": "server.ts",
   "scripts": {

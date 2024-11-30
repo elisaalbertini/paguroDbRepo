@@ -1,6 +1,5 @@
 {
   "name": "menu-service",
-  "version": "0.0.0",
   "description": "",
   "main": "./src/app.ts",
   "scripts": {
