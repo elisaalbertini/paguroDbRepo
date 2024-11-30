@@ -1,3 +1,13 @@
+## [1.28.0](https://github.com/elisaalbertini/paguroDbRepo/compare/1.27.0...1.28.0) (2024-11-30)
+
+### Features
+
+* jar ([57772da](https://github.com/elisaalbertini/paguroDbRepo/commit/57772da42a36e1d1a0a13d8c1e4ee259a9761683))
+
+### General maintenance
+
+* merge ([48bbf19](https://github.com/elisaalbertini/paguroDbRepo/commit/48bbf198e2d248abea4d662b0a38a1b8fa3cb9b7))
+
 ## [1.27.0](https://github.com/elisaalbertini/paguroDbRepo/compare/1.26.0...1.27.0) (2024-11-30)
 
 ### Features
