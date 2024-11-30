@@ -1,3 +1,14 @@
+## [1.23.0](https://github.com/elisaalbertini/paguroDbRepo/compare/1.22.0...1.23.0) (2024-11-30)
+
+### Features
+
+* 3 ([0efc4aa](https://github.com/elisaalbertini/paguroDbRepo/commit/0efc4aa4adc0be6c42408b7defd542d292eb03ae))
+* 4 ([94fd718](https://github.com/elisaalbertini/paguroDbRepo/commit/94fd71809b78a82f94aa4fca1231a72ff33fa752))
+
+### General maintenance
+
+* merge ([269381c](https://github.com/elisaalbertini/paguroDbRepo/commit/269381c299fe7462f5bb4d8b1959c6c304230592))
+
 ## [1.22.0](https://github.com/elisaalbertini/paguroDbRepo/compare/1.21.0...1.22.0) (2024-11-30)
 
 ### Features
