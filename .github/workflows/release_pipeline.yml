@@ -29,8 +29,7 @@ jobs:
       - name: Generate shadowjar
         run: |
           chmod +x gradlew
-          ./gradlew :WarehouseService:shadowJar --info
-          ./gradlew :EmployeeApplication:shadowJar
+          ./gradlew shadowJar
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
