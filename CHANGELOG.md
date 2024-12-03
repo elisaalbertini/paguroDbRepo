@@ -1,3 +1,24 @@
+## [3.0.0](https://github.com/elisaalbertini/paguroDbRepo/compare/2.0.0...3.0.0) (2024-12-03)
+
+### ⚠ BREAKING CHANGES
+
+* ciao
+* ciao
+* ciaooo
+
+### Features
+
+* ci ([c39fae5](https://github.com/elisaalbertini/paguroDbRepo/commit/c39fae5571c389b2f010271b0e5595e5a92e62d9))
+* ci 2 ([e876ecc](https://github.com/elisaalbertini/paguroDbRepo/commit/e876eccd71dca30bc9a823435801897ccf825638))
+* ciao ([6b339c9](https://github.com/elisaalbertini/paguroDbRepo/commit/6b339c9a172fbe71749727504e59f10935316a77))
+* ciao ([97354ec](https://github.com/elisaalbertini/paguroDbRepo/commit/97354ec4aea4338c32d1ad52ce49db32b6bf1e5d))
+* ciao ([8bdfe50](https://github.com/elisaalbertini/paguroDbRepo/commit/8bdfe508d4d9c8e7a5d4671624bb075bdb5b43ad))
+* ciaooo ([e02ae35](https://github.com/elisaalbertini/paguroDbRepo/commit/e02ae35f4a04643bb12cafa58087ea45e03044c6))
+
+### General maintenance
+
+* merge ([bcd107a](https://github.com/elisaalbertini/paguroDbRepo/commit/bcd107aaf713a40643f4ab0d1d54264b56ce2adc))
+
 ## [2.0.0](https://github.com/elisaalbertini/paguroDbRepo/compare/1.32.0...2.0.0) (2024-12-03)
 
 ### ⚠ BREAKING CHANGES
