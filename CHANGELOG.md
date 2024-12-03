@@ -1,3 +1,13 @@
+## [4.0.0](https://github.com/elisaalbertini/paguroDbRepo/compare/3.0.0...4.0.0) (2024-12-03)
+
+### ⚠ BREAKING CHANGES
+
+* Update README.md
+
+### Features
+
+* Update README.md ([2b2d3fb](https://github.com/elisaalbertini/paguroDbRepo/commit/2b2d3fbb274f3b99159099cf8140747224444644))
+
 ## [3.0.0](https://github.com/elisaalbertini/paguroDbRepo/compare/2.0.0...3.0.0) (2024-12-03)
 
 ### ⚠ BREAKING CHANGES
