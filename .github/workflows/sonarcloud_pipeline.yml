@@ -1,10 +1,10 @@
 name: Sonarcloud workflow
 
 on:
-  #push:
-   # branches:
+  push:
+    branches:
     #  - main
-     # - develop
+       - develop
   pull_request:
     branches:
       - main
