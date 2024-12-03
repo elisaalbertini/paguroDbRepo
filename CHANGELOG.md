@@ -1,3 +1,17 @@
+## [2.0.0](https://github.com/elisaalbertini/paguroDbRepo/compare/1.32.0...2.0.0) (2024-12-03)
+
+### ⚠ BREAKING CHANGES
+
+* ciao
+
+### Features
+
+* ciao ([7046ba5](https://github.com/elisaalbertini/paguroDbRepo/commit/7046ba59bbf328c0179b59bb519fe643307fe6ed))
+
+### General maintenance
+
+* merge ([206259f](https://github.com/elisaalbertini/paguroDbRepo/commit/206259f5abe3e1756b0d2b7a2236ee828d70909f))
+
 ## [1.32.0](https://github.com/elisaalbertini/paguroDbRepo/compare/1.31.0...1.32.0) (2024-12-03)
 
 ### Features
