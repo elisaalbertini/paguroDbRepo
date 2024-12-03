@@ -24,9 +24,6 @@ jobs:
 
       - name: Coverage server
         uses: DistributedCafe/DistributedCafeProject/.github/serverTest@develop
-
-      - name: Kill node 
-        run: killall node
       
       - name: Coverage orders-service
         working-directory: orders-service
